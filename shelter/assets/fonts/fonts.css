@@ -1,0 +1,86 @@
+@font-face {
+  font-family: "Georgia";
+  src: url("./Georgia.woff2") format("woff2"),
+    url("./Georgia.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arial";
+  src: url("./arial-regular.woff2") format("woff2"),
+    url("./arial-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arial";
+  src: url("./arial-italic.woff2") format("woff2"),
+    url("./arial-italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* не использовал */
+@font-face {
+  font-family: "Georgia";
+  src: url("./Georgia-Bold.woff2") format("woff2"),
+    url("./Georgia-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* не использовал */
+@font-face {
+  font-family: "Georgia";
+  src: url("./Georgia-Italic.woff2") format("woff2"),
+    url("./Georgia-Italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* не использовал */
+@font-face {
+  font-family: "Georgia";
+  src: url("./Georgia-BoldItalic.woff2") format("woff2"),
+    url("./Georgia-BoldItalic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* не использовал */
+@font-face {
+  font-family: "Arial";
+  src: url("./arial-black.woff2") format("woff2"),
+    url("./arial-black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* не использовал */
+@font-face {
+  font-family: "Arial";
+  src: url("./arial-bold.woff2") format("woff2"),
+    url("./arial-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* не использовал */
+@font-face {
+  font-family: "Arial";
+  src: url("./arial-bold-italic.woff2") format("woff2"),
+    url("./arial-bold-italic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
