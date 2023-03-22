@@ -1,0 +1,467 @@
+// sass --watch shelter/pages/main/style.scss:shelter/pages/main/style.css
+$white-color: #fff;
+$ligth-grey-color: #f6f6f6;
+$main-beige-color: #f1cdb3;
+$header-size: 35px;
+$main-font-family: "Georgia";
+$main-letter-spacing: 2px;
+$extra-letter-spacing: 1px;
+$hovered-button: #fddcc4;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: $main-font-family;
+  font-weight: 400;
+}
+
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 40px;
+  background: linear-gradient(90deg, #5b483a, #262425);
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    padding-bottom: 10px;
+    font-size: 32px;
+    line-height: 34px;
+    font-weight: 400;
+    letter-spacing: $main-letter-spacing;
+    color: $main-beige-color;
+  }
+
+  &__subtitle {
+    font-family: "Arial";
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.3px;
+    color: $white-color;
+  }
+}
+
+.menu__list {
+  display: flex;
+  gap: 35px;
+
+  &-link {
+    padding-bottom: 3px;
+    font-family: "Arial";
+    font-weight: 400;
+    font-size: 15px;
+    color: #cdcdcd;
+    transition: color 0.3s ease-in;
+
+    &:hover {
+      color: #fafafa;
+    }
+
+    &--active {
+      color: #fafafa;
+      border-bottom: 3px solid $main-beige-color;
+    }
+  }
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.not-only {
+  &__content {
+    display: flex;
+    gap: 40px;
+    padding: 0 40px;
+    background: radial-gradient(100% 100% at 0% 0%, #5b483a 0%, #262425 100%);
+  }
+
+  &__title {
+    margin-top: 164px;
+    max-width: 320px;
+    font-size: 44px;
+    line-height: 57px;
+    font-weight: 400;
+    color: $white-color;
+  }
+
+  &__text {
+    margin: 42px 0 57px 0;
+    font-family: "Arial";
+    font-size: 15px;
+    line-height: 24px;
+    color: #cdcdcd;
+  }
+
+  &__link {
+    padding: 16px 45px;
+    font-size: 17px;
+    background: $main-beige-color;
+    color: #292929;
+    letter-spacing: $extra-letter-spacing;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.3s ease-in;
+
+    &:hover {
+      background: $hovered-button;
+    }
+  }
+
+  &__img {
+    object-fit: cover;
+    max-width: 60%;
+  }
+}
+
+.about {
+  &__inner {
+    padding: 80px 40px 100px 40px;
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    background: $white-color;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  &__title {
+    font-size: 35px;
+    line-height: 46px;
+    font-weight: 400;
+    color: #545454;
+    letter-spacing: $main-letter-spacing;
+  }
+
+  &__text {
+    max-width: 430px;
+    font-family: "Arial";
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #4c4c4c;
+  }
+}
+
+.our-friends {
+  &__inner {
+    padding: 80px 40px 100px 40px;
+    background: #f6f6f6;
+  }
+
+  &__title {
+    padding-bottom: 60px;
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 45px;
+    text-align: center;
+    color: #545454;
+    letter-spacing: $main-letter-spacing;
+  }
+
+  &__carousel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__link {
+    display: block;
+    max-width: 262px;
+    margin: 59px auto 0 auto;
+    padding: 15px 45px;
+    font-size: 17px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: $extra-letter-spacing;
+    color: #292929;
+    background: $main-beige-color;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.3s ease-in;
+
+    &:hover {
+      background: $hovered-button;
+    }
+  }
+}
+
+.carousel {
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    width: 52px;
+    height: 52px;
+    font-family: $main-font-family;
+    font-weight: 400;
+    font-size: 20px;
+    background: transparent;
+    border: 2px solid $main-beige-color;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease-in, border-color 0.3s ease-in;
+
+    &:hover {
+      background: $hovered-button;
+      border-color: $hovered-button;
+    }
+  }
+
+  &__list {
+    padding: 0 53px;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 2;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    border-radius: 10px;
+    background: #fafafa;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.3s ease-in, border-color 0.3s ease-in;
+
+    &:hover .carousel__item-btn {
+      background: $hovered-button;
+      border-color: $hovered-button;
+    }
+
+    &-img {
+      height: 270px;
+    }
+
+    &-name {
+      font-size: 20px;
+      line-height: 22px;
+      color: #545454;
+      letter-spacing: $extra-letter-spacing;
+    }
+
+    &-btn {
+      margin-bottom: 30px;
+      padding: 14px 44px;
+      font-family: "Georgia";
+      font-size: 17px;
+      line-height: 22px;
+      letter-spacing: $extra-letter-spacing;
+      background: none;
+      border: 2px solid $main-beige-color;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.3s ease-in;
+    }
+  }
+}
+
+.help {
+  &__inner {
+    padding: 80px 40px 100px 40px;
+    background: $white-color;
+  }
+
+  &__header {
+    margin-bottom: 60px;
+    font-size: 35px;
+    line-height: 45px;
+    font-weight: 400;
+    text-align: center;
+    color: #545454;
+    letter-spacing: $main-letter-spacing;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: end;
+    column-gap: 120px;
+    row-gap: 57px;
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    &-img {
+      max-width: 60px;
+      max-height: 60px;
+    }
+
+    &-title {
+      font-size: 20px;
+      line-height: 23px;
+      color: #545454;
+      letter-spacing: $extra-letter-spacing;
+    }
+  }
+}
+
+.donation {
+  &-img {
+    background-size: cover;
+  }
+
+  &__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 40px 100px 40px;
+    gap: 30px;
+    background: #f6f6f6;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: start;
+    max-width: 370px;
+  }
+
+  &__title {
+    font-size: 35px;
+    line-height: 45px;
+    font-weight: 400;
+    letter-spacing: $main-letter-spacing;
+    color: #545454;
+  }
+
+  &__subtitle {
+    font-size: 15px;
+    line-height: 16.5px;
+    color: #545454;
+    letter-spacing: $extra-letter-spacing;
+  }
+
+  &__card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+    background: $main-beige-color;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.3s ease-in;
+
+    &:hover {
+      background: $hovered-button;
+    }
+
+    &-link {
+      font-size: 20px;
+      line-height: 23px;
+      letter-spacing: $extra-letter-spacing;
+      color: #545454;
+      cursor: pointer;
+    }
+  }
+
+  &__text {
+    font-family: "Arial";
+    font-weight: 400;
+    font-style: italic;
+    font-size: 12px;
+    line-height: 18px;
+    color: #b2b2b2;
+  }
+}
+
+.contacts {
+  background: radial-gradient(100% 215.42% at 0% 0%, #5b483a 0%, #262425 100%);
+
+  &__questions {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 40px 0 40px;
+
+    &-column-first {
+      padding-top: 17px;
+      display: flex;
+      flex-direction: column;
+      gap: 43px;
+      max-width: 300px;
+    }
+
+    &-column-second {
+      margin-right: 20px;
+      padding-top: 17px;
+      display: flex;
+      flex-direction: column;
+      gap: 33px;
+      max-width: 300px;
+    }
+
+    &-title {
+      font-size: 35px;
+      line-height: 45px;
+      font-weight: 400;
+      color: $white-color;
+      letter-spacing: $main-letter-spacing;
+    }
+
+    &-link {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 20px;
+      color: $main-beige-color;
+      letter-spacing: $extra-letter-spacing;
+      cursor: pointer;
+      transition: color 0.3s ease-in;
+
+      &:hover {
+        color: #fce8d9;
+      }
+    }
+  }
+}
