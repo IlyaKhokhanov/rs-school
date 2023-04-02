@@ -22,6 +22,7 @@
               <p class="logo__subtitle">Shelter for pets in Boston</p>
             </a>
             <nav class="menu">
+              <div class="overlay-menu"></div>
               <button class="menu__btn">
                 <span></span>
                 <span></span>
@@ -60,82 +61,21 @@
                 Our friends who <br />
                 are looking for a house
               </h1>
-              <ul class="our-friends__list">
-                <li class="our-friends__item">
-                  <img
-                    class="our-friends__item-img"
-                    src="./../../assets/images/pets/katrine.png"
-                    alt="cat" />
-                  <div class="our-friends__item-name">Katrine</div>
-                  <button class="our-friends__item-btn">Learn more</button>
-                </li>
-                <li class="our-friends__item">
-                  <img
-                    class="our-friends__item-img"
-                    src="./../../assets/images/pets/jennifer.png"
-                    alt="dog" />
-                  <div class="our-friends__item-name">Jennifer</div>
-                  <button class="our-friends__item-btn">Learn more</button>
-                </li>
-                <li class="our-friends__item">
-                  <img
-                    class="our-friends__item-img"
-                    src="./../../assets/images/pets/woody.png"
-                    alt="dog" />
-                  <div class="our-friends__item-name">Woody</div>
-                  <button class="our-friends__item-btn">Learn more</button>
-                </li>
-                <li class="our-friends__item">
-                  <img
-                    class="our-friends__item-img"
-                    src="./../../assets/images/pets/sophia.png"
-                    alt="dog" />
-                  <div class="our-friends__item-name">Sophia</div>
-                  <button class="our-friends__item-btn">Learn more</button>
-                </li>
-                <li class="our-friends__item">
-                  <img
-                    class="our-friends__item-img"
-                    src="./../../assets/images/pets/timmy.png"
-                    alt="dog" />
-                  <div class="our-friends__item-name">Timmy</div>
-                  <button class="our-friends__item-btn">Learn more</button>
-                </li>
-                <li class="our-friends__item">
-                  <img
-                    class="our-friends__item-img"
-                    src="./../../assets/images/pets/charly.png"
-                    alt="dog" />
-                  <div class="our-friends__item-name">Charly</div>
-                  <button class="our-friends__item-btn">Learn more</button>
-                </li>
-                <li class="our-friends__item">
-                  <img
-                    class="our-friends__item-img"
-                    src="./../../assets/images/pets/scarlett.png"
-                    alt="dog" />
-                  <div class="our-friends__item-name">Scarlett</div>
-                  <button class="our-friends__item-btn">Learn more</button>
-                </li>
-                <li class="our-friends__item">
-                  <img
-                    class="our-friends__item-img"
-                    src="./../../assets/images/pets/freddie.png"
-                    alt="dog" />
-                  <div class="our-friends__item-name">Freddie</div>
-                  <button class="our-friends__item-btn">Learn more</button>
-                </li>
-              </ul>
+              <ul class="our-friends__list"></ul>
               <div class="our-friends__pagination">
-                <button class="our-friends__pagination-btn" href="" disabled>
+                <button class="our-friends__pagination-btn btn-start" href="">
                   <<
                 </button>
-                <button class="our-friends__pagination-btn" href="" disabled>
+                <button class="our-friends__pagination-btn btn-prev" href="">
                   <
                 </button>
                 <div class="our-friends__pagination-number" href="">1</div>
-                <button class="our-friends__pagination-btn" href="">></button>
-                <button class="our-friends__pagination-btn" href="">>></button>
+                <button class="our-friends__pagination-btn btn-next" href="">
+                  >
+                </button>
+                <button class="our-friends__pagination-btn btn-end" href="">
+                  >>
+                </button>
               </div>
             </div>
           </div>
@@ -205,6 +145,6 @@
         </div>
       </footer>
     </div>
-    <script src="./script.js"></script>
+    <script type="module" src="./script.js"></script>
   </body>
 </html>
