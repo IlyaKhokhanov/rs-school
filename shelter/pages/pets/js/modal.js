@@ -62,7 +62,7 @@ export function modal() {
       });
 
     btn.innerHTML =
-      '<img src="./../../../assets/icons/close-btn.svg" alt="close" />';
+      '<img src="./../../assets/icons/close-btn.svg" alt="close" />';
     content.innerHTML = item[0];
     modal.append(btn);
     modal.append(content);

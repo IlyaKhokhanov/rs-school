@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Georgia";
-  src: url("./Georgia.woff2") format("woff2"),
-    url("./Georgia.woff") format("woff");
+  src: url("./georgia-regular.woff2") format("woff2"),
+    url("./georgia-regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
