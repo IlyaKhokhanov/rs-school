@@ -1,3 +1,4 @@
+import app from './js/app';
 import './style.scss';
 
-document.body.innerHTML = 'hello';
+app();
