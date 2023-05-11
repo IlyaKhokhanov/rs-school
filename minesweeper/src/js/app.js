@@ -1,8 +1,8 @@
-import Board from './Board';
+import Minesweeper from './Minesweeper';
 import { addElement } from './utilits';
 
 export default function app() {
   const main = addElement('div', 'main');
   document.body.append(main);
-  const board = new Board(main, 10);
+  const minesweeper = new Minesweeper(main);
 }

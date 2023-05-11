@@ -1,70 +1,271 @@
+$color-white: rgb(255, 255, 255);
+$color-grey-dark: rgb(102, 102, 102);
+
+%cell-active {
+  background-color: rgb(235, 235, 235);
+  border: 1px solid rgb(190, 190, 190);
+}
+
+%setting-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-grey-dark;
+  border-radius: 4px;
+  font-weight: 700;
+  color: rgb(37, 37, 37);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .main {
   margin: 0 auto;
-  max-width: 1200px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(221, 221, 221);
+}
+
+.minesweeper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  gap: 15px;
+
+  .header {
+    align-self: center;
+    margin-top: 10px;
+  }
+
+  .settings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &__main {
+      display: flex;
+      gap: 10px;
+    }
+
+    &__addit {
+      display: flex;
+      gap: 10px;
+    }
+
+    &__level {
+      @extend %setting-button;
+      padding: 2px 5px;
+      background-color: rgb(223, 223, 223);
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(190, 190, 190);
+      }
+    }
+
+    &__bombs {
+      @extend %setting-button;
+      padding: 2px 5px;
+      background-color: rgb(223, 223, 223);
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(190, 190, 190);
+      }
+    }
+
+    &__records {
+      @extend %setting-button;
+      width: 25px;
+      height: 25px;
+      background-color: rgb(223, 223, 223);
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(190, 190, 190);
+      }
+    }
+
+    &__sound {
+      @extend %setting-button;
+      width: 25px;
+      height: 25px;
+      background-color: rgb(223, 223, 223);
+      cursor: pointer;
+
+      &.active {
+        background-color: rgb(150, 150, 150);
+      }
+
+      &:hover {
+        background-color: rgb(190, 190, 190);
+      }
+    }
+
+    &__theme {
+      @extend %setting-button;
+      width: 25px;
+      height: 25px;
+      background-color: rgb(223, 223, 223);
+      cursor: pointer;
+
+      &.active {
+        background-color: rgb(150, 150, 150);
+      }
+
+      &:hover {
+        background-color: rgb(190, 190, 190);
+      }
+    }
+  }
+
+  .info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &__bombs {
+      @extend %setting-button;
+      width: 50px;
+      background-color: rgb(223, 223, 223);
+      cursor: default;
+    }
+
+    &__time {
+      @extend %setting-button;
+      width: 40px;
+      background-color: rgb(223, 223, 223);
+      cursor: default;
+    }
+
+    &__button {
+      @extend %setting-button;
+      padding: 2px 5px;
+      background-color: $color-white;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgb(190, 190, 190);
+      }
+    }
+  }
 }
 
 .board {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  margin: 0 auto;
+  margin-top: 10px;
 
   .cell {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px;
-    border: 1px solid black;
+    background-color: $color-white;
+    border: 1px solid $color-grey-dark;
+    border-radius: 3px;
     font-weight: 700;
     cursor: pointer;
 
     &.celltrue {
-      background-color: lightgray;
+      @extend %cell-active;
       color: black;
     }
 
     &.cell0 {
-      background-color: lightgray;
-      color: rgb(0, 0, 255);
+      @extend %cell-active;
     }
 
     &.cell1 {
-      background-color: lightgray;
+      @extend %cell-active;
       color: rgb(0, 0, 255);
     }
 
     &.cell2 {
-      background-color: lightgray;
+      @extend %cell-active;
       color: rgb(0, 128, 0);
     }
 
     &.cell3 {
-      background-color: lightgray;
+      @extend %cell-active;
       color: rgb(255, 0, 0);
     }
 
     &.cell4 {
-      background-color: lightgray;
+      @extend %cell-active;
       color: rgb(0, 0, 139);
     }
 
     &.cell5 {
-      background-color: lightgray;
+      @extend %cell-active;
       color: rgb(165, 42, 42);
     }
 
     &.cell6 {
-      background-color: lightgray;
+      @extend %cell-active;
       color: rgb(59, 218, 202);
     }
 
     &.cell7 {
-      background-color: lightgray;
+      @extend %cell-active;
       color: rgb(0, 0, 0);
     }
 
     &.cell8 {
-      background-color: lightgray;
+      @extend %cell-active;
       color: rgb(255, 255, 255);
+    }
+  }
+}
+
+.description {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.main[data-board-cells="10"] {
+  .minesweeper {
+    width: 300px;
+  }
+}
+
+.main[data-board-cells="15"] {
+  .minesweeper {
+    width: 450px;
+  }
+}
+
+.main[data-board-cells="25"] {
+  .minesweeper {
+    width: 750px;
+  }
+}
+
+.board[data-board-cells="10"] {
+  width: 300px;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(10, 30px);
+}
+
+.board[data-board-cells="15"] {
+  width: 450px;
+  grid-template-columns: repeat(15, 30px);
+  grid-template-rows: repeat(15, 30px);
+}
+
+.board[data-board-cells="25"] {
+  width: 750px;
+  grid-template-columns: repeat(25, 30px);
+  grid-template-rows: repeat(25, 30px);
+}
+
+.main.dark {
+  background-color: rgb(15, 12, 31);
+
+  .minesweeper {
+    .header {
+      color: $color-white;
     }
   }
 }

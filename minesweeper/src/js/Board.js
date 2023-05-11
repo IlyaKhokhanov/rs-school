@@ -5,11 +5,21 @@ import { checkForPlaint, getNearbyCells } from './boardUtilits';
 export default class Board {
   matrix = [];
 
+  totalBombs = 10;
+
   isFirstClick = true;
 
-  constructor(container, length) {
+  constructor(container, length, totalBombs = 10) {
     this.container = container;
     this.length = length;
+    this.totalBombs = totalBombs;
+
+    this.boardElement = addElement('div', 'board');
+    this.boardElement.setAttribute('data-board-cells', this.length);
+
+    this.container.setAttribute('data-board-cells', this.length);
+
+    this.container.append(this.boardElement);
 
     this.addMatrix(length);
     this.addCells();
@@ -26,9 +36,6 @@ export default class Board {
   }
 
   addCells() {
-    const boardElement = addElement('div', 'board');
-    this.container.append(boardElement);
-
     this.matrix.forEach((arr) => {
       arr.forEach((elem) => {
         const cellElement = addElement('div', 'cell');
@@ -40,15 +47,13 @@ export default class Board {
           e.preventDefault();
           this.addFlag(elem.x, elem.y);
         });
-        boardElement.append(cellElement);
+        this.boardElement.append(cellElement);
       });
     });
   }
 
   updateCells() {
-    this.container.innerHTML = '';
-    const boardElement = addElement('div', 'board');
-    this.container.append(boardElement);
+    this.boardElement.innerHTML = '';
 
     this.matrix.forEach((arr) => {
       arr.forEach((elem) => {
@@ -75,21 +80,51 @@ export default class Board {
           e.preventDefault();
           this.addFlag(elem.x, elem.y);
         });
-        boardElement.append(cellElement);
+        this.boardElement.append(cellElement);
+      });
+    });
+    this.checkEndGame();
+  }
+
+  checkEndGame() {
+    const arrOpened = [];
+
+    this.matrix.forEach((arr, y) => {
+      arr.forEach((cell, x) => {
+        const elem = this.matrix[y][x];
+        if (elem.value === true && elem.isOpen) {
+          console.log('Lost');
+        }
+        if (elem.value !== true && elem.isOpen) {
+          arrOpened.push(elem);
+          if (
+            arrOpened.length ===
+            this.length * this.length - this.totalBombs
+          ) {
+            console.log('Win');
+          }
+        }
       });
     });
   }
 
   addBombs(x, y) {
-    let totalBombs = this.length * 1.6;
+    let countBombs = this.totalBombs;
 
-    while (totalBombs) {
+    while (countBombs) {
       const randomX = getRandom(this.length - 1);
       const randomY = getRandom(this.length - 1);
 
-      if (checkForPlaint(this.matrix, x, y, randomX, randomY)) {
-        this.matrix[randomY][randomX].value = true;
-        totalBombs -= 1;
+      if (this.matrix[randomY][randomX]?.value !== true) {
+        if ((this.totalBombs < 92 && this.length === 10) || this.length > 10) {
+          if (checkForPlaint(this.matrix, x, y, randomX, randomY)) {
+            this.matrix[randomY][randomX].value = true;
+            countBombs -= 1;
+          }
+        } else if (this.matrix[y]?.[x] !== this.matrix[randomY]?.[randomX]) {
+          this.matrix[randomY][randomX].value = true;
+          countBombs -= 1;
+        }
       }
     }
     this.addCellsValue();
@@ -116,7 +151,7 @@ export default class Board {
     const arrFlag = arrCells.filter((cell) => cell?.isFlag);
     if (this.matrix[y][x].value === arrFlag.length) {
       arrCells.forEach((cell) => {
-        if (cell && cell.value !== true) {
+        if (cell && cell.isFlag !== true) {
           cell.open();
           if (cell.value === 0) {
             cell.open();
