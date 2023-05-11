@@ -7,7 +7,3 @@ export function addElement(tagName, className) {
   elem.classList.add(className);
   return elem;
 }
-
-// export function checkCells(x, y, matrix, callback) {
-//   let count = 0
-// }

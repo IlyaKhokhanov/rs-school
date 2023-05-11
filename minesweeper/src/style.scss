@@ -7,9 +7,64 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-}
 
-.cell {
-  padding: 10px;
-  border: 1px solid black;
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 1px solid black;
+    font-weight: 700;
+    cursor: pointer;
+
+    &.celltrue {
+      background-color: lightgray;
+      color: black;
+    }
+
+    &.cell0 {
+      background-color: lightgray;
+      color: rgb(0, 0, 255);
+    }
+
+    &.cell1 {
+      background-color: lightgray;
+      color: rgb(0, 0, 255);
+    }
+
+    &.cell2 {
+      background-color: lightgray;
+      color: rgb(0, 128, 0);
+    }
+
+    &.cell3 {
+      background-color: lightgray;
+      color: rgb(255, 0, 0);
+    }
+
+    &.cell4 {
+      background-color: lightgray;
+      color: rgb(0, 0, 139);
+    }
+
+    &.cell5 {
+      background-color: lightgray;
+      color: rgb(165, 42, 42);
+    }
+
+    &.cell6 {
+      background-color: lightgray;
+      color: rgb(59, 218, 202);
+    }
+
+    &.cell7 {
+      background-color: lightgray;
+      color: rgb(0, 0, 0);
+    }
+
+    &.cell8 {
+      background-color: lightgray;
+      color: rgb(255, 255, 255);
+    }
+  }
 }
