@@ -9,7 +9,12 @@ export default class Board {
 
   isFirstClick = true;
 
-  constructor(container, length, totalBombs = 10) {
+  isLost = false;
+
+  isWin = false;
+
+  constructor(settings, container, length, totalBombs = 10) {
+    this.settings = settings;
     this.container = container;
     this.length = length;
     this.totalBombs = totalBombs;
@@ -93,7 +98,7 @@ export default class Board {
       arr.forEach((cell, x) => {
         const elem = this.matrix[y][x];
         if (elem.value === true && elem.isOpen) {
-          console.log('Lost');
+          this.isLost = true;
         }
         if (elem.value !== true && elem.isOpen) {
           arrOpened.push(elem);
@@ -101,11 +106,19 @@ export default class Board {
             arrOpened.length ===
             this.length * this.length - this.totalBombs
           ) {
-            console.log('Win');
+            this.isWin = true;
           }
         }
       });
     });
+    if (this.isLost) {
+      this.settings.openModal('Lose');
+      console.log('llose');
+    }
+
+    if (this.isWin) {
+      this.settings.openModal('Win');
+    }
   }
 
   addBombs(x, y) {
@@ -215,6 +228,7 @@ export default class Board {
     if (this.isFirstClick) {
       this.addBombs(x, y);
       this.isFirstClick = false;
+      this.settings.startTimer();
     }
 
     if (!elem.isOpen && !elem.isFlag) {

@@ -4,23 +4,25 @@ import { addElement } from './utilits';
 export default class Minesweeper {
   connainer = null;
 
+  timer = 0;
+
   constructor(container) {
     this.container = container;
 
+    this.minesweeperElement = addElement('div', 'minesweeper');
+    this.container.append(this.minesweeperElement);
+
     this.createSettings();
-
-    this.board = new Board(container, 10);
-
-    const text = addElement('div', 'description');
-    text.textContent = 'To set a flag, right click';
-    this.container.append(text);
   }
 
   createSettings() {
-    const minesweeperElement = addElement('div', 'minesweeper');
+    this.minesweeperElement.innerHTML = '';
 
     const header = addElement('h2', 'header');
     header.textContent = 'Minesweeper';
+
+    const text = addElement('div', 'description');
+    text.textContent = 'To set a flag, click right mouse button';
 
     const settBlock = addElement('div', 'settings');
 
@@ -52,17 +54,41 @@ export default class Minesweeper {
     const infoButton = addElement('div', 'info__button');
     infoButton.textContent = 'Start game';
 
-    const infoTime = addElement('div', 'info__time');
-    infoTime.textContent = '000';
+    this.infoTime = addElement('div', 'info__time');
+    this.infoTime.textContent = '000';
 
     settMainWrap.append(settLevel, settBombs);
     settAdditWrap.append(settRecords, settSound, settTheme);
     settBlock.append(settMainWrap, settAdditWrap);
 
-    infoBlock.append(infoBombs, infoButton, infoTime);
+    infoBlock.append(infoBombs, infoButton, this.infoTime);
 
-    minesweeperElement.append(header, settBlock, infoBlock);
-    this.container.append(minesweeperElement);
+    this.minesweeperElement.append(header, text, settBlock, infoBlock);
+
+    this.board = new Board(this, this.container, 10);
+  }
+
+  openModal(value) {
+    const overlay = addElement('div', 'overlay');
+    overlay.addEventListener('click', (e) => {
+      if (e.target.classList.contains('overlay')) {
+        this.startNewGame();
+      }
+    });
+
+    const modal = addElement('div', 'modal');
+    const btnClose = addElement('div', 'modal__btn-close');
+    btnClose.textContent = '×';
+    btnClose.addEventListener('click', () => {
+      overlay.remove();
+    });
+
+    const content = addElement('div', 'modal__content');
+    content.textContent = value;
+
+    modal.append(btnClose, content);
+    overlay.append(modal);
+    this.minesweeperElement.append(overlay);
   }
 
   changeTheme(e) {
@@ -73,5 +99,26 @@ export default class Minesweeper {
       e.target.classList.add('active');
       this.container.classList.add('dark');
     }
+  }
+
+  startNewGame() {
+    this.board.boardElement.remove();
+    this.board = null;
+    this.createSettings();
+  }
+
+  startTimer() {
+    const activeTimer = () => {
+      this.timer += 1;
+      if (this.timer < 10) {
+        this.infoTime.textContent = `00${this.timer}`;
+      } else if (this.timer < 100) {
+        this.infoTime.textContent = `0${this.timer}`;
+      } else {
+        this.infoTime.textContent = this.timer;
+      }
+    };
+    clearInterval();
+    setInterval(activeTimer, 1000);
   }
 }

@@ -1,5 +1,11 @@
 $color-white: rgb(255, 255, 255);
 $color-grey-dark: rgb(102, 102, 102);
+$color-grey-light: rgb(223, 223, 223);
+$color-grey-light2: rgb(200, 200, 200);
+
+$color-blue-dark1: rgb(16, 12, 39);
+$color-blue-dark2: rgb(47, 36, 112);
+$color-blue-dark3: rgb(69, 57, 133);
 
 %cell-active {
   background-color: rgb(235, 235, 235);
@@ -25,14 +31,13 @@ $color-grey-dark: rgb(102, 102, 102);
   margin: 0 auto;
   width: 100vw;
   height: 100vh;
-  background-color: rgb(221, 221, 221);
+  background-color: $color-grey-light;
 }
 
 .minesweeper {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  gap: 15px;
 
   .header {
     align-self: center;
@@ -43,6 +48,7 @@ $color-grey-dark: rgb(102, 102, 102);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin: 15px 0;
 
     &__main {
       display: flex;
@@ -57,7 +63,7 @@ $color-grey-dark: rgb(102, 102, 102);
     &__level {
       @extend %setting-button;
       padding: 2px 5px;
-      background-color: rgb(223, 223, 223);
+      background-color: $color-grey-light;
       cursor: pointer;
 
       &:hover {
@@ -68,7 +74,7 @@ $color-grey-dark: rgb(102, 102, 102);
     &__bombs {
       @extend %setting-button;
       padding: 2px 5px;
-      background-color: rgb(223, 223, 223);
+      background-color: $color-grey-light;
       cursor: pointer;
 
       &:hover {
@@ -80,7 +86,7 @@ $color-grey-dark: rgb(102, 102, 102);
       @extend %setting-button;
       width: 25px;
       height: 25px;
-      background-color: rgb(223, 223, 223);
+      background-color: $color-grey-light;
       cursor: pointer;
 
       &:hover {
@@ -92,7 +98,7 @@ $color-grey-dark: rgb(102, 102, 102);
       @extend %setting-button;
       width: 25px;
       height: 25px;
-      background-color: rgb(223, 223, 223);
+      background-color: $color-grey-light;
       cursor: pointer;
 
       &.active {
@@ -108,7 +114,7 @@ $color-grey-dark: rgb(102, 102, 102);
       @extend %setting-button;
       width: 25px;
       height: 25px;
-      background-color: rgb(223, 223, 223);
+      background-color: $color-grey-light;
       cursor: pointer;
 
       &.active {
@@ -129,14 +135,14 @@ $color-grey-dark: rgb(102, 102, 102);
     &__bombs {
       @extend %setting-button;
       width: 50px;
-      background-color: rgb(223, 223, 223);
+      background-color: $color-grey-light;
       cursor: default;
     }
 
     &__time {
       @extend %setting-button;
       width: 40px;
-      background-color: rgb(223, 223, 223);
+      background-color: $color-grey-light;
       cursor: default;
     }
 
@@ -220,8 +226,70 @@ $color-grey-dark: rgb(102, 102, 102);
 }
 
 .description {
-  margin-top: 10px;
+  font-size: 13px;
   text-align: center;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(41, 41, 41, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: smoothShow 0.5s;
+
+  .modal {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 450px;
+    height: 500px;
+    border-radius: 5px;
+    background-color: #fafafa;
+
+    &__btn-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+      width: 25px;
+      height: 25px;
+      background: $color-white;
+      border: 1px solid $color-grey-dark;
+      border-radius: 4px;
+      font-size: 35px;
+      cursor: pointer;
+      transition: background 0.3s ease-in, border-color 0.3s ease-in;
+
+      &:hover {
+        background-color: rgb(190, 190, 190);
+      }
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+@keyframes smoothShow {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .main[data-board-cells="10"] {
@@ -261,11 +329,68 @@ $color-grey-dark: rgb(102, 102, 102);
 }
 
 .main.dark {
-  background-color: rgb(15, 12, 31);
+  background-color: $color-blue-dark1;
+
+  * {
+    color: $color-grey-light2;
+  }
 
   .minesweeper {
-    .header {
-      color: $color-white;
+    .settings {
+      &__level,
+      &__bombs,
+      &__records,
+      &__sound {
+        background-color: $color-blue-dark2;
+        border-color: $color-grey-light2;
+
+        &:hover {
+          background-color: $color-blue-dark3;
+        }
+      }
+
+      &__sound.active,
+      &__theme.active {
+        background-color: rgb(33, 30, 48);
+      }
+    }
+
+    .info {
+      &__bombs,
+      &__time {
+        background-color: $color-blue-dark2;
+        border-color: $color-grey-light2;
+      }
+
+      &__button {
+        background-color: $color-blue-dark2;
+        border-color: $color-grey-light2;
+
+        &:hover {
+          background-color: $color-blue-dark3;
+        }
+      }
+    }
+  }
+
+  .board {
+    .cell {
+      background-color: $color-blue-dark2;
+      border-color: $color-grey-light2;
+
+      &.celltrue,
+      &.cell0,
+      &.cell1,
+      &.cell2,
+      &.cell3,
+      &.cell4,
+      &.cell5,
+      &.cell6,
+      &.cell7,
+      &.cell8 {
+        background-color: rgb(192, 192, 255);
+        border-color: rgb(178, 178, 253);
+      }
     }
   }
 }
