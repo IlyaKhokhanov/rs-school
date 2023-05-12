@@ -4,13 +4,9 @@ import { checkForPlaint, getNearbyCells } from './boardUtilits';
 
 export default class Board {
   matrix = [];
-
   totalBombs = 10;
-
   isFirstClick = true;
-
   isLost = false;
-
   isWin = false;
 
   constructor(settings, container, length, totalBombs = 10) {
@@ -55,6 +51,7 @@ export default class Board {
         this.boardElement.append(cellElement);
       });
     });
+    this.checkCountFlags();
   }
 
   updateCells() {
@@ -88,6 +85,7 @@ export default class Board {
         this.boardElement.append(cellElement);
       });
     });
+    this.settings.steps += 1;
     this.checkEndGame();
   }
 
@@ -111,14 +109,34 @@ export default class Board {
         }
       });
     });
+
     if (this.isLost) {
-      this.settings.openModal('Lose');
-      console.log('llose');
+      this.settings.stopTimer();
+      this.settings.openModal('defeat');
     }
 
     if (this.isWin) {
-      this.settings.openModal('Win');
+      this.settings.stopTimer();
+      this.settings.openModal('win');
     }
+  }
+
+  checkCountFlags() {
+    const arrFlags = [];
+
+    this.matrix.forEach((arr, y) => {
+      arr.forEach((cell, x) => {
+        const elem = this.matrix[y][x];
+        if (elem.isFlag) {
+          arrFlags.push(elem);
+        }
+      });
+    });
+
+    this.settings.flags = arrFlags.length;
+    this.settings.infoBombs.textContent = `🚩${
+      this.settings.bombs - this.settings.flags
+    }`;
   }
 
   addBombs(x, y) {
@@ -180,6 +198,7 @@ export default class Board {
     if (!elem.isOpen) {
       elem.isFlag = elem.isFlag ? false : true;
     }
+    this.checkCountFlags();
     this.updateCells();
   }
 
