@@ -53,17 +53,27 @@ export default class Minesweeper {
 
     settLevel.addEventListener('change', (e) => {
       this.lengthBoard = +e.target.value;
+      if (+e.target.value === 10) {
+        this.bombs = 10;
+        this.settBombsCount.value = 10;
+      } else if (+e.target.value === 15) {
+        this.bombs = 40;
+        this.settBombsCount.value = 40;
+      } else if (+e.target.value === 25) {
+        this.bombs = 80;
+        this.settBombsCount.value = 80;
+      }
     });
 
     settLevel.append(option1, option2, option3);
 
     const settBombs = addElement('div', 'settings__bombs-wrap');
-    const settBombsCount = addElement('input', 'settings__bombs');
-    settBombsCount.setAttribute('type', 'number');
-    settBombsCount.setAttribute('min', '10');
-    settBombsCount.setAttribute('max', '99');
-    settBombsCount.setAttribute('value', this.bombs);
-    settBombsCount.addEventListener('change', (e) => {
+    this.settBombsCount = addElement('input', 'settings__bombs');
+    this.settBombsCount.setAttribute('type', 'number');
+    this.settBombsCount.setAttribute('min', '10');
+    this.settBombsCount.setAttribute('max', '99');
+    this.settBombsCount.setAttribute('value', this.bombs);
+    this.settBombsCount.addEventListener('change', (e) => {
       if (+e.target.value > 9) {
         this.bombs = +e.target.value;
       }
@@ -71,7 +81,7 @@ export default class Minesweeper {
     const settBombsImg = addElement('div', 'settings__bombs-img');
     settBombsImg.textContent = '💣';
 
-    settBombs.append(settBombsCount, settBombsImg);
+    settBombs.append(this.settBombsCount, settBombsImg);
 
     const settAdditWrap = addElement('div', 'settings__addit');
 
@@ -80,30 +90,44 @@ export default class Minesweeper {
     settRecords.addEventListener('click', () => this.openModal('records'));
 
     const settSound = addElement('div', 'settings__sound');
-    settSound.textContent = '🔊';
+    settSound.textContent = '🎵';
     settSound.addEventListener('click', (e) => this.controlSound(e));
 
     const settTheme = addElement('div', 'settings__theme');
-    settTheme.textContent = '🌑';
+    settTheme.textContent = '☯';
     settTheme.addEventListener('click', (e) => this.changeTheme(e));
 
     const infoBlock = addElement('div', 'info');
 
+    const infoBlockLeft = addElement('div', 'info__block-left');
+
     this.infoBombs = addElement('div', 'info__bombs');
-    this.infoBombs.textContent = `🚩${this.bombs - this.flags}`;
+    this.infoBombs.textContent = `💣${this.bombs - this.flags}`;
+
+    this.infoFlags = addElement('div', 'info__flags');
+    this.infoFlags.textContent = `🚩${this.flags}`;
+
+    infoBlockLeft.append(this.infoBombs, this.infoFlags);
 
     const infoButton = addElement('div', 'info__button');
     infoButton.textContent = 'Start game';
     infoButton.addEventListener('click', () => this.startNewGame());
 
+    const infoBlockRight = addElement('div', 'info__block-right');
+
+    this.infoSteps = addElement('div', 'info__steps');
+    this.infoSteps.textContent = `🐾${this.steps}`;
+
     this.infoTime = addElement('div', 'info__time');
     this.infoTime.textContent = '000';
+
+    infoBlockRight.append(this.infoSteps, this.infoTime);
 
     settMainWrap.append(settLevel, settBombs);
     settAdditWrap.append(settRecords, settSound, settTheme);
     settBlock.append(settMainWrap, settAdditWrap);
 
-    infoBlock.append(this.infoBombs, infoButton, this.infoTime);
+    infoBlock.append(infoBlockLeft, infoButton, infoBlockRight);
 
     this.minesweeperElement.append(header, text, settBlock, infoBlock);
 

@@ -86,6 +86,7 @@ export default class Board {
       });
     });
     this.settings.steps += 1;
+    this.settings.infoSteps.textContent = `🐾${this.settings.steps}`;
     this.checkEndGame();
   }
 
@@ -134,9 +135,10 @@ export default class Board {
     });
 
     this.settings.flags = arrFlags.length;
-    this.settings.infoBombs.textContent = `🚩${
+    this.settings.infoBombs.textContent = `💣${
       this.settings.bombs - this.settings.flags
     }`;
+    this.settings.infoFlags.textContent = `🚩${this.settings.flags}`;
   }
 
   addBombs(x, y) {
