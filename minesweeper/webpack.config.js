@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 // const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+        test: /\.(?:ico|gif|png|jpg|jpeg|svg|mp3|wav)$/i,
         type: 'asset/resource',
       },
       {
@@ -34,6 +35,14 @@ module.exports = {
     // new ESLintPlugin({ extensions: ['ts', 'js'] }),
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'public',
+          noErrorOnMissing: true,
+        },
+      ],
+    }),
   ],
   resolve: {
     extensions: ['.ts', '.js'],

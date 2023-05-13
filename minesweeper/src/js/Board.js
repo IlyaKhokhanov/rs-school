@@ -1,6 +1,12 @@
 import Cell from './Cell';
 import { addElement, getRandom } from './utilits';
 import { checkForPlaint, getNearbyCells } from './boardUtilits';
+import { soundAK47, soundBomb, soundFlag, soundDefused } from './sounds';
+
+const playAK47 = new Audio(soundAK47);
+const playBomb = new Audio(soundBomb);
+const playFlag = new Audio(soundFlag);
+const playDefused = new Audio(soundDefused);
 
 export default class Board {
   matrix = [];
@@ -85,8 +91,6 @@ export default class Board {
         this.boardElement.append(cellElement);
       });
     });
-    this.settings.steps += 1;
-    this.settings.infoSteps.textContent = `🐾${this.settings.steps}`;
     this.checkEndGame();
   }
 
@@ -112,11 +116,13 @@ export default class Board {
     });
 
     if (this.isLost) {
+      if (this.settings.sound) playBomb.play();
       this.settings.stopTimer();
       this.settings.openModal('defeat');
     }
 
     if (this.isWin) {
+      if (this.settings.sound) playDefused.play();
       this.settings.stopTimer();
       this.settings.openModal('win');
     }
@@ -200,6 +206,8 @@ export default class Board {
     if (!elem.isOpen) {
       elem.isFlag = elem.isFlag ? false : true;
     }
+
+    if (this.settings.sound) playFlag.play();
     this.checkCountFlags();
     this.updateCells();
   }
@@ -250,6 +258,11 @@ export default class Board {
       this.addBombs(x, y);
       this.isFirstClick = false;
       this.settings.startTimer();
+      if (this.settings.sound) playAK47.play();
+      if (this.settings.sound) this.settings.playMainMenu.pause();
+
+      this.settings.steps += 1;
+      this.settings.infoSteps.textContent = `🐾${this.settings.steps}`;
     }
 
     if (!elem.isOpen && !elem.isFlag) {
@@ -260,7 +273,10 @@ export default class Board {
 
       if (elem.value === true) {
         this.openBombs(x, y);
+        if (this.settings.sound) playBomb.play();
       }
+
+      if (this.settings.sound) playAK47.play();
 
       this.updateCells();
     }
@@ -268,6 +284,11 @@ export default class Board {
     if (elem.isOpen && elem.value > 0) {
       this.clickNumberCells(x, y);
       this.updateCells();
+      if (this.settings.sound) playAK47.play();
+      if (!this.isLost && !this.isWin) {
+        this.settings.steps += 1;
+        this.settings.infoSteps.textContent = `🐾${this.settings.steps}`;
+      }
     }
   }
 }

@@ -1,5 +1,15 @@
 import Board from './Board';
 import { addElement } from './utilits';
+import {
+  soundTerroristWin,
+  soundWonRound,
+  soundClick,
+  soundMainMenu,
+} from './sounds';
+
+const playClick = new Audio(soundClick);
+const playWonRound = new Audio(soundWonRound);
+const playTerroristWin = new Audio(soundTerroristWin);
 
 export default class Minesweeper {
   connainer = null;
@@ -10,9 +20,13 @@ export default class Minesweeper {
   steps = 0;
   flags = 0;
   sound = true;
+  darkTheme = false;
 
   constructor(container) {
     this.container = container;
+
+    this.playMainMenu = new Audio(soundMainMenu);
+    this.playMainMenu.loop = true;
 
     this.minesweeperElement = addElement('div', 'minesweeper');
     this.container.append(this.minesweeperElement);
@@ -52,6 +66,7 @@ export default class Minesweeper {
     }
 
     settLevel.addEventListener('change', (e) => {
+      if (this.sound) playClick.play();
       this.lengthBoard = +e.target.value;
       if (+e.target.value === 10) {
         this.bombs = 10;
@@ -74,6 +89,7 @@ export default class Minesweeper {
     this.settBombsCount.setAttribute('max', '99');
     this.settBombsCount.setAttribute('value', this.bombs);
     this.settBombsCount.addEventListener('change', (e) => {
+      if (this.sound) playClick.play();
       if (+e.target.value > 9) {
         this.bombs = +e.target.value;
       }
@@ -90,10 +106,12 @@ export default class Minesweeper {
     settRecords.addEventListener('click', () => this.openModal('records'));
 
     const settSound = addElement('div', 'settings__sound');
+    if (!this.sound) settSound.classList.add('active');
     settSound.textContent = '🎵';
     settSound.addEventListener('click', (e) => this.controlSound(e));
 
     const settTheme = addElement('div', 'settings__theme');
+    if (this.darkTheme) settTheme.classList.add('active');
     settTheme.textContent = '☯';
     settTheme.addEventListener('click', (e) => this.changeTheme(e));
 
@@ -149,12 +167,15 @@ export default class Minesweeper {
 
     const content = addElement('div', 'modal__content');
     if (value === 'win') {
+      if (this.sound) playWonRound.play();
       content.classList.add('modal-info');
       content.textContent = `Hooray! You found all mines in ${this.timer} seconds and ${this.steps} moves!`;
     } else if (value === 'defeat') {
+      if (this.sound) playTerroristWin.play();
       content.classList.add('modal-info');
       content.textContent = 'Game over. Try again';
     } else if (value === 'records') {
+      if (this.sound) playClick.play();
       content.classList.add('modal-info');
       content.textContent = 'Records';
     }
@@ -169,26 +190,34 @@ export default class Minesweeper {
   }
 
   changeTheme(e) {
+    if (this.sound) playClick.play();
     if (e.target.classList.contains('active')) {
+      this.darkTheme = false;
       e.target.classList.remove('active');
       this.container.classList.remove('dark');
     } else {
+      this.darkTheme = true;
       e.target.classList.add('active');
       this.container.classList.add('dark');
     }
   }
 
   controlSound(e) {
+    playClick.play();
     if (e.target.classList.contains('active')) {
       e.target.classList.remove('active');
       this.sound = true;
     } else {
       e.target.classList.add('active');
       this.sound = false;
+      this.playMainMenu.pause();
     }
   }
 
   startNewGame() {
+    if (this.sound) this.playMainMenu.play();
+    if (this.sound) playClick.play();
+    playWonRound.pause();
     this.board.boardElement.remove();
     this.board = null;
     this.timer = 0;

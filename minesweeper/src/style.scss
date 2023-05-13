@@ -3,9 +3,13 @@ $color-grey-dark: rgb(102, 102, 102);
 $color-grey-light: rgb(223, 223, 223);
 $color-grey-light2: rgb(200, 200, 200);
 
-$color-blue-dark1: rgb(16, 12, 39);
-$color-blue-dark2: rgb(47, 36, 112);
-$color-blue-dark3: rgb(69, 57, 133);
+$color-blue-dark1: rgb(25, 46, 25);
+$color-blue-dark2: rgb(51, 90, 51);
+$color-blue-dark3: rgb(67, 116, 67);
+
+// $color-blue-dark1: rgb(16, 12, 39);
+// $color-blue-dark2: rgb(47, 36, 112);
+// $color-blue-dark3: rgb(69, 57, 133);
 
 %cell-active {
   background-color: rgb(235, 235, 235);
@@ -116,6 +120,7 @@ $color-blue-dark3: rgb(69, 57, 133);
 
       &.active {
         background-color: rgb(150, 150, 150);
+        opacity: 0.3;
       }
 
       &:hover {
@@ -134,6 +139,7 @@ $color-blue-dark3: rgb(69, 57, 133);
 
       &.active {
         background-color: rgb(150, 150, 150);
+        opacity: 0.3;
       }
 
       &:hover {
@@ -457,7 +463,8 @@ $color-blue-dark3: rgb(69, 57, 133);
       &__level,
       &__bombs,
       &__records,
-      &__sound {
+      &__sound,
+      &__theme {
         background-color: $color-blue-dark2;
         border-color: $color-grey-light2;
 
@@ -468,7 +475,8 @@ $color-blue-dark3: rgb(69, 57, 133);
 
       &__sound.active,
       &__theme.active {
-        background-color: rgb(33, 30, 48);
+        background-color: rgb(70, 121, 70);
+        opacity: 0.3;
       }
     }
 
@@ -507,8 +515,39 @@ $color-blue-dark3: rgb(69, 57, 133);
       &.cell6,
       &.cell7,
       &.cell8 {
-        background-color: rgb(192, 192, 255);
-        border-color: rgb(178, 178, 253);
+        background-color: rgb(112, 141, 112);
+        border-color: rgb(150, 177, 150);
+      }
+    }
+  }
+
+  .overlay {
+    background-color: rgba(41, 41, 41, 0.6);
+
+    .modal {
+      background-color: $color-blue-dark2;
+
+      &__btn-close {
+        background-color: $color-blue-dark1;
+        border: 1px solid $color-grey-light2;
+
+        &:hover {
+          background-color: $color-blue-dark3;
+        }
+      }
+
+      &__content {
+        &.modal-info {
+        }
+      }
+
+      &__btn-start {
+        background-color: $color-blue-dark1;
+        border: 1px solid $color-grey-light2;
+
+        &:hover {
+          background-color: $color-blue-dark3;
+        }
       }
     }
   }
