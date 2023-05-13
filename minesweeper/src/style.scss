@@ -7,10 +7,6 @@ $color-blue-dark1: rgb(25, 46, 25);
 $color-blue-dark2: rgb(51, 90, 51);
 $color-blue-dark3: rgb(67, 116, 67);
 
-// $color-blue-dark1: rgb(16, 12, 39);
-// $color-blue-dark2: rgb(47, 36, 112);
-// $color-blue-dark3: rgb(69, 57, 133);
-
 %cell-active {
   background-color: rgb(235, 235, 235);
   border: 1px solid rgb(190, 190, 190);
@@ -173,7 +169,16 @@ $color-blue-dark3: rgb(67, 116, 67);
       width: 50px;
       padding: 2px 5px;
       background-color: $color-grey-light;
-      cursor: default;
+      cursor: pointer;
+
+      &.active {
+        background-color: rgb(150, 150, 150);
+        opacity: 0.8;
+      }
+
+      &:hover {
+        background-color: rgb(190, 190, 190);
+      }
     }
 
     &__steps {
@@ -325,13 +330,35 @@ $color-blue-dark3: rgb(67, 116, 67);
 
     &__content {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 25px;
+      padding-top: 40px;
+      padding-bottom: 100px;
 
       &.modal-info {
         padding: 30px;
         text-align: center;
         font-size: 30px;
+      }
+    }
+
+    &__records {
+      &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      &-item {
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      &-empty {
+        font-size: 18px;
+        font-weight: 600;
       }
     }
 
@@ -346,6 +373,7 @@ $color-blue-dark3: rgb(67, 116, 67);
       border: 1px solid $color-grey-dark;
       border-radius: 4px;
       font-size: 22px;
+      font-weight: 600;
       cursor: pointer;
       transition: background 0.3s ease-in;
 
@@ -384,6 +412,20 @@ $color-blue-dark3: rgb(67, 116, 67);
       padding: 2px 10px;
       font-size: 18px;
     }
+
+    @media (max-width: 470px) {
+      width: 375px;
+
+      .info__block-left,
+      .info__block-right {
+        flex-direction: column;
+      }
+
+      .info__button {
+        padding: 2px 18px;
+        font-size: 20px;
+      }
+    }
   }
 }
 
@@ -412,6 +454,20 @@ $color-blue-dark3: rgb(67, 116, 67);
     @media (max-width: 520px) {
       width: 475px;
     }
+
+    @media (max-width: 480px) {
+      width: 375px;
+
+      .info__block-left,
+      .info__block-right {
+        flex-direction: column;
+      }
+
+      .info__button {
+        padding: 2px 18px;
+        font-size: 20px;
+      }
+    }
   }
 }
 
@@ -425,6 +481,12 @@ $color-blue-dark3: rgb(67, 116, 67);
   width: 450px;
   grid-template-columns: repeat(15, 30px);
   grid-template-rows: repeat(15, 30px);
+
+  @media (max-width: 470px) {
+    width: 375px;
+    grid-template-columns: repeat(15, 25px);
+    grid-template-rows: repeat(15, 25px);
+  }
 }
 
 .board[data-board-cells="25"] {
@@ -449,6 +511,12 @@ $color-blue-dark3: rgb(67, 116, 67);
     grid-template-columns: repeat(25, 19px);
     grid-template-rows: repeat(25, 19px);
   }
+
+  @media (max-width: 480px) {
+    width: 375px;
+    grid-template-columns: repeat(25, 15px);
+    grid-template-rows: repeat(25, 15px);
+  }
 }
 
 .main.dark {
@@ -464,7 +532,8 @@ $color-blue-dark3: rgb(67, 116, 67);
       &__bombs,
       &__records,
       &__sound,
-      &__theme {
+      &__theme,
+      &__flags {
         background-color: $color-blue-dark2;
         border-color: $color-grey-light2;
 
@@ -475,20 +544,25 @@ $color-blue-dark3: rgb(67, 116, 67);
 
       &__sound.active,
       &__theme.active {
-        background-color: rgb(70, 121, 70);
-        opacity: 0.3;
+        background-color: rgb(126, 158, 126);
+        opacity: 0.7;
       }
     }
 
     .info {
       &__bombs,
       &__time,
-      &__flags,
       &__steps {
         background-color: $color-blue-dark2;
         border-color: $color-grey-light2;
       }
 
+      &__flags.active {
+        background-color: rgb(126, 158, 126);
+        opacity: 0.7;
+      }
+
+      &__flags,
       &__button {
         background-color: $color-blue-dark2;
         border-color: $color-grey-light2;

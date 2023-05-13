@@ -13,17 +13,27 @@ const playTerroristWin = new Audio(soundTerroristWin);
 
 export default class Minesweeper {
   connainer = null;
-  lengthBoard = 10;
-  timer = 0;
-  timerWorks = null;
-  bombs = 10;
+
+  lengthBoard = +localStorage.getItem('length') || 10;
+
+  bombs = +localStorage.getItem('bombs') || 10;
+
+  sound = localStorage.getItem('sound')
+    ? JSON.parse(localStorage.getItem('sound'))
+    : true;
+
+  darkTheme = JSON.parse(localStorage.getItem('theme')) || false;
+
   steps = 0;
   flags = 0;
-  sound = true;
-  darkTheme = false;
+  setFlags = false;
+  timer = 0;
+  timerWorks = null;
 
   constructor(container) {
     this.container = container;
+
+    localStorage.getItem('sound');
 
     this.playMainMenu = new Audio(soundMainMenu);
     this.playMainMenu.loop = true;
@@ -78,6 +88,9 @@ export default class Minesweeper {
         this.bombs = 80;
         this.settBombsCount.value = 80;
       }
+
+      localStorage.setItem('length', +e.target.value);
+      localStorage.setItem('bombs', this.bombs);
     });
 
     settLevel.append(option1, option2, option3);
@@ -92,6 +105,7 @@ export default class Minesweeper {
       if (this.sound) playClick.play();
       if (+e.target.value > 9) {
         this.bombs = +e.target.value;
+        localStorage.setItem('bombs', +e.target.value);
       }
     });
     const settBombsImg = addElement('div', 'settings__bombs-img');
@@ -111,7 +125,11 @@ export default class Minesweeper {
     settSound.addEventListener('click', (e) => this.controlSound(e));
 
     const settTheme = addElement('div', 'settings__theme');
-    if (this.darkTheme) settTheme.classList.add('active');
+    if (this.darkTheme) {
+      settTheme.classList.add('active');
+      this.container.classList.add('dark');
+    }
+
     settTheme.textContent = '☯';
     settTheme.addEventListener('click', (e) => this.changeTheme(e));
 
@@ -124,11 +142,20 @@ export default class Minesweeper {
 
     this.infoFlags = addElement('div', 'info__flags');
     this.infoFlags.textContent = `🚩${this.flags}`;
+    this.infoFlags.addEventListener('click', (e) => {
+      if (e.target.classList.contains('active')) {
+        this.setFlags = false;
+        e.target.classList.remove('active');
+      } else {
+        this.setFlags = true;
+        e.target.classList.add('active');
+      }
+    });
 
     infoBlockLeft.append(this.infoBombs, this.infoFlags);
 
     const infoButton = addElement('div', 'info__button');
-    infoButton.textContent = 'Start game';
+    infoButton.textContent = 'New game';
     infoButton.addEventListener('click', () => this.startNewGame());
 
     const infoBlockRight = addElement('div', 'info__block-right');
@@ -176,8 +203,42 @@ export default class Minesweeper {
       content.textContent = 'Game over. Try again';
     } else if (value === 'records') {
       if (this.sound) playClick.play();
-      content.classList.add('modal-info');
-      content.textContent = 'Records';
+      const header = addElement('h2', 'modal__records-header');
+      header.textContent = 'Last results';
+
+      content.append(header);
+
+      if (localStorage.getItem('records')) {
+        const list = addElement('ol', 'modal__records-list');
+        JSON.parse(localStorage.getItem('records'))
+          .sort((a, b) => a.time - b.time)
+          .forEach((item) => {
+            const date = item.date.split('T')[0];
+            const time = item.date.split('T')[1].split('.')[0];
+
+            if (item.win) {
+              let level = '';
+              if (item.level === 10) level = 'Easy';
+              if (item.level === 15) level = 'Medium';
+              if (item.level === 25) level = 'Hard';
+              const itemElem = addElement('li', 'modal__records-item');
+              itemElem.textContent = `${item.time} seconds - ${item.steps} steps - ${level} level - ${time} ${date}`;
+
+              list.append(itemElem);
+            } else {
+              const itemElem = addElement('li', 'modal__records-item');
+              itemElem.textContent = `The game is lost - ${time} ${date}`;
+
+              list.append(itemElem);
+            }
+          });
+        content.append(list);
+      } else {
+        const itemElem = addElement('div', 'modal__records-empty');
+        itemElem.textContent = 'Results list is empty...';
+
+        content.append(itemElem);
+      }
     }
 
     const btnStart = addElement('div', 'modal__btn-start');
@@ -187,16 +248,33 @@ export default class Minesweeper {
     modal.append(btnClose, content, btnStart);
     overlay.append(modal);
     this.minesweeperElement.append(overlay);
+
+    if (value !== 'records') {
+      let storageData = JSON.parse(localStorage.getItem('records')) || [];
+      if (storageData.length === 10) {
+        storageData = storageData.slice(1);
+      }
+      storageData.push({
+        time: this.board.isWin ? this.timer : 999,
+        steps: this.steps,
+        level: this.lengthBoard,
+        win: this.board.isWin,
+        date: new Date(),
+      });
+      localStorage.setItem('records', JSON.stringify(storageData));
+    }
   }
 
   changeTheme(e) {
     if (this.sound) playClick.play();
     if (e.target.classList.contains('active')) {
       this.darkTheme = false;
+      localStorage.setItem('theme', false);
       e.target.classList.remove('active');
       this.container.classList.remove('dark');
     } else {
       this.darkTheme = true;
+      localStorage.setItem('theme', true);
       e.target.classList.add('active');
       this.container.classList.add('dark');
     }
@@ -207,10 +285,12 @@ export default class Minesweeper {
     if (e.target.classList.contains('active')) {
       e.target.classList.remove('active');
       this.sound = true;
+      localStorage.setItem('sound', true);
     } else {
       e.target.classList.add('active');
       this.sound = false;
       this.playMainMenu.pause();
+      localStorage.setItem('sound', false);
     }
   }
 

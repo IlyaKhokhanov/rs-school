@@ -4,6 +4,8 @@
   "description": "minesweeper on JS",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "build": "npx webpack --mode production",
     "start": "npx webpack-dev-server --mode development",
     "lint": "eslint src"
@@ -11,6 +13,7 @@
   "keywords": [],
   "author": "Ilya Khokhanov",
   "license": "ISC",
+  "homepage": "https://rolling-scopes-school.github.io/ilyakhokhanov-JSFE2023Q1",
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
@@ -18,6 +21,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-webpack-plugin": "^4.0.1",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.1",
     "mini-css-extract-plugin": "^2.7.5",
     "sass": "^1.62.1",

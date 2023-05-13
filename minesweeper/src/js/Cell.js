@@ -1,6 +1,5 @@
 export default class Cell {
-  constructor(board, x, y, value = 0, isOpen = false, isFlag = false) {
-    this.board = board;
+  constructor(x, y, value = 0, isOpen = false, isFlag = false) {
     this.x = x;
     this.y = y;
     this.value = value;

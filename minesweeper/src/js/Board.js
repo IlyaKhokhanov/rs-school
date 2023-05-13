@@ -36,7 +36,7 @@ export default class Board {
     for (let y = 0; y < length; y += 1) {
       const row = [];
       for (let x = 0; x < length; x += 1) {
-        row.push(new Cell(this, x, y));
+        row.push(new Cell(x, y));
       }
       this.matrix.push(row);
     }
@@ -126,6 +126,13 @@ export default class Board {
       this.settings.stopTimer();
       this.settings.openModal('win');
     }
+
+    if (!this.isLost && !this.isWin) {
+      localStorage.setItem('matrix', JSON.stringify(this.matrix));
+    } else {
+      localStorage.removeItem('matrix');
+    }
+    // console.log(JSON.parse(localStorage.getItem('matrix')));
   }
 
   checkCountFlags() {
@@ -171,16 +178,14 @@ export default class Board {
 
   clickEmptyCell(x, y) {
     getNearbyCells(this.matrix, x, y).forEach((cell) => {
-      if (cell && !cell.isOpen) {
-        if (cell.value !== true) {
-          if (cell.value === 0) {
-            cell.open();
-            this.clickEmptyCell(cell.x, cell.y);
-          }
-          if (cell.value > 0) {
-            cell.open();
-          }
-        }
+      if (!cell || cell.isOpen || cell.value === true) return;
+
+      if (cell.value === 0) {
+        cell.open();
+        this.clickEmptyCell(cell.x, cell.y);
+      }
+      if (cell.value > 0) {
+        cell.open();
       }
     });
   }
@@ -208,6 +213,10 @@ export default class Board {
     }
 
     if (this.settings.sound) playFlag.play();
+
+    this.settings.steps += 1;
+    this.settings.infoSteps.textContent = `🐾${this.settings.steps}`;
+
     this.checkCountFlags();
     this.updateCells();
   }
@@ -254,6 +263,11 @@ export default class Board {
   clickHandler(x, y) {
     const elem = this.matrix[y][x];
 
+    if (this.settings.setFlags) {
+      this.addFlag(x, y);
+      return;
+    }
+
     if (this.isFirstClick) {
       this.addBombs(x, y);
       this.isFirstClick = false;
@@ -266,6 +280,8 @@ export default class Board {
     }
 
     if (!elem.isOpen && !elem.isFlag) {
+      if (this.settings.sound) playAK47.play();
+
       elem.open();
       if (elem.value === 0) {
         this.clickEmptyCell(x, y);
@@ -276,12 +292,11 @@ export default class Board {
         if (this.settings.sound) playBomb.play();
       }
 
-      if (this.settings.sound) playAK47.play();
-
       this.updateCells();
     }
 
     if (elem.isOpen && elem.value > 0) {
+      if (elem.value === true) return;
       this.clickNumberCells(x, y);
       this.updateCells();
       if (this.settings.sound) playAK47.play();
