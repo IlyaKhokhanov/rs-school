@@ -1,7 +1,9 @@
 import Cell from './Cell';
 import { addElement, getRandom } from './utilits';
 import { checkForPlaint, getNearbyCells } from './boardUtilits';
-import { soundAK47, soundBomb, soundFlag, soundDefused } from './sounds';
+import {
+  soundAK47, soundBomb, soundFlag, soundDefused,
+} from './sounds';
 
 const playAK47 = new Audio(soundAK47);
 const playBomb = new Audio(soundBomb);
@@ -9,10 +11,14 @@ const playFlag = new Audio(soundFlag);
 const playDefused = new Audio(soundDefused);
 
 export default class Board {
-  matrix = [];
-  totalBombs = 10;
-  isFirstClick = true;
+  matrix = JSON.parse(localStorage.getItem('matrix')) || [];
+
+  totalBombs = +localStorage.getItem('matrixBoms') || 10;
+
+  isFirstClick = !localStorage.getItem('matrix');
+
   isLost = false;
+
   isWin = false;
 
   constructor(settings, container, length, totalBombs = 10) {
@@ -28,8 +34,13 @@ export default class Board {
 
     this.container.append(this.boardElement);
 
-    this.addMatrix(length);
-    this.addCells();
+    if (!localStorage.getItem('matrix')) {
+      this.addMatrix(length);
+      this.addCells();
+    } else {
+      this.mapMatrix();
+      this.updateCells();
+    }
   }
 
   addMatrix(length) {
@@ -58,6 +69,14 @@ export default class Board {
       });
     });
     this.checkCountFlags();
+  }
+
+  mapMatrix() {
+    this.settings.startTimer();
+
+    this.matrix = this.matrix.map((arr) => arr.map((elem) => (
+      new Cell(elem.x, elem.y, elem.value, elem.isOpen, elem.isFlag))
+    ))
   }
 
   updateCells() {
@@ -106,8 +125,7 @@ export default class Board {
         if (elem.value !== true && elem.isOpen) {
           arrOpened.push(elem);
           if (
-            arrOpened.length ===
-            this.length * this.length - this.totalBombs
+            arrOpened.length === this.length * this.length - this.totalBombs
           ) {
             this.isWin = true;
           }
@@ -129,10 +147,17 @@ export default class Board {
 
     if (!this.isLost && !this.isWin) {
       localStorage.setItem('matrix', JSON.stringify(this.matrix));
+      localStorage.setItem('matrixBoms', this.totalBombs);
+      localStorage.setItem('matrixSteps', this.settings.steps);
+      localStorage.setItem('matrixFlags', this.settings.flags);
+      localStorage.setItem('matrixTimer', this.settings.timer);
     } else {
       localStorage.removeItem('matrix');
+      localStorage.removeItem('matrixBoms');
+      localStorage.removeItem('matrixSteps');
+      localStorage.removeItem('matrixFlags');
+      localStorage.removeItem('matrixTimer');
     }
-    // console.log(JSON.parse(localStorage.getItem('matrix')));
   }
 
   checkCountFlags() {
@@ -149,7 +174,7 @@ export default class Board {
 
     this.settings.flags = arrFlags.length;
     this.settings.infoBombs.textContent = `💣${
-      this.settings.bombs - this.settings.flags
+      this.totalBombs - this.settings.flags
     }`;
     this.settings.infoFlags.textContent = `🚩${this.settings.flags}`;
   }
@@ -209,7 +234,7 @@ export default class Board {
   addFlag(x, y) {
     const elem = this.matrix[y][x];
     if (!elem.isOpen) {
-      elem.isFlag = elem.isFlag ? false : true;
+      elem.isFlag = !elem.isFlag;
     }
 
     if (this.settings.sound) playFlag.play();
@@ -285,14 +310,15 @@ export default class Board {
       elem.open();
       if (elem.value === 0) {
         this.clickEmptyCell(x, y);
+        this.updateCells();
       }
 
       if (elem.value === true) {
         this.openBombs(x, y);
+        this.updateCells();
+
         if (this.settings.sound) playBomb.play();
       }
-
-      this.updateCells();
     }
 
     if (elem.isOpen && elem.value > 0) {

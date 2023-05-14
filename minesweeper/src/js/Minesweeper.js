@@ -24,10 +24,14 @@ export default class Minesweeper {
 
   darkTheme = JSON.parse(localStorage.getItem('theme')) || false;
 
-  steps = 0;
-  flags = 0;
+  steps = +localStorage.getItem('matrixSteps') || 0;
+
+  flags = +localStorage.getItem('matrixFlags') || 0;
+
   setFlags = false;
-  timer = 0;
+
+  timer = +localStorage.getItem('matrixTimer') || 0;
+
   timerWorks = null;
 
   constructor(container) {
@@ -103,7 +107,7 @@ export default class Minesweeper {
     this.settBombsCount.setAttribute('value', this.bombs);
     this.settBombsCount.addEventListener('change', (e) => {
       if (this.sound) playClick.play();
-      if (+e.target.value > 9) {
+      if (+e.target.value > 9 && +e.target.value < 100) {
         this.bombs = +e.target.value;
         localStorage.setItem('bombs', +e.target.value);
       }
@@ -183,14 +187,24 @@ export default class Minesweeper {
     const overlay = addElement('div', 'overlay');
     overlay.addEventListener('click', (e) => {
       if (e.target.classList.contains('overlay')) {
-        this.startNewGame();
+        if (value === 'records') {
+          overlay.remove();
+        } else {
+          this.startNewGame();
+        }
       }
     });
 
     const modal = addElement('div', 'modal');
     const btnClose = addElement('div', 'modal__btn-close');
     btnClose.textContent = '×';
-    btnClose.addEventListener('click', () => this.startNewGame());
+    btnClose.addEventListener('click', () => {
+      if (value === 'records') {
+        overlay.remove();
+      } else {
+        this.startNewGame();
+      }
+    });
 
     const content = addElement('div', 'modal__content');
     if (value === 'win') {
@@ -303,6 +317,11 @@ export default class Minesweeper {
     this.timer = 0;
     this.steps = 0;
     this.stopTimer(this.timerWorks);
+    localStorage.removeItem('matrix');
+    localStorage.removeItem('matrixBoms');
+    localStorage.removeItem('matrixSteps');
+    localStorage.removeItem('matrixFlags');
+    localStorage.removeItem('matrixTimer');
     this.createSettings();
   }
 
