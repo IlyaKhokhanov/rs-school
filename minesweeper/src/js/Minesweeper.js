@@ -142,7 +142,7 @@ export default class Minesweeper {
     const infoBlockLeft = addElement('div', 'info__block-left');
 
     this.infoBombs = addElement('div', 'info__bombs');
-    this.infoBombs.textContent = `💣${this.bombs - this.flags}`;
+    this.infoBombs.textContent = `💣${(+localStorage.getItem('matrixBombs') || this.bombs) - this.flags}`;
 
     this.infoFlags = addElement('div', 'info__flags');
     this.infoFlags.textContent = `🚩${this.flags}`;
@@ -180,7 +180,7 @@ export default class Minesweeper {
 
     this.minesweeperElement.append(header, text, settBlock, infoBlock);
 
-    this.board = new Board(this, this.container, this.lengthBoard, this.bombs);
+    this.board = new Board(this, this.container, JSON.parse(localStorage.getItem('matrix'))?.length || this.lengthBoard, +localStorage.getItem('matrixBombs') || this.bombs);
   }
 
   openModal(value) {
@@ -318,7 +318,7 @@ export default class Minesweeper {
     this.steps = 0;
     this.stopTimer(this.timerWorks);
     localStorage.removeItem('matrix');
-    localStorage.removeItem('matrixBoms');
+    localStorage.removeItem('matrixBombs');
     localStorage.removeItem('matrixSteps');
     localStorage.removeItem('matrixFlags');
     localStorage.removeItem('matrixTimer');

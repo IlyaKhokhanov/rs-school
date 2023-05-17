@@ -13,7 +13,7 @@ const playDefused = new Audio(soundDefused);
 export default class Board {
   matrix = JSON.parse(localStorage.getItem('matrix')) || [];
 
-  totalBombs = +localStorage.getItem('matrixBoms') || 10;
+  totalBombs = +localStorage.getItem('matrixBombs') || 10;
 
   isFirstClick = !localStorage.getItem('matrix');
 
@@ -75,8 +75,7 @@ export default class Board {
     this.settings.startTimer();
 
     this.matrix = this.matrix.map((arr) => arr.map((elem) => (
-      new Cell(elem.x, elem.y, elem.value, elem.isOpen, elem.isFlag))
-    ))
+      new Cell(elem.x, elem.y, elem.value, elem.isOpen, elem.isFlag))));
   }
 
   updateCells() {
@@ -147,13 +146,13 @@ export default class Board {
 
     if (!this.isLost && !this.isWin) {
       localStorage.setItem('matrix', JSON.stringify(this.matrix));
-      localStorage.setItem('matrixBoms', this.totalBombs);
+      localStorage.setItem('matrixBombs', this.totalBombs);
       localStorage.setItem('matrixSteps', this.settings.steps);
       localStorage.setItem('matrixFlags', this.settings.flags);
       localStorage.setItem('matrixTimer', this.settings.timer);
     } else {
       localStorage.removeItem('matrix');
-      localStorage.removeItem('matrixBoms');
+      localStorage.removeItem('matrixBombs');
       localStorage.removeItem('matrixSteps');
       localStorage.removeItem('matrixFlags');
       localStorage.removeItem('matrixTimer');
