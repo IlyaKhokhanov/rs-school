@@ -11,11 +11,11 @@ const playFlag = new Audio(soundFlag);
 const playDefused = new Audio(soundDefused);
 
 export default class Board {
-  matrix = JSON.parse(localStorage.getItem('matrix')) || [];
+  matrix = JSON.parse(localStorage.getItem('matrixKH')) || [];
 
-  totalBombs = +localStorage.getItem('matrixBombs') || 10;
+  totalBombs = +localStorage.getItem('matrixBombsKH') || 10;
 
-  isFirstClick = !localStorage.getItem('matrix');
+  isFirstClick = !localStorage.getItem('matrixKH');
 
   isLost = false;
 
@@ -34,7 +34,7 @@ export default class Board {
 
     this.container.append(this.boardElement);
 
-    if (!localStorage.getItem('matrix')) {
+    if (!localStorage.getItem('matrixKH')) {
       this.addMatrix(length);
       this.addCells();
     } else {
@@ -145,17 +145,17 @@ export default class Board {
     }
 
     if (!this.isLost && !this.isWin) {
-      localStorage.setItem('matrix', JSON.stringify(this.matrix));
-      localStorage.setItem('matrixBombs', this.totalBombs);
-      localStorage.setItem('matrixSteps', this.settings.steps);
-      localStorage.setItem('matrixFlags', this.settings.flags);
-      localStorage.setItem('matrixTimer', this.settings.timer);
+      localStorage.setItem('matrixKH', JSON.stringify(this.matrix));
+      localStorage.setItem('matrixBombsKH', this.totalBombs);
+      localStorage.setItem('matrixStepsKH', this.settings.steps);
+      localStorage.setItem('matrixFlagsKH', this.settings.flags);
+      localStorage.setItem('matrixTimerKH', this.settings.timer);
     } else {
-      localStorage.removeItem('matrix');
-      localStorage.removeItem('matrixBombs');
-      localStorage.removeItem('matrixSteps');
-      localStorage.removeItem('matrixFlags');
-      localStorage.removeItem('matrixTimer');
+      localStorage.removeItem('matrixKH');
+      localStorage.removeItem('matrixBombsKH');
+      localStorage.removeItem('matrixStepsKH');
+      localStorage.removeItem('matrixFlagsKH');
+      localStorage.removeItem('matrixTimerKH');
     }
   }
 

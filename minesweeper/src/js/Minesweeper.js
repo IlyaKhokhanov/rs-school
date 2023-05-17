@@ -14,30 +14,30 @@ const playTerroristWin = new Audio(soundTerroristWin);
 export default class Minesweeper {
   connainer = null;
 
-  lengthBoard = +localStorage.getItem('length') || 10;
+  lengthBoard = +localStorage.getItem('lengthKH') || 10;
 
-  bombs = +localStorage.getItem('bombs') || 10;
+  bombs = +localStorage.getItem('bombsKH') || 10;
 
-  sound = localStorage.getItem('sound')
-    ? JSON.parse(localStorage.getItem('sound'))
+  sound = localStorage.getItem('soundKH')
+    ? JSON.parse(localStorage.getItem('soundKH'))
     : true;
 
-  darkTheme = JSON.parse(localStorage.getItem('theme')) || false;
+  darkTheme = JSON.parse(localStorage.getItem('themeKH')) || false;
 
-  steps = +localStorage.getItem('matrixSteps') || 0;
+  steps = +localStorage.getItem('matrixStepsKH') || 0;
 
-  flags = +localStorage.getItem('matrixFlags') || 0;
+  flags = +localStorage.getItem('matrixFlagsKH') || 0;
 
   setFlags = false;
 
-  timer = +localStorage.getItem('matrixTimer') || 0;
+  timer = +localStorage.getItem('matrixTimerKH') || 0;
 
   timerWorks = null;
 
   constructor(container) {
     this.container = container;
 
-    localStorage.getItem('sound');
+    localStorage.getItem('soundKH');
 
     this.playMainMenu = new Audio(soundMainMenu);
     this.playMainMenu.loop = true;
@@ -93,8 +93,8 @@ export default class Minesweeper {
         this.settBombsCount.value = 80;
       }
 
-      localStorage.setItem('length', +e.target.value);
-      localStorage.setItem('bombs', this.bombs);
+      localStorage.setItem('lengthKH', +e.target.value);
+      localStorage.setItem('bombsKH', this.bombs);
     });
 
     settLevel.append(option1, option2, option3);
@@ -109,7 +109,7 @@ export default class Minesweeper {
       if (this.sound) playClick.play();
       if (+e.target.value > 9 && +e.target.value < 100) {
         this.bombs = +e.target.value;
-        localStorage.setItem('bombs', +e.target.value);
+        localStorage.setItem('bombsKH', +e.target.value);
       }
     });
     const settBombsImg = addElement('div', 'settings__bombs-img');
@@ -142,7 +142,7 @@ export default class Minesweeper {
     const infoBlockLeft = addElement('div', 'info__block-left');
 
     this.infoBombs = addElement('div', 'info__bombs');
-    this.infoBombs.textContent = `💣${(+localStorage.getItem('matrixBombs') || this.bombs) - this.flags}`;
+    this.infoBombs.textContent = `💣${(+localStorage.getItem('matrixBombsKH') || this.bombs) - this.flags}`;
 
     this.infoFlags = addElement('div', 'info__flags');
     this.infoFlags.textContent = `🚩${this.flags}`;
@@ -180,7 +180,7 @@ export default class Minesweeper {
 
     this.minesweeperElement.append(header, text, settBlock, infoBlock);
 
-    this.board = new Board(this, this.container, JSON.parse(localStorage.getItem('matrix'))?.length || this.lengthBoard, +localStorage.getItem('matrixBombs') || this.bombs);
+    this.board = new Board(this, this.container, JSON.parse(localStorage.getItem('matrixKH'))?.length || this.lengthBoard, +localStorage.getItem('matrixBombsKH') || this.bombs);
   }
 
   openModal(value) {
@@ -222,9 +222,9 @@ export default class Minesweeper {
 
       content.append(header);
 
-      if (localStorage.getItem('records')) {
+      if (localStorage.getItem('recordsKH')) {
         const list = addElement('ol', 'modal__records-list');
-        JSON.parse(localStorage.getItem('records'))
+        JSON.parse(localStorage.getItem('recordsKH'))
           .sort((a, b) => a.time - b.time)
           .forEach((item) => {
             const date = item.date.split('T')[0];
@@ -264,7 +264,7 @@ export default class Minesweeper {
     this.minesweeperElement.append(overlay);
 
     if (value !== 'records') {
-      let storageData = JSON.parse(localStorage.getItem('records')) || [];
+      let storageData = JSON.parse(localStorage.getItem('recordsKH')) || [];
       if (storageData.length === 10) {
         storageData = storageData.slice(1);
       }
@@ -275,7 +275,7 @@ export default class Minesweeper {
         win: this.board.isWin,
         date: new Date(),
       });
-      localStorage.setItem('records', JSON.stringify(storageData));
+      localStorage.setItem('recordsKH', JSON.stringify(storageData));
     }
   }
 
@@ -283,12 +283,12 @@ export default class Minesweeper {
     if (this.sound) playClick.play();
     if (e.target.classList.contains('active')) {
       this.darkTheme = false;
-      localStorage.setItem('theme', false);
+      localStorage.setItem('themeKH', false);
       e.target.classList.remove('active');
       this.container.classList.remove('dark');
     } else {
       this.darkTheme = true;
-      localStorage.setItem('theme', true);
+      localStorage.setItem('themeKH', true);
       e.target.classList.add('active');
       this.container.classList.add('dark');
     }
@@ -299,12 +299,12 @@ export default class Minesweeper {
     if (e.target.classList.contains('active')) {
       e.target.classList.remove('active');
       this.sound = true;
-      localStorage.setItem('sound', true);
+      localStorage.setItem('soundKH', true);
     } else {
       e.target.classList.add('active');
       this.sound = false;
       this.playMainMenu.pause();
-      localStorage.setItem('sound', false);
+      localStorage.setItem('soundKH', false);
     }
   }
 
@@ -317,11 +317,11 @@ export default class Minesweeper {
     this.timer = 0;
     this.steps = 0;
     this.stopTimer(this.timerWorks);
-    localStorage.removeItem('matrix');
-    localStorage.removeItem('matrixBombs');
-    localStorage.removeItem('matrixSteps');
-    localStorage.removeItem('matrixFlags');
-    localStorage.removeItem('matrixTimer');
+    localStorage.removeItem('matrixKH');
+    localStorage.removeItem('matrixBombsKH');
+    localStorage.removeItem('matrixStepsKH');
+    localStorage.removeItem('matrixFlagsKH');
+    localStorage.removeItem('matrixTimerKH');
     this.createSettings();
   }
 
