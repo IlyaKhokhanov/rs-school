@@ -142,7 +142,9 @@ export default class Minesweeper {
     const infoBlockLeft = addElement('div', 'info__block-left');
 
     this.infoBombs = addElement('div', 'info__bombs');
-    this.infoBombs.textContent = `💣${(+localStorage.getItem('matrixBombsKH') || this.bombs) - this.flags}`;
+    this.infoBombs.textContent = `💣${
+      (+localStorage.getItem('matrixBombsKH') || this.bombs) - this.flags
+    }`;
 
     this.infoFlags = addElement('div', 'info__flags');
     this.infoFlags.textContent = `🚩${this.flags}`;
@@ -180,7 +182,12 @@ export default class Minesweeper {
 
     this.minesweeperElement.append(header, text, settBlock, infoBlock);
 
-    this.board = new Board(this, this.container, JSON.parse(localStorage.getItem('matrixKH'))?.length || this.lengthBoard, +localStorage.getItem('matrixBombsKH') || this.bombs);
+    this.board = new Board(
+      this,
+      this.container,
+      JSON.parse(localStorage.getItem('matrixKH'))?.length || this.lengthBoard,
+      +localStorage.getItem('matrixBombsKH') || this.bombs,
+    );
   }
 
   openModal(value) {
@@ -230,21 +237,14 @@ export default class Minesweeper {
             const date = item.date.split('T')[0];
             const time = item.date.split('T')[1].split('.')[0];
 
-            if (item.win) {
-              let level = '';
-              if (item.level === 10) level = 'Easy';
-              if (item.level === 15) level = 'Medium';
-              if (item.level === 25) level = 'Hard';
-              const itemElem = addElement('li', 'modal__records-item');
-              itemElem.textContent = `${item.time} seconds - ${item.steps} steps - ${level} level - ${time} ${date}`;
+            let level = '';
+            if (item.level === 10) level = 'Easy';
+            if (item.level === 15) level = 'Medium';
+            if (item.level === 25) level = 'Hard';
+            const itemElem = addElement('li', 'modal__records-item');
+            itemElem.textContent = `${item.time} seconds - ${item.steps} steps - ${level} level - ${time} ${date}`;
 
-              list.append(itemElem);
-            } else {
-              const itemElem = addElement('li', 'modal__records-item');
-              itemElem.textContent = `The game is lost - ${time} ${date}`;
-
-              list.append(itemElem);
-            }
+            list.append(itemElem);
           });
         content.append(list);
       } else {
@@ -263,13 +263,13 @@ export default class Minesweeper {
     overlay.append(modal);
     this.minesweeperElement.append(overlay);
 
-    if (value !== 'records') {
+    if (value === 'win') {
       let storageData = JSON.parse(localStorage.getItem('recordsKH')) || [];
       if (storageData.length === 10) {
         storageData = storageData.slice(1);
       }
       storageData.push({
-        time: this.board.isWin ? this.timer : 999,
+        time: this.timer,
         steps: this.steps,
         level: this.lengthBoard,
         win: this.board.isWin,
