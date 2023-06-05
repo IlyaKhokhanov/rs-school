@@ -1,9 +1,9 @@
-import News from './news/news';
+import News from './news/News';
 import Sources from './sources/Sources';
 
 export class AppView {
   constructor() {
-    this.news = new News();
+    this.news = News;
     this.sources = Sources;
   }
 
