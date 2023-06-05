@@ -1,10 +1,10 @@
 import News from './news/news';
-import Sources from './sources/sources';
+import Sources from './sources/Sources';
 
 export class AppView {
   constructor() {
     this.news = new News();
-    this.sources = new Sources();
+    this.sources = Sources;
   }
 
   drawNews(data) {
