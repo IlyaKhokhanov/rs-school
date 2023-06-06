@@ -2,7 +2,7 @@ export interface ISourcesObject {
   category: string;
   country: string;
   description: string;
-  id: string;
+  id: string | number;
   language: string;
   name: string;
   url: string;
@@ -14,7 +14,7 @@ export interface INewsObject {
   description: string;
   publishedAt: string;
   source: {
-    id: string;
+    id: string | number;
     name: string;
   };
   title: string;
@@ -22,6 +22,13 @@ export interface INewsObject {
   urlToImage: string;
 }
 
-// export interface IViewClasses {
-//   draw(data: ISourcesObject[]): void;
-// }
+export interface ISourcesResponse {
+  sources: ISourcesObject[];
+  status: string;
+}
+
+export interface INewsResponse {
+  articles: INewsObject[];
+  status: string;
+  totalResults: number;
+}
