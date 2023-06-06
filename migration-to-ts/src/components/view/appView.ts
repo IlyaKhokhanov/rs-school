@@ -1,5 +1,5 @@
-import News from './news/News';
-import Sources from './sources/Sources';
+import News from './news/news';
+import Sources from './sources/sources';
 import { ISourcesResponse, INewsResponse } from '../../types';
 
 export class AppView {
@@ -8,21 +8,13 @@ export class AppView {
   private sources: typeof Sources = Sources;
 
   public drawNews(data: INewsResponse) {
-    if (data.status === 'ok') {
-      const values = data.articles ? data.articles : [];
-      this.news.draw(values);
-    } else {
-      throw new Error('Data could not be retrieved');
-    }
+    const values = data.articles ? data.articles : [];
+    this.news.draw(values);
   }
 
   public drawSources(data: ISourcesResponse) {
-    if (data.status === 'ok') {
-      const values = data.sources ? data.sources : [];
-      this.sources.draw(values);
-    } else {
-      throw new Error('Data could not be retrieved');
-    }
+    const values = data.sources ? data.sources : [];
+    this.sources.draw(values);
   }
 }
 
