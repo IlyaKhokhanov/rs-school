@@ -2,11 +2,11 @@ import { CallbackType, INewsResponse, ISourcesResponse } from '../../types';
 import AppLoader from './appLoader';
 
 class AppController extends AppLoader {
-  getSources(callback: CallbackType<ISourcesResponse>): void {
+  public getSources(callback: CallbackType<ISourcesResponse>): void {
     super.getResp({ endpoint: 'sources' }, callback);
   }
 
-  getNews(e: Event, callback: CallbackType<INewsResponse>): void {
+  public getNews(e: Event, callback: CallbackType<INewsResponse>): void {
     let { target } = e;
     const { currentTarget } = e;
 
