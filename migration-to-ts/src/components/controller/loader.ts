@@ -21,8 +21,8 @@ class Loader {
     {
       endpoint,
       options = {},
-    }: { endpoint: string; options: { sources?: string } },
-    callback = () => {
+    }: { endpoint: string; options?: { sources?: string } },
+    callback = (): void => {
       throw Error('No callback for GET response');
     },
   ): void {

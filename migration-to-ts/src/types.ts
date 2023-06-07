@@ -32,3 +32,5 @@ export interface INewsResponse {
   status: string;
   totalResults: number;
 }
+
+export type CallbackType<T> = (data?: T) => void;
