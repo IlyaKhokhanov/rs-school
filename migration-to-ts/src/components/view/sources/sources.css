@@ -5,30 +5,40 @@
   height: 120px;
   overflow: auto;
   align-items: center;
-  font: 300 1em 'Fira Sans', sans-serif;
+  font: 300 1em "Fira Sans", sans-serif;
 }
 
 .source__item {
   background: none;
-  border: 2px solid #30c5ff;
+  border: 2px solid #fff;
   font: inherit;
   line-height: 1;
   margin: 0.5em;
   padding: 1em 2em;
-  color: #70d6ff;
+  color: #fff;
   transition: 0.25s;
   cursor: pointer;
 }
 
 .source__item:hover,
 .source__item:focus {
-  border-color: #3fcc59;
-  color: #69db7e;
-  box-shadow: 0 0.5em 0.5em -0.4em #3fcc59;
-  transform: translateY(-0.25em);
+  border-color: #000000;
+  color: #000000;
+  box-shadow: 0 0.5em 0.5em -0.4em #000000;
+  transform: translateY(-0.2em);
 }
 
 .source__item-name {
   font-weight: 400;
   white-space: nowrap;
+}
+
+@media (max-width: 540px) {
+  .sources {
+    height: 70px;
+  }
+
+  .source__item {
+    padding: 0.6em 1.2em;
+  }
 }
