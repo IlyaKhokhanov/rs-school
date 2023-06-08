@@ -1,4 +1,4 @@
-export interface ISourcesObject {
+export type SourcesObject = {
   category: string;
   country: string;
   description: string;
@@ -6,9 +6,9 @@ export interface ISourcesObject {
   language: string;
   name: string;
   url: string;
-}
+};
 
-export interface INewsObject {
+export type NewsObject = {
   author: string;
   content: string;
   description: string;
@@ -20,15 +20,15 @@ export interface INewsObject {
   title: string;
   url: string;
   urlToImage: string;
-}
+};
 
 export interface ISourcesResponse {
-  sources: ISourcesObject[];
+  sources: SourcesObject[];
   status: string;
 }
 
 export interface INewsResponse {
-  articles: INewsObject[];
+  articles: NewsObject[];
   status: string;
   totalResults: number;
 }

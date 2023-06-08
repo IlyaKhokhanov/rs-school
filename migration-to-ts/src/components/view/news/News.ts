@@ -1,59 +1,63 @@
-import { INewsObject } from '../../../types';
+import { NewsTempClass } from '../../../enum';
+import { NewsObject } from '../../../types';
 import './news.css';
 
 class News {
-  static draw(data: INewsObject[]): void {
-    const news: INewsObject[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+  static draw(data: NewsObject[]): void {
+    const news: NewsObject[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
     const fragment: DocumentFragment = document.createDocumentFragment();
-    const newsItemTemp: HTMLTemplateElement = document.querySelector('#newsItemTemp');
+    const newsItemTemp: HTMLTemplateElement | null = document.querySelector('#newsItemTemp');
 
-    news.forEach((item, idx) => {
-      const newsClone: Node = newsItemTemp.content.cloneNode(true);
+    if (newsItemTemp instanceof HTMLTemplateElement) {
+      news.forEach((item, idx) => {
+        const newsClone: Node = newsItemTemp.content.cloneNode(true);
 
-      if (idx % 2) {
+        if (idx % 2) {
+          (<HTMLElement>newsClone)
+            .querySelector(NewsTempClass.item)
+            .classList.add('alt');
+        }
+
         (<HTMLElement>newsClone)
-          .querySelector('.news__item')
-          .classList.add('alt');
-      }
+          .querySelector<HTMLDivElement>(NewsTempClass.photo)
+          .style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
 
-      (<HTMLElement>newsClone)
-        .querySelector<HTMLDivElement>('.news__meta-photo')
-        .style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
+        (<HTMLElement>newsClone)
+          .querySelector(NewsTempClass.author)
+          .textContent = item.author || item.source.name;
 
-      (<HTMLElement>newsClone)
-        .querySelector('.news__meta-author')
-        .textContent = item.author || item.source.name;
+        (<HTMLElement>newsClone)
+          .querySelector(NewsTempClass.date)
+          .textContent = item.publishedAt
+            .slice(0, 10)
+            .split('-')
+            .reverse()
+            .join('-');
 
-      (<HTMLElement>newsClone)
-        .querySelector('.news__meta-date')
-        .textContent = item.publishedAt
-          .slice(0, 10)
-          .split('-')
-          .reverse()
-          .join('-');
+        (<HTMLElement>newsClone)
+          .querySelector(NewsTempClass.title)
+          .textContent = item.title;
 
-      (<HTMLElement>newsClone)
-        .querySelector('.news__description-title')
-        .textContent = item.title;
+        (<HTMLElement>newsClone)
+          .querySelector(NewsTempClass.source)
+          .textContent = item.source.name;
 
-      (<HTMLElement>newsClone)
-        .querySelector('.news__description-source')
-        .textContent = item.source.name;
+        (<HTMLElement>newsClone)
+          .querySelector(NewsTempClass.content)
+          .textContent = item.description;
 
-      (<HTMLElement>newsClone)
-        .querySelector('.news__description-content')
-        .textContent = item.description;
+        (<HTMLElement>newsClone)
+          .querySelector(NewsTempClass.link)
+          .setAttribute('href', item.url);
 
-      (<HTMLElement>newsClone)
-        .querySelector('.news__read-more a')
-        .setAttribute('href', item.url);
+        fragment.append(newsClone);
+      });
+    }
 
-      fragment.append(newsClone);
-    });
-
-    document.querySelector('.news').innerHTML = '';
-    document.querySelector('.news').appendChild(fragment);
+    const newsEl: HTMLElement = document.querySelector('.news');
+    newsEl.innerHTML = '';
+    newsEl.appendChild(fragment);
   }
 }
 

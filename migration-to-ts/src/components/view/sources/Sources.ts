@@ -1,21 +1,22 @@
-import { ISourcesObject } from '../../../types';
+import { SourcesTempClass } from '../../../enum';
+import { SourcesObject } from '../../../types';
 import './sources.css';
 
 class Sources {
-  static draw(data: ISourcesObject[] | null): void {
+  static draw(data: SourcesObject[] | null): void {
     const fragment: DocumentFragment = document.createDocumentFragment();
     const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
 
-    if (sourceItemTemp) {
+    if (sourceItemTemp instanceof HTMLTemplateElement) {
       data.forEach((item) => {
         const sourceClone: Node = sourceItemTemp.content.cloneNode(true);
 
         (<HTMLElement>sourceClone)
-          .querySelector('.source__item-name')
+          .querySelector(SourcesTempClass.name)
           .textContent = item.name;
 
         (<HTMLElement>sourceClone)
-          .querySelector('.source__item')
+          .querySelector(SourcesTempClass.item)
           .setAttribute('data-source-id', String(item.id));
 
         fragment.append(sourceClone);
