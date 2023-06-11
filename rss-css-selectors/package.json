@@ -1,0 +1,20 @@
+{
+  "name": "rss-css-selectors",
+  "version": "1.0.0",
+  "description": "Game css selectoctor on JS",
+  "main": "index.js",
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist -e rss-css-selectors",
+    "build": "npx webpack --mode production",
+    "start": "npx webpack-dev-server --mode development",
+    "lint": "eslint"
+  },
+  "keywords": [],
+  "author": "Ilya Khokhanov",
+  "license": "ISC",
+  "homepage": "https://rolling-scopes-school.github.io/ilyakhokhanov-JSFE2023Q1",
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
+  }
+}
