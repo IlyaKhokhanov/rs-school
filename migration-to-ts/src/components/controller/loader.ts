@@ -1,7 +1,7 @@
 class Loader {
   constructor(
     protected baseLink: string,
-    protected options: { apiKey: string },
+    protected options: { [key: string]: string },
   ) {}
 
   static errorHandler(res: Response): Response {

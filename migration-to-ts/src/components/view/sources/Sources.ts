@@ -8,21 +8,32 @@ class Sources {
     const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
 
     if (sourceItemTemp instanceof HTMLTemplateElement) {
-      data.forEach((item) => {
-        const sourceClone: Node = sourceItemTemp.content.cloneNode(true);
+      if (data) {
+        data.forEach((item) => {
+          const sourceClone: Node = sourceItemTemp.content.cloneNode(true);
 
-        (<HTMLElement>sourceClone)
-          .querySelector(SourcesTempClass.name)
-          .textContent = item.name;
+          const sourceName: HTMLElement | null = (<HTMLElement>sourceClone)
+            .querySelector(SourcesTempClass.name);
+          if (sourceName) {
+            sourceName.textContent = item.name;
+          }
 
-        (<HTMLElement>sourceClone)
-          .querySelector(SourcesTempClass.item)
-          .setAttribute('data-source-id', String(item.id));
+          const sourceItem: HTMLElement | null = (<HTMLElement>sourceClone)
+            .querySelector(SourcesTempClass.item);
+          if (sourceItem) {
+            sourceItem.setAttribute('data-source-id', String(item.id));
+          }
 
-        fragment.append(sourceClone);
-      });
+          fragment.append(sourceClone);
+        });
 
-      document.querySelector('.sources').append(fragment);
+        const sourcesEl: HTMLElement | null = document.querySelector('.sources');
+        if (sourcesEl) {
+          sourcesEl.append(fragment);
+        }
+      } else {
+        throw new Error('Data not found');
+      }
     }
   }
 }
