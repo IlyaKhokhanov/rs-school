@@ -1,11 +1,42 @@
 body {
+  position: relative;
+  margin: 0 auto;
   color: #fff;
   background: #444444;
   font-family: sans-serif;
 }
 
 header {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  top: 0;
   padding: 10px 30px;
+}
+
+.menu__btn {
+  width: 30px;
+  height: 21px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: none;
+  z-index: 15;
+  transition: transform 0.3s ease-in;
+}
+
+.menu__btn--active {
+  transform: rotate(90deg);
+}
+
+.menu__btn span {
+  height: 2px;
+  background-color: #fff;
+  width: 100%;
 }
 
 header h1 {
@@ -13,8 +44,26 @@ header h1 {
   font-weight: 800;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(37, 37, 37, 0.9);
+  transform: translateX(-110%);
+  z-index: 5;
+  transition: transform 0.3s ease-in;
+}
+
+.overlay--active {
+  transform: translateX(0);
+}
 footer {
-  margin-top: 20px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 320px;
   height: 100px;
   display: flex;
   flex-direction: column;
@@ -24,6 +73,7 @@ footer {
 }
 
 footer .copyright {
+  margin: 0 auto;
   font-size: 14px;
   color: #000;
   text-align: center;
@@ -74,13 +124,22 @@ footer .copyright:before {
   height: 30px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 767px) {
   header {
     padding: 5px 15px;
   }
 
   header h1 {
-    font-size: 35px;
+    font-size: 32px;
     margin: 10px 0;
+  }
+
+  .menu__btn {
+    display: flex;
+  }
+
+  footer {
+    position: static;
+    left: 0;
   }
 }
