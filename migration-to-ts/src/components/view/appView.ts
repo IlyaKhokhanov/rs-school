@@ -1,5 +1,5 @@
-import News from './news/News';
-import Sources from './sources/Sources';
+import News from './news/news';
+import Sources from './sources/sources';
 import { ISourcesResponse, INewsResponse } from '../../types';
 
 export class AppView {

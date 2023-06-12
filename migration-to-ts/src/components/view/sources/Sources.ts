@@ -3,7 +3,7 @@ import { SourcesObject } from '../../../types';
 import './sources.css';
 
 class Sources {
-  static draw(data: SourcesObject[] | null): void {
+  static draw(data: SourcesObject[] | undefined): void {
     const fragment: DocumentFragment = document.createDocumentFragment();
     const sourceItemTemp: HTMLTemplateElement | null = document.querySelector('#sourceItemTemp');
 

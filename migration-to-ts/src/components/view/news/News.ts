@@ -3,8 +3,10 @@ import { NewsObject } from '../../../types';
 import './news.css';
 
 class News {
-  static draw(data: NewsObject[]): void {
-    const news: NewsObject[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+  static draw(data: NewsObject[] | undefined): void {
+    const news: NewsObject[] | undefined = data && data.length >= 10
+      ? data.filter((_item, idx) => idx < 10)
+      : data;
 
     const fragment: DocumentFragment = document.createDocumentFragment();
     const newsItemTemp: HTMLTemplateElement | null = document.querySelector('#newsItemTemp');
