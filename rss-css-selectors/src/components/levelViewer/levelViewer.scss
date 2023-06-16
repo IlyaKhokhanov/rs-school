@@ -1,0 +1,63 @@
+@import "./../../utils/vars.scss";
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  padding: 30px;
+  width: 250px;
+  background: $dark-gray-color;
+
+  &-header {
+    font-size: 3em;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &-level {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    font-size: 2em;
+    cursor: pointer;
+
+    &:hover {
+      background: $light-gray-color;
+    }
+
+    &--active {
+      background: $main-gray-color;
+    }
+
+    &--img {
+      width: 20px;
+    }
+  }
+
+  &-reset--btn {
+    padding: 10px 15px;
+    background: transparent;
+    font-size: 2em;
+    font-weight: bold;
+    border: 1px solid $black-color;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background: $main-gray-color;
+    }
+
+    &:active {
+      background: $light-gray-color;
+    }
+  }
+}

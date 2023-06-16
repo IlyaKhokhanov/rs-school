@@ -1,6 +1,7 @@
-import app from './components/app/app';
+import App from './components/app/app';
 import header from './components/header/header';
 import './global.scss';
 
 header();
-app();
+const app = new App();
+app.initApp();

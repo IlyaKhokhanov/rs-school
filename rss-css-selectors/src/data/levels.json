@@ -1,1 +1,64 @@
-[{ "name": "Level 1", "elements": {}, "answer": "" }]
+[
+  {
+    "name": "Level 1",
+    "complete": false,
+    "items": [
+      { "element": "box", "class": "active" },
+      { "element": "box", "class": "active" }
+    ],
+    "answer": ""
+  },
+  {
+    "name": "Level 2",
+    "complete": false,
+    "items": [
+      { "element": "box", "class": "active" },
+      { "element": "bucket" },
+      { "element": "box", "class": "active" }
+    ],
+    "answer": ""
+  },
+  {
+    "name": "Level 3",
+    "complete": false,
+    "items": [
+      { "element": "box", "class": "active", "id": "fansy" },
+      { "element": "box" },
+      { "element": "bucket" }
+    ],
+    "answer": ""
+  },
+  {
+    "name": "Level 4",
+    "complete": false,
+    "items": [
+      { "element": "box" },
+      {
+        "element": "bucket",
+        "innerElement": { "element": "red-ball", "class": "active" }
+      },
+      { "element": "red-ball" }
+    ],
+    "answer": ""
+  },
+  {
+    "name": "Level 5",
+    "complete": false,
+    "items": [
+      { "element": "box", "innerElement": { "element": "blue-ball" } },
+      {
+        "element": "bucket",
+        "innerElement": {
+          "element": "red-ball",
+          "class": "active",
+          "id": "fancy"
+        }
+      },
+      {
+        "element": "bucket",
+        "innerElement": { "element": "red-ball" }
+      }
+    ],
+    "answer": ""
+  }
+]

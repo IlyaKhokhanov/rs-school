@@ -1,3 +1,5 @@
+@import "./utils/vars.scss";
+
 * {
   margin: 0;
   padding: 0;
@@ -6,4 +8,9 @@
 
 body {
   font-size: 10px;
+  background: $main-gray-color;
+}
+
+ul {
+  list-style: none;
 }
