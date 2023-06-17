@@ -1,6 +1,7 @@
 [
   {
     "name": "Level 1",
+    "description": "Select the boxes",
     "complete": false,
     "items": [
       { "element": "box", "class": "active" },
@@ -10,6 +11,7 @@
   },
   {
     "name": "Level 2",
+    "description": "Select the boxes",
     "complete": false,
     "items": [
       { "element": "box", "class": "active" },
@@ -20,6 +22,7 @@
   },
   {
     "name": "Level 3",
+    "description": "Select the boxes",
     "complete": false,
     "items": [
       { "element": "box", "class": "active", "id": "fansy" },
@@ -30,6 +33,7 @@
   },
   {
     "name": "Level 4",
+    "description": "Select the boxes",
     "complete": false,
     "items": [
       { "element": "box" },
@@ -43,6 +47,7 @@
   },
   {
     "name": "Level 5",
+    "description": "Select the boxes",
     "complete": false,
     "items": [
       { "element": "box", "innerElement": { "element": "blue-ball" } },

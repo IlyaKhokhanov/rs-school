@@ -5,17 +5,17 @@ import './levelViewer.scss';
 export default class LevelViewer {
   currentLevel: string | null = 'Level 1';
 
-  sidebar: HTMLElement = addElement('aside', 'sidebar');
+  private sidebar: HTMLElement = addElement('aside', 'sidebar');
 
   constructor(private levelsData: ILevelData[]) {
     this.initLevels();
   }
 
-  initLevels(): void {
+  public initLevels(): void {
     this.sidebar.innerHTML = '';
 
     const sidebarHeader: HTMLElement = addElement('h2', 'sidebar-header');
-    sidebarHeader.textContent = 'Level';
+    sidebarHeader.textContent = 'Levels';
 
     const sidebarList: HTMLElement = addElement('ul', 'sidebar-list');
 
@@ -63,7 +63,7 @@ export default class LevelViewer {
     document.body.append(this.sidebar);
   }
 
-  nextLevel(): void {
+  public nextLevel(): void {
     this.currentLevel = `Level ${Number(this.currentLevel?.split(' ')[1]) + 1}`;
     this.initLevels();
   }

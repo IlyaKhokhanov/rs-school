@@ -7,10 +7,23 @@
 }
 
 body {
+  position: relative;
   font-size: 10px;
   background: $main-gray-color;
 }
 
 ul {
   list-style: none;
+}
+
+.main {
+  position: absolute;
+  top: 40px;
+  right: 250px;
+  bottom: 80px;
+  left: 0;
+  height: calc(100vh - 120px);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
