@@ -1,4 +1,4 @@
-footer {
+.footer {
   position: fixed;
   right: 250px;
   bottom: 0;
@@ -11,36 +11,36 @@ footer {
   justify-content: center;
 }
 
+.rss {
+  &-img {
+    height: 30px;
+  }
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
 .github {
-  height: 20px;
-}
+  &-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #000;
+  }
 
-.github:hover {
-  opacity: 0.5;
-}
+  &-img {
+    height: 20px;
+  }
 
-.github-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-decoration: none;
-  color: #000;
-}
+  &-author {
+    text-decoration: none;
+    font-size: 1.5em;
+  }
 
-.github-img {
-  height: 20px;
-}
-
-.github-author {
-  text-decoration: none;
-  font-size: 1.5em;
-}
-
-.rss:hover {
-  opacity: 0.5;
-}
-
-.rss-img {
-  height: 30px;
+  &:hover {
+    opacity: 0.5;
+  }
 }
