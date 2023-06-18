@@ -22,6 +22,10 @@ module.exports = {
         type: 'asset/resource',
       },
       {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader',
+      },
+      {
         test: /\.(woff(2)?|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
@@ -31,7 +35,11 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader', options: { url: false } },
+          'sass-loader',
+        ],
       },
     ],
   },

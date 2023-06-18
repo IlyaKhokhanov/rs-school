@@ -22,8 +22,9 @@ ul {
   right: 250px;
   bottom: 80px;
   left: 0;
-  height: calc(100vh - 120px);
-  padding: 20px;
+  height: calc(100vh - 140px);
+  padding: 0 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 400px 1fr;
 }

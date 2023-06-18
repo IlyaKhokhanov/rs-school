@@ -1,4 +1,113 @@
-.elements-wrapper {
-  background: #fff;
-  grid-column: 1/3;
+@import "./../../utils/vars.scss";
+
+.elements {
+  &-wrapper {
+    grid-column: 1/3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    transform-style: flat;
+  }
+
+  &-header {
+    padding: 0;
+    font-size: 4em;
+  }
+
+  &-btn {
+    padding: 10px 15px;
+    background: $dark-gray-color;
+    font-size: 1.5em;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+
+    &:hover {
+      background: $light-gray-color;
+    }
+
+    &:active {
+      background: $light-gray-color;
+    }
+  }
+}
+
+field {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 30px;
+  height: 300px;
+  padding: 20px;
+  background-image: url("img/grass.jpg");
+  background-size: cover;
+  transform-style: flat;
+  transform-origin: bottom;
+  transform: perspective(200px) rotateX(3deg);
+}
+
+box {
+  position: relative;
+  height: 220px;
+  width: 200px;
+  background-image: url("img/box.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
+  &:hover {
+    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
+  }
+
+  & * {
+    position: absolute;
+    transform: translate(20px, -90px);
+  }
+}
+
+bucket {
+  position: relative;
+  height: 200px;
+  width: 150px;
+  background-image: url("img/bucket.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
+  &:hover {
+    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
+  }
+
+  & * {
+    position: absolute;
+    transform: translateY(-105px);
+  }
+}
+
+red-ball {
+  height: 200px;
+  width: 150px;
+  background-image: url("img/red-ball.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
+  &:hover {
+    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
+  }
+}
+
+blue-ball {
+  height: 200px;
+  width: 150px;
+  background-image: url("img/blue-ball.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
+
+  &:hover {
+    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
+  }
 }

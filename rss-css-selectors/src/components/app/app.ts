@@ -13,7 +13,7 @@ export default class App {
 
   levels = new LevelViewer(levelsData);
 
-  elements = new ElementsViewer(this.container);
+  elements = new ElementsViewer(this.container, levelsData[4]);
 
   cssEditor = new CssEditor(this.container);
 

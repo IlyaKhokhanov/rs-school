@@ -1,6 +1,6 @@
-function addElement(tagName: string, className: string): HTMLElement {
+function addElement(tagName: string, className?: string): HTMLElement {
   const elem: HTMLElement = document.createElement(tagName);
-  elem.classList.add(className);
+  if (className) elem.classList.add(className);
   return elem;
 }
 
