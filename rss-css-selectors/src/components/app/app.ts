@@ -17,7 +17,7 @@ export default class App {
 
   cssEditor = new CssEditor(this.container);
 
-  htmlViewer = new HtmlViewer(this.container);
+  htmlViewer = new HtmlViewer(this.container, levelsData[4]);
 
   initApp(): void {
     document.body.append(this.container);

@@ -1,3 +1,74 @@
-.html-viewer-wrapper {
-  background: red;
+@import "./../../utils/vars.scss";
+
+.html-viewer {
+  &-wrapper {
+    padding: 8px 8px 8px 0;
+    background: $dark-gray-color;
+    border-radius: 0 7px 7px 0;
+  }
+
+  &-header {
+    font-size: 1.7em;
+
+    &-block {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      justify-content: space-between;
+      border-radius: 0 10px 0 0;
+      background: $main-gray-color;
+    }
+
+    &-file {
+      font-size: 1.7em;
+    }
+  }
+
+  &-code {
+    height: 100%;
+    padding-left: 10px;
+    background-color: $light-gray-color;
+    font-size: 1.6em;
+
+    &-item {
+      margin-left: 16px;
+    }
+
+    &-wrapper {
+      display: grid;
+      grid-template-columns: 25px 1fr;
+      height: 342px;
+      border-radius: 0 0 10px 0;
+      overflow: hidden;
+    }
+
+    &-numbers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: $main-gray-color;
+      font-size: 1.6em;
+    }
+  }
+}
+
+.language-html {
+  height: 300px;
+  width: 400px;
+}
+
+.operator {
+  color: #979797;
+}
+
+.tag {
+  color: #5e0909;
+}
+
+.classEl {
+  color: #2caa2c;
+}
+
+.classVal {
+  color: #9e9848;
 }
