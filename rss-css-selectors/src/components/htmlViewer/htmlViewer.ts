@@ -24,15 +24,12 @@ export default class HtmlViewer {
 
   initHtmlViewer() {
     const htmlViewerWrapper = addElement('div', 'html-viewer-wrapper');
-
     const htmlViewerHeaderBlock = addElement('div', 'html-viewer-header-block');
-
     const htmlViewerHeader = addElement(
       'h2',
       'html-viewer-header',
       'HTML Viewer'
     );
-
     const htmlViewerHeaderFile = addElement(
       'span',
       'html-viewer-header-file',
@@ -42,21 +39,17 @@ export default class HtmlViewer {
     htmlViewerHeaderBlock.append(htmlViewerHeader, htmlViewerHeaderFile);
 
     const htmlViewerCodeWrapper = addElement('div', 'html-viewer-code-wrapper');
-
     const htmlViewerNumbers = addElement('div', 'html-viewer-code-numbers');
 
-    for (let i = 1; i <= 20; i += 1) {
+    for (let i = 1; i <= 19; i += 1) {
       const numberEl = addElement('div', 'html-viewer-code-number', String(i));
       htmlViewerNumbers.append(numberEl);
     }
 
     const htmlViewerCode = addElement('div', 'html-viewer-code');
-
     const fieldOpenDiv = addElement('div');
-
     const fieldOpenSpan = elemToHtmlViewer('div', true, true, 'field');
     fieldOpenDiv.append(fieldOpenSpan);
-
     htmlViewerCode.append(fieldOpenDiv);
 
     this.levelData.items.forEach((elem) => {
@@ -74,7 +67,6 @@ export default class HtmlViewer {
 
         itemToHTML.appendChild(openItemToHTML);
         const elemToItem = addElement('div', 'html-viewer-code-item');
-
         const spanToElem = elemToHtmlViewer(
           elem.innerElement.element,
           true,
@@ -83,10 +75,8 @@ export default class HtmlViewer {
         );
 
         elemToItem.append(spanToElem);
-
         itemToHTML.append(elemToItem);
-
-        const closeItemToHTML = elemToHtmlViewer('span', false, true);
+        const closeItemToHTML = elemToHtmlViewer(elem.element, false, true);
         itemToHTML.appendChild(closeItemToHTML);
       }
       htmlViewerCode.append(itemToHTML);

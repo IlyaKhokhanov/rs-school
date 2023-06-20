@@ -38,8 +38,8 @@ field {
   display: flex;
   align-items: end;
   justify-content: center;
-  gap: 30px;
-  height: 300px;
+  gap: 25px;
+  height: 280px;
   padding: 20px;
   background-image: url("img/grass.jpg");
   background-size: cover;
@@ -50,8 +50,8 @@ field {
 
 box {
   position: relative;
-  height: 220px;
-  width: 200px;
+  height: 170px;
+  width: 150px;
   background-image: url("img/box.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -63,14 +63,15 @@ box {
 
   & * {
     position: absolute;
-    transform: translate(20px, -90px);
+    bottom: 80px;
+    left: 26px;
   }
 }
 
 bucket {
   position: relative;
-  height: 200px;
-  width: 150px;
+  height: 150px;
+  width: 100px;
   background-image: url("img/bucket.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -82,13 +83,13 @@ bucket {
 
   & * {
     position: absolute;
-    transform: translateY(-105px);
+    bottom: 68px;
   }
 }
 
 red-ball {
-  height: 200px;
-  width: 150px;
+  height: 150px;
+  width: 100px;
   background-image: url("img/red-ball.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -100,8 +101,8 @@ red-ball {
 }
 
 blue-ball {
-  height: 200px;
-  width: 150px;
+  height: 150px;
+  width: 100px;
   background-image: url("img/blue-ball.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -109,5 +110,28 @@ blue-ball {
 
   &:hover {
     filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
+  }
+}
+
+.active {
+  transform-origin: center bottom;
+  animation: active 1.5s infinite;
+}
+
+@keyframes active {
+  from {
+    transform: skewX(0);
+  }
+
+  25% {
+    transform: skewX(-5deg);
+  }
+
+  75% {
+    transform: skewX(5deg);
+  }
+
+  to {
+    transform: skewX(0);
   }
 }
