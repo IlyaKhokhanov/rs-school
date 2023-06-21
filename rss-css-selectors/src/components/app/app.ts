@@ -7,19 +7,21 @@ import HtmlViewer from '../htmlViewer/htmlViewer';
 import LevelViewer from '../levelViewer/levelViewer';
 
 export default class App {
-  levelsData: ILevelData[] = levelsData;
+  private mainContainer: HTMLElement = addElement('main', 'main');
 
-  container: HTMLElement = addElement('main', 'main');
+  elements = new ElementsViewer(this.mainContainer);
 
-  levels = new LevelViewer(levelsData);
+  cssEditor = new CssEditor(this.mainContainer);
 
-  elements = new ElementsViewer(this.container, levelsData[4]);
+  htmlViewer = new HtmlViewer(this.mainContainer);
 
-  cssEditor = new CssEditor(this.container);
+  levels = new LevelViewer(this, levelsData);
 
-  htmlViewer = new HtmlViewer(this.container, levelsData[4]);
-
-  initApp(): void {
-    document.body.append(this.container);
+  initApp(levelData: ILevelData): void {
+    this.mainContainer.innerHTML = '';
+    this.elements.initElements(levelData);
+    this.cssEditor.initCssEditor();
+    this.htmlViewer.initHtmlViewer(levelData);
+    document.body.append(this.mainContainer);
   }
 }

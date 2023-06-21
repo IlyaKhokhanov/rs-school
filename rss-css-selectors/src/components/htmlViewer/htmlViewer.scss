@@ -44,14 +44,14 @@
 
   &-code {
     height: 100%;
-    padding: 2px 0 0 10px;
+    padding: 5px 0 0 10px;
     background-color: $light-gray-color;
     font-size: 1.6em;
 
     &-item {
       margin-left: 16px;
       color: #fff;
-      pointer-events: none;
+      // pointer-events: none;
 
       &:hover {
         .operator,
@@ -66,7 +66,7 @@
     &-wrapper {
       display: grid;
       grid-template-columns: 25px 1fr;
-      height: 342px;
+      height: 350px;
       border-radius: 0 0 10px 0;
       overflow: hidden;
     }
@@ -75,7 +75,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 2px;
+      padding-top: 5px;
       background: $main-gray-color;
       font-size: 1.6em;
     }

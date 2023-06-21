@@ -18,11 +18,9 @@ import './htmlViewer.scss';
 // ).value;
 
 export default class HtmlViewer {
-  constructor(public container: HTMLElement, public levelData: ILevelData) {
-    this.initHtmlViewer();
-  }
+  constructor(public container: HTMLElement) {}
 
-  initHtmlViewer() {
+  public initHtmlViewer(levelData: ILevelData) {
     const htmlViewerWrapper = addElement('div', 'html-viewer-wrapper');
     const htmlViewerHeaderBlock = addElement('div', 'html-viewer-header-block');
     const htmlViewerHeader = addElement(
@@ -52,7 +50,7 @@ export default class HtmlViewer {
     fieldOpenDiv.append(fieldOpenSpan);
     htmlViewerCode.append(fieldOpenDiv);
 
-    this.levelData.items.forEach((elem) => {
+    levelData.items.forEach((elem) => {
       const itemToHTML = addElement('div', 'html-viewer-code-item');
       if (!elem.innerElement) {
         const openTag = elemToHtmlViewer(elem.element, true, false, elem.id);

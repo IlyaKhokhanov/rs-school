@@ -115,7 +115,7 @@ blue-ball {
 
 .active {
   transform-origin: center bottom;
-  animation: active 1.5s infinite;
+  animation: active 1.5s infinite linear;
 }
 
 @keyframes active {

@@ -7,7 +7,7 @@
       { "element": "box", "class": "active" },
       { "element": "box", "class": "active" }
     ],
-    "answer": ""
+    "answer": ["box", "*"]
   },
   {
     "name": "Level 2",
@@ -18,7 +18,7 @@
       { "element": "bucket" },
       { "element": "box", "class": "active" }
     ],
-    "answer": ""
+    "answer": ["box"]
   },
   {
     "name": "Level 3",
@@ -29,7 +29,7 @@
       { "element": "box" },
       { "element": "bucket" }
     ],
-    "answer": ""
+    "answer": [".fansy"]
   },
   {
     "name": "Level 4",
@@ -43,7 +43,7 @@
       },
       { "element": "red-ball" }
     ],
-    "answer": ""
+    "answer": ["bucket red-ball", "bucket > *"]
   },
   {
     "name": "Level 5",
@@ -53,10 +53,10 @@
       { "element": "box", "innerElement": { "element": "blue-ball" } },
       {
         "element": "bucket",
+        "id": "fancy",
         "innerElement": {
           "element": "red-ball",
-          "class": "active",
-          "id": "fancy"
+          "class": "active"
         }
       },
       {
@@ -64,6 +64,6 @@
         "innerElement": { "element": "red-ball" }
       }
     ],
-    "answer": ""
+    "answer": [".fancy red-ball"]
   }
 ]

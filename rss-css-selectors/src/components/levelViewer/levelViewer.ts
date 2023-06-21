@@ -1,13 +1,14 @@
 import { ILevelData } from '../../utils/types';
 import { addElement } from '../../utils/utils';
+import App from '../app/app';
 import './levelViewer.scss';
 
 export default class LevelViewer {
-  currentLevel: string | null = 'Level 1';
+  currentLevel: number | null = 0;
 
   private sidebar: HTMLElement = addElement('aside', 'sidebar');
 
-  constructor(private levelsData: ILevelData[]) {
+  constructor(private app: App, private levelsData: ILevelData[]) {
     this.initLevels();
   }
 
@@ -19,7 +20,7 @@ export default class LevelViewer {
 
     const sidebarList: HTMLElement = addElement('ul', 'sidebar-list');
 
-    this.levelsData.forEach((level) => {
+    this.levelsData.forEach((level, levelIndx) => {
       const elem: HTMLElement = addElement('li', 'sidebar-level');
 
       const icon: HTMLImageElement = document.createElement('img');
@@ -34,19 +35,22 @@ export default class LevelViewer {
       elem.addEventListener('click', (e) => {
         const { target } = e;
         if (target) {
-          this.currentLevel = (target as HTMLElement).textContent;
+          this.currentLevel =
+            Number((target as HTMLElement).textContent?.split(' ')[1]) - 1;
         }
         this.initLevels();
       });
 
-      if (this.currentLevel === level.name) elem.classList.add('sidebar-level--active');
+      if (this.currentLevel === levelIndx) {
+        elem.classList.add('sidebar-level--active');
+      }
 
       sidebarList.append(elem);
     });
 
     const sidebarButton: HTMLElement = addElement(
       'button',
-      'sidebar-reset--btn',
+      'sidebar-reset--btn'
     );
 
     sidebarButton.textContent = 'Reset Progress';
@@ -55,16 +59,17 @@ export default class LevelViewer {
         ...level,
         complete: false,
       }));
-      this.currentLevel = 'Level 1';
+      this.currentLevel = 0;
       this.initLevels();
     });
 
     this.sidebar.append(sidebarHeader, sidebarList, sidebarButton);
     document.body.append(this.sidebar);
+    this.app.initApp(this.levelsData[this.currentLevel || 0]);
   }
 
   public nextLevel(): void {
-    this.currentLevel = `Level ${Number(this.currentLevel?.split(' ')[1]) + 1}`;
+    if (this.currentLevel) this.currentLevel += 1;
     this.initLevels();
   }
 }

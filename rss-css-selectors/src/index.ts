@@ -5,5 +5,4 @@ import './global.scss';
 
 header();
 const app = new App();
-app.initApp();
 footer();

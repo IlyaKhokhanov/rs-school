@@ -9,6 +9,6 @@ export interface ILevelData {
   name: string;
   description: string;
   complete: boolean;
-  answer: string;
+  answer: string[];
   items: LevelItemsT[];
 }

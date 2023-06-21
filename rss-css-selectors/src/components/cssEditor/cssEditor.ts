@@ -2,18 +2,16 @@ import { addElement } from '../../utils/utils';
 import './cssEditor.scss';
 
 export default class CssEditor {
-  constructor(public container: HTMLElement) {
-    this.CssEditor();
-  }
+  constructor(public container: HTMLElement) {}
 
-  CssEditor() {
+  initCssEditor() {
     const cssEditorWrapper = addElement('div', 'css-editor-wrapper');
     const cssEditorHeaderBlock = addElement('div', 'css-editor-header-block');
     const cssEditorHeader = addElement('h2', 'css-editor-header', 'CSS Editor');
     const cssEditorHeaderFile = addElement(
       'span',
       'css-editor-header-file',
-      'field.html'
+      'style.css'
     );
 
     cssEditorHeaderBlock.append(cssEditorHeader, cssEditorHeaderFile);
@@ -28,7 +26,10 @@ export default class CssEditor {
 
     const cssEditorCode = addElement('div', 'css-editor-code');
 
-    const cssEditorInputWrapper = addElement('div', 'css-editor-code-input-wrapper');
+    const cssEditorInputWrapper = addElement(
+      'div',
+      'css-editor-code-input-wrapper'
+    );
 
     const cssEditorInput = addElement('input', 'css-editor-code-input');
     cssEditorInput.setAttribute('placeholder', 'Type in a CSS selector');

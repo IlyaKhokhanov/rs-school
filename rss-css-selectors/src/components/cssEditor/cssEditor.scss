@@ -5,7 +5,7 @@
     padding: 8px 0 8px 8px;
     background: $dark-gray-color;
     border-radius: 10px 0 0 10px;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.5px;
   }
 
   &-header {
@@ -27,14 +27,14 @@
 
   &-code {
     height: 100%;
-    padding: 2px 0 0 10px;
+    padding: 5px 0 0 10px;
     background: #ccc;
     font-size: 1.6em;
 
     &-wrapper {
       display: grid;
       grid-template-columns: 25px 1fr;
-      height: 342px;
+      height: 350px;
       border-radius: 0 0 0 10px;
       overflow: hidden;
     }
@@ -43,7 +43,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 2px;
+      padding-top: 5px;
       background: #b6b6b6;
       font-size: 1.6em;
     }
@@ -56,7 +56,7 @@
 
       &-wrapper {
         display: flex;
-        padding-right: 3px;
+        padding-right: 5px;
         gap: 5px;
       }
 
@@ -75,6 +75,7 @@
     }
 
     &-value {
+      height: 100%;
       white-space: pre-wrap;
       color: $main-gray-color;
     }

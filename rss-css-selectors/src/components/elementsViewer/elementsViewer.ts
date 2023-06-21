@@ -3,15 +3,14 @@ import { addElement } from '../../utils/utils';
 import './elementsViewer.scss';
 
 export default class ElementsViewer {
-  constructor(public container: HTMLElement, public levelData: ILevelData) {
-    this.initElements();
+  constructor(public container: HTMLElement) {
   }
 
-  initElements(): void {
+  initElements(levelData: ILevelData): void {
     const elementsWrapper = addElement('div', 'elements-wrapper');
 
     const header = addElement('h2', 'elements-header');
-    header.textContent = this.levelData.description;
+    header.textContent = levelData.description;
 
     const helpBtn = addElement('button', 'elements-btn');
     helpBtn.textContent = "Help, I'm stuck!";
@@ -19,7 +18,7 @@ export default class ElementsViewer {
 
     const field = addElement('field');
 
-    this.levelData.items.forEach((elem) => {
+    levelData.items.forEach((elem) => {
       const itemToField = addElement(elem.element, elem.class);
       if (elem.id) itemToField.classList.add(elem.id);
 
