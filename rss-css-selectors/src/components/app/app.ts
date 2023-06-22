@@ -20,8 +20,8 @@ export default class App {
   initApp(levelData: ILevelData): void {
     this.mainContainer.innerHTML = '';
     this.elements.initElements(levelData);
-    this.cssEditor.initCssEditor();
-    this.htmlViewer.initHtmlViewer(levelData);
+    this.cssEditor.initCssEditor(levelData.answer);
+    this.htmlViewer.initHtmlViewer(levelData.items);
     document.body.append(this.mainContainer);
   }
 }

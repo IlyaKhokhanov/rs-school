@@ -51,9 +51,8 @@
     &-item {
       margin-left: 16px;
       color: #fff;
-      // pointer-events: none;
 
-      &:hover {
+      &.hovered {
         .operator,
         .tag,
         .classEl,

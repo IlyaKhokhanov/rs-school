@@ -42,4 +42,21 @@ function elemToHtmlViewer(
   return element;
 }
 
-export { addElement, elemToHtmlViewer };
+function illuminateElementsAndCode(event: MouseEvent, add: boolean): void {
+  if ((event.target as HTMLElement).closest('[data-id]')) {
+    const idElem = (
+      (event.target as HTMLElement).closest('[data-id]') as HTMLElement
+    )?.dataset?.id;
+    if (idElem) {
+      document.querySelectorAll(`[data-id="${idElem}"]`).forEach((el) => {
+        if (add) {
+          el.classList.add('hovered');
+        } else {
+          el.classList.remove('hovered');
+        }
+      });
+    }
+  }
+}
+
+export { addElement, elemToHtmlViewer, illuminateElementsAndCode };

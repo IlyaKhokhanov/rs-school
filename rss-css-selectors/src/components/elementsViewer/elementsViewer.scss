@@ -39,13 +39,21 @@ field {
   align-items: end;
   justify-content: center;
   gap: 25px;
-  height: 280px;
+  height: 250px;
   padding: 20px;
   background-image: url("img/grass.jpg");
   background-size: cover;
   transform-style: flat;
   transform-origin: bottom;
   transform: perspective(200px) rotateX(3deg);
+
+  .hovered {
+    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
+
+    > .tooltip {
+      display: block;
+    }
+  }
 }
 
 box {
@@ -57,14 +65,14 @@ box {
   background-repeat: no-repeat;
   background-position: bottom;
 
-  &:hover {
-    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
-  }
-
   & * {
     position: absolute;
     bottom: 80px;
     left: 26px;
+
+    .tooltip {
+      bottom: -110px;
+    }
   }
 }
 
@@ -77,13 +85,13 @@ bucket {
   background-repeat: no-repeat;
   background-position: bottom;
 
-  &:hover {
-    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
-  }
-
   & * {
     position: absolute;
     bottom: 68px;
+
+    .tooltip {
+      bottom: -100px;
+    }
   }
 }
 
@@ -94,10 +102,6 @@ red-ball {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom;
-
-  &:hover {
-    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
-  }
 }
 
 blue-ball {
@@ -107,15 +111,24 @@ blue-ball {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom;
-
-  &:hover {
-    filter: drop-shadow(2px 2px 2px white) drop-shadow(-2px -2px 2px white);
-  }
 }
 
 .active {
   transform-origin: center bottom;
   animation: active 1.5s infinite linear;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  bottom: -30px;
+  height: 25px;
+  padding: 3px;
+  z-index: 10;
+  background: #fff;
+  font-size: 1.5em;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 @keyframes active {

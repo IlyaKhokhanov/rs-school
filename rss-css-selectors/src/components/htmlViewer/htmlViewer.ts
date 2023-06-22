@@ -1,7 +1,7 @@
 // import hljs from 'highlight.js/lib/core';
 // import xml from 'highlight.js/lib/languages/xml';
-import { addElement, elemToHtmlViewer } from '../../utils/utils';
-import { ILevelData } from '../../utils/types';
+import { addElement, elemToHtmlViewer, illuminateElementsAndCode } from '../../utils/utils';
+import { LevelItemsT } from '../../utils/types';
 import './htmlViewer.scss';
 
 // hljs.registerLanguage('xml', xml);
@@ -18,9 +18,12 @@ import './htmlViewer.scss';
 // ).value;
 
 export default class HtmlViewer {
+  public items: LevelItemsT[] | null = null;
+
   constructor(public container: HTMLElement) {}
 
-  public initHtmlViewer(levelData: ILevelData) {
+  public initHtmlViewer(levelItems: LevelItemsT[]) {
+    this.items = levelItems;
     const htmlViewerWrapper = addElement('div', 'html-viewer-wrapper');
     const htmlViewerHeaderBlock = addElement('div', 'html-viewer-header-block');
     const htmlViewerHeader = addElement(
@@ -45,13 +48,17 @@ export default class HtmlViewer {
     }
 
     const htmlViewerCode = addElement('div', 'html-viewer-code');
+    htmlViewerCode.addEventListener('mouseover', (e) => illuminateElementsAndCode(e, true));
+    htmlViewerCode.addEventListener('mouseout', (e) => illuminateElementsAndCode(e, false));
+
     const fieldOpenDiv = addElement('div');
     const fieldOpenSpan = elemToHtmlViewer('div', true, true, 'field');
     fieldOpenDiv.append(fieldOpenSpan);
     htmlViewerCode.append(fieldOpenDiv);
 
-    levelData.items.forEach((elem) => {
+    this.items.forEach((elem, indx) => {
       const itemToHTML = addElement('div', 'html-viewer-code-item');
+      itemToHTML.dataset.id = String(indx);
       if (!elem.innerElement) {
         const openTag = elemToHtmlViewer(elem.element, true, false, elem.id);
         itemToHTML.append(openTag);
@@ -63,8 +70,9 @@ export default class HtmlViewer {
           elem.id
         );
 
-        itemToHTML.appendChild(openItemToHTML);
+        itemToHTML.append(openItemToHTML);
         const elemToItem = addElement('div', 'html-viewer-code-item');
+        elemToItem.dataset.id = `in${indx}`;
         const spanToElem = elemToHtmlViewer(
           elem.innerElement.element,
           true,
