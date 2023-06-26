@@ -1,4 +1,3 @@
-import levelsData from '../../data/levels.json';
 import { ILevelData } from '../../utils/types';
 import { addElement } from '../../utils/utils';
 import CssEditor from '../cssEditor/cssEditor';
@@ -9,19 +8,25 @@ import LevelViewer from '../levelViewer/levelViewer';
 export default class App {
   private mainContainer: HTMLElement = addElement('main', 'main');
 
-  elements = new ElementsViewer(this.mainContainer);
+  private elements = new ElementsViewer(this.mainContainer);
 
-  cssEditor = new CssEditor(this.mainContainer);
+  private cssEditor = new CssEditor(this.levelComplete.bind(this), this.mainContainer);
 
-  htmlViewer = new HtmlViewer(this.mainContainer);
+  private htmlViewer = new HtmlViewer(this.mainContainer);
 
-  levels = new LevelViewer(this, levelsData);
+  private levels = new LevelViewer(this.mainContainer, this.initApp.bind(this));
 
-  initApp(levelData: ILevelData): void {
+  public initApp(levelData: ILevelData): void {
     this.mainContainer.innerHTML = '';
     this.elements.initElements(levelData);
     this.cssEditor.initCssEditor(levelData.answer);
     this.htmlViewer.initHtmlViewer(levelData.items);
     document.body.append(this.mainContainer);
+  }
+
+  public levelComplete() {
+    setTimeout(() => {
+      this.levels.nextLevel();
+    }, 1000);
   }
 }

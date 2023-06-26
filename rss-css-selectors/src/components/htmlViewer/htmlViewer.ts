@@ -1,26 +1,11 @@
-// import hljs from 'highlight.js/lib/core';
-// import xml from 'highlight.js/lib/languages/xml';
 import { addElement, elemToHtmlViewer, illuminateElementsAndCode } from '../../utils/utils';
 import { LevelItemsT } from '../../utils/types';
 import './htmlViewer.scss';
 
-// hljs.registerLanguage('xml', xml);
-
-// const highlightedCode = hljs.highlight(
-//   `<span>
-//   <h2 class="asd">
-//     Hello World
-//   </h2>
-// </span>`,
-//   {
-//     language: 'xml',
-//   }
-// ).value;
-
 export default class HtmlViewer {
-  public items: LevelItemsT[] | null = null;
+  private items: LevelItemsT[] | null = null;
 
-  constructor(public container: HTMLElement) {}
+  constructor(private container: HTMLElement) {}
 
   public initHtmlViewer(levelItems: LevelItemsT[]) {
     this.items = levelItems;
@@ -29,12 +14,12 @@ export default class HtmlViewer {
     const htmlViewerHeader = addElement(
       'h2',
       'html-viewer-header',
-      'HTML Viewer'
+      'HTML Viewer',
     );
     const htmlViewerHeaderFile = addElement(
       'span',
       'html-viewer-header-file',
-      'field.html'
+      'field.html',
     );
 
     htmlViewerHeaderBlock.append(htmlViewerHeader, htmlViewerHeaderFile);
@@ -67,7 +52,7 @@ export default class HtmlViewer {
           elem.element,
           true,
           true,
-          elem.id
+          elem.id,
         );
 
         itemToHTML.append(openItemToHTML);
@@ -77,7 +62,7 @@ export default class HtmlViewer {
           elem.innerElement.element,
           true,
           false,
-          elem.innerElement.id
+          elem.innerElement.id,
         );
 
         elemToItem.append(spanToElem);

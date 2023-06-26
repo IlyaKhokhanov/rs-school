@@ -2,18 +2,22 @@ import { addElement } from '../../utils/utils';
 import './cssEditor.scss';
 
 export default class CssEditor {
+  private complete = false;
+
   private cssEditorInput: HTMLInputElement | null = null;
 
-  constructor(private container: HTMLElement) {}
+  constructor(private callback: () => void, private container: HTMLElement) {}
 
   public initCssEditor(answer: string[]) {
+    this.complete = false;
+
     const cssEditorWrapper = addElement('div', 'css-editor-wrapper');
     const cssEditorHeaderBlock = addElement('div', 'css-editor-header-block');
     const cssEditorHeader = addElement('h2', 'css-editor-header', 'CSS Editor');
     const cssEditorHeaderFile = addElement(
       'span',
       'css-editor-header-file',
-      'style.css'
+      'style.css',
     );
 
     cssEditorHeaderBlock.append(cssEditorHeader, cssEditorHeaderFile);
@@ -21,7 +25,7 @@ export default class CssEditor {
     const cssEditorCodeWrapper = addElement('div', 'css-editor-code-wrapper');
     const cssEditorNumbers = addElement('div', 'css-editor-code-numbers');
 
-    for (let i = 1; i <= 19; i += 1) {
+    for (let i = 1; i <= 20; i += 1) {
       const numberEl = addElement('div', 'css-editor-code-number', String(i));
       cssEditorNumbers.append(numberEl);
     }
@@ -35,7 +39,7 @@ export default class CssEditor {
 
     const cssEditorInputWrapper = addElement(
       'div',
-      'css-editor-code-input-wrapper'
+      'css-editor-code-input-wrapper',
     );
 
     this.cssEditorInput = document.createElement('input');
@@ -48,7 +52,7 @@ export default class CssEditor {
 
     cssEditorInputWrapper.append(this.cssEditorInput, cssEditorInputBtn);
 
-    const cssEditorCodeVal = addElement('div', 'css-editor-code-value');
+    const cssEditorCodeVal = addElement('span', 'css-editor-code-value');
 
     cssEditorCodeVal.textContent = '{\n/* Styles would go here. */\n}';
 
@@ -61,18 +65,26 @@ export default class CssEditor {
 
   private checkAnswer(answer: string[]) {
     if (this.cssEditorInput?.value) {
-      if (
-        answer.includes(
-          this.cssEditorInput.value
-            .split(' ')
-            .map((item) => item.trim())
-            .join(' ')
-        )
-      ) {
-        console.log('win');
+      if (answer.includes(this.cssEditorInput.value)) {
+        const activeEl = document.querySelectorAll('.active');
+        activeEl.forEach((elem) => {
+          elem.classList.add('complete');
+        });
+        if (!this.complete) {
+          this.callback();
+          this.complete = true;
+        }
       } else {
-        console.log('lose');
+        this.container.classList.add('error');
+        setTimeout(() => {
+          this.container.classList.remove('error');
+        }, 200);
       }
+    } else {
+      this.container.classList.add('error');
+      setTimeout(() => {
+        this.container.classList.remove('error');
+      }, 200);
     }
   }
 }

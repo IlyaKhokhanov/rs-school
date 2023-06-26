@@ -2,6 +2,7 @@
 
 .css-editor {
   &-wrapper {
+    align-self: flex-start;
     padding: 8px 0 8px 8px;
     background: $dark-gray-color;
     border-radius: 10px 0 0 10px;
@@ -34,7 +35,7 @@
     &-wrapper {
       display: grid;
       grid-template-columns: 25px 1fr;
-      height: 350px;
+      height: 37vh;
       border-radius: 0 0 0 10px;
       overflow: hidden;
     }
@@ -49,6 +50,7 @@
     }
 
     &-input {
+      width: 100px;
       background: transparent;
       border: none;
       outline: none;

@@ -27,5 +27,27 @@ ul {
   padding: 0 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 400px 1fr;
+  grid-template-rows: 41vh 1fr;
+}
+
+.error {
+  animation: error 0.2s linear;
+}
+
+@keyframes error {
+  from {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-8px);
+  }
+
+  75% {
+    transform: translateX(8px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }

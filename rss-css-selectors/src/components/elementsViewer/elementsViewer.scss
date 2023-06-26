@@ -39,7 +39,7 @@ field {
   align-items: end;
   justify-content: center;
   gap: 25px;
-  height: 250px;
+  height: 28vh;
   padding: 20px;
   background-image: url("img/grass.jpg");
   background-size: cover;
@@ -53,6 +53,10 @@ field {
     > .tooltip {
       display: block;
     }
+  }
+
+  & * {
+    transition: opacity 1s ease-in;
   }
 }
 
@@ -116,6 +120,10 @@ blue-ball {
 .active {
   transform-origin: center bottom;
   animation: active 1.5s infinite linear;
+}
+
+.complete {
+  opacity: 0;
 }
 
 .tooltip {

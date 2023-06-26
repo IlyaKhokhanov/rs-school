@@ -4,11 +4,11 @@ import './elementsViewer.scss';
 
 export default class ElementsViewer {
   constructor(
-    public container: HTMLElement,
-    public items?: LevelItemsT[] | null[] | null,
+    private container: HTMLElement,
+    private items?: LevelItemsT[] | null,
   ) {}
 
-  initElements(levelData: ILevelData): void {
+  public initElements(levelData: ILevelData): void {
     this.items = levelData.items;
 
     const elementsWrapper = addElement('div', 'elements-wrapper');

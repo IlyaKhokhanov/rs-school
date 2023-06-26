@@ -1,18 +1,21 @@
 import { ILevelData } from '../../utils/types';
 import { addElement } from '../../utils/utils';
-import App from '../app/app';
+import data from '../../data/levels.json';
 import './levelViewer.scss';
+import Modal from '../modal/modal';
 
 export default class LevelViewer {
-  currentLevel: number | null = 0;
+  private levelsData: ILevelData[] = /* JSON.parse(localStorage.getItem('testData')) || */ data;
+
+  private currentLevel: number | null = 0;
 
   private sidebar: HTMLElement = addElement('aside', 'sidebar');
 
-  constructor(private app: App, private levelsData: ILevelData[]) {
+  constructor(private container: HTMLElement, private callback:(levelData: ILevelData)=> void) {
     this.initLevels();
   }
 
-  public initLevels(): void {
+  private initLevels(): void {
     this.sidebar.innerHTML = '';
 
     const sidebarHeader: HTMLElement = addElement('h2', 'sidebar-header');
@@ -35,8 +38,7 @@ export default class LevelViewer {
       elem.addEventListener('click', (e) => {
         const { target } = e;
         if (target) {
-          this.currentLevel =
-            Number((target as HTMLElement).textContent?.split(' ')[1]) - 1;
+          this.currentLevel = Number((target as HTMLElement).textContent?.split(' ')[1]) - 1;
         }
         this.initLevels();
       });
@@ -50,26 +52,41 @@ export default class LevelViewer {
 
     const sidebarButton: HTMLElement = addElement(
       'button',
-      'sidebar-reset--btn'
+      'sidebar-reset--btn',
     );
 
     sidebarButton.textContent = 'Reset Progress';
-    sidebarButton.addEventListener('click', () => {
-      this.levelsData.map((level) => ({
-        ...level,
-        complete: false,
-      }));
-      this.currentLevel = 0;
-      this.initLevels();
-    });
+    sidebarButton.addEventListener('click', () => this.resetProgress());
 
     this.sidebar.append(sidebarHeader, sidebarList, sidebarButton);
     document.body.append(this.sidebar);
-    this.app.initApp(this.levelsData[this.currentLevel || 0]);
+    this.callback(this.levelsData[this.currentLevel || 0]);
+  }
+
+  private resetProgress(): void {
+    this.levelsData = this.levelsData.map((level) => ({
+      ...level,
+      complete: false,
+    }));
+    this.currentLevel = 0;
+    this.initLevels();
   }
 
   public nextLevel(): void {
-    if (this.currentLevel) this.currentLevel += 1;
-    this.initLevels();
+    if (this.currentLevel !== null) {
+      this.levelsData[this.currentLevel].complete = true;
+      if (this.currentLevel !== this.levelsData.length - 1) this.currentLevel += 1;
+      if (this.levelsData.length === this.levelsData.filter((level) => level.complete).length) {
+        this.initLevels();
+        const modal = new Modal(this.container, this.resetProgress.bind(this));
+      } else if (this.currentLevel === this.levelsData.length - 1) {
+        this.currentLevel = this.levelsData.findIndex((el) => !el.complete);
+        this.initLevels();
+      } else if (!this.levelsData[this.currentLevel].complete) {
+        this.initLevels();
+      } else {
+        this.nextLevel();
+      }
+    }
   }
 }
