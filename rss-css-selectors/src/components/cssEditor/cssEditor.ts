@@ -6,10 +6,13 @@ export default class CssEditor {
 
   private cssEditorInput: HTMLInputElement | null = null;
 
-  constructor(private callback: () => void, private container: HTMLElement) {}
+  private answerArr: string[] | null = null;
+
+  constructor(private container: HTMLElement, private callback: () => void) {}
 
   public initCssEditor(answer: string[]) {
     this.complete = false;
+    this.answerArr = answer;
 
     const cssEditorWrapper = addElement('div', 'css-editor-wrapper');
     const cssEditorHeaderBlock = addElement('div', 'css-editor-header-block');
@@ -63,7 +66,7 @@ export default class CssEditor {
     this.container.append(cssEditorWrapper);
   }
 
-  private checkAnswer(answer: string[]) {
+  private checkAnswer(answer: string[]): void {
     if (this.cssEditorInput?.value) {
       if (answer.includes(this.cssEditorInput.value)) {
         const activeEl = document.querySelectorAll('.active');
@@ -85,6 +88,22 @@ export default class CssEditor {
       setTimeout(() => {
         this.container.classList.remove('error');
       }, 200);
+    }
+  }
+
+  public addAnswer(): void {
+    if (this.answerArr && this.cssEditorInput instanceof HTMLInputElement) {
+      const [answer] = this.answerArr;
+      const { cssEditorInput } = this;
+      let count = 0;
+
+      setTimeout(function write() {
+        cssEditorInput.value += answer[count];
+        if (count < answer.length - 1) {
+          setTimeout(write, 300);
+        }
+        count += 1;
+      }, 300);
     }
   }
 }

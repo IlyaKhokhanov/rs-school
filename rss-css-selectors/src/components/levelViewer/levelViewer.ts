@@ -33,7 +33,17 @@ export default class LevelViewer {
       const elemText = addElement('span', 'sidebar-level--text');
       elemText.textContent = level.name;
 
-      elem.append(icon, elemText);
+      const elemWrapper = addElement('span', 'sidebar-level--wrapper');
+      elemWrapper.append(icon, elemText);
+
+      elem.append(elemWrapper);
+
+      if (level.help) {
+        const iconHelp: HTMLImageElement = document.createElement('img');
+        iconHelp.classList.add('sidebar-level--img');
+        iconHelp.src = './img/question.png';
+        elem.append(iconHelp);
+      }
 
       elem.addEventListener('click', (e) => {
         const { target } = e;
@@ -87,6 +97,12 @@ export default class LevelViewer {
       } else {
         this.nextLevel();
       }
+    }
+  }
+
+  public addInfoHelp(): void {
+    if (this.currentLevel !== null) {
+      this.levelsData[this.currentLevel].help = true;
     }
   }
 }

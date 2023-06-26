@@ -25,6 +25,7 @@
   &-level {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 5px;
     padding: 5px;
     font-size: 2em;
@@ -32,6 +33,12 @@
 
     &:hover {
       background: $light-gray-color;
+    }
+
+    &--wrapper {
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     &--active {

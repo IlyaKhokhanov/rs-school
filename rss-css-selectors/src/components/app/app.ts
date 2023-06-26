@@ -8,15 +8,15 @@ import LevelViewer from '../levelViewer/levelViewer';
 export default class App {
   private mainContainer: HTMLElement = addElement('main', 'main');
 
-  private elements = new ElementsViewer(this.mainContainer);
+  private elements = new ElementsViewer(this.mainContainer, this.helpWithAnswer.bind(this));
 
-  private cssEditor = new CssEditor(this.levelComplete.bind(this), this.mainContainer);
+  private cssEditor = new CssEditor(this.mainContainer, this.levelComplete.bind(this));
 
   private htmlViewer = new HtmlViewer(this.mainContainer);
 
   private levels = new LevelViewer(this.mainContainer, this.initApp.bind(this));
 
-  public initApp(levelData: ILevelData): void {
+  private initApp(levelData: ILevelData): void {
     this.mainContainer.innerHTML = '';
     this.elements.initElements(levelData);
     this.cssEditor.initCssEditor(levelData.answer);
@@ -24,9 +24,14 @@ export default class App {
     document.body.append(this.mainContainer);
   }
 
-  public levelComplete() {
+  private levelComplete() {
     setTimeout(() => {
       this.levels.nextLevel();
     }, 1000);
+  }
+
+  private helpWithAnswer() {
+    this.cssEditor.addAnswer();
+    this.levels.addInfoHelp();
   }
 }

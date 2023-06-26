@@ -3,10 +3,9 @@ import { addElement, illuminateElementsAndCode } from '../../utils/utils';
 import './elementsViewer.scss';
 
 export default class ElementsViewer {
-  constructor(
-    private container: HTMLElement,
-    private items?: LevelItemsT[] | null,
-  ) {}
+  private items?: LevelItemsT[] | null = null;
+
+  constructor(private container: HTMLElement, private callback: () => void) {}
 
   public initElements(levelData: ILevelData): void {
     this.items = levelData.items;
@@ -18,7 +17,7 @@ export default class ElementsViewer {
 
     const helpBtn = addElement('button', 'elements-btn');
     helpBtn.textContent = "Help, I'm stuck!";
-    helpBtn.addEventListener('click', (e) => console.log('help me'));
+    helpBtn.addEventListener('click', this.callback);
 
     const field = addElement('field');
     field.addEventListener('mouseover', (e) => illuminateElementsAndCode(e, true));

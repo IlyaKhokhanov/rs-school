@@ -8,7 +8,8 @@ export type LevelItemsT = {
 export interface ILevelData {
   name: string;
   description: string;
-  complete: boolean;
   answer: string[];
   items: LevelItemsT[];
+  complete: boolean;
+  help?: boolean;
 }
