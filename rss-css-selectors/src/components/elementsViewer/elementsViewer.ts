@@ -11,7 +11,6 @@ export default class ElementsViewer {
     this.items = levelData.items;
 
     const elementsWrapper = addElement('div', 'elements-wrapper');
-
     const header = addElement('h2', 'elements-header');
     header.textContent = levelData.description;
 

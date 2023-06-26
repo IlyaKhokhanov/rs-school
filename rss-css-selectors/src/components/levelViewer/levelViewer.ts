@@ -4,10 +4,12 @@ import data from '../../data/levels.json';
 import './levelViewer.scss';
 import Modal from '../modal/modal';
 
-export default class LevelViewer {
-  private levelsData: ILevelData[] = /* JSON.parse(localStorage.getItem('testData')) || */ data;
+const LSdata: string | null = localStorage.getItem('testDataKH');
 
-  private currentLevel: number | null = 0;
+export default class LevelViewer {
+  private levelsData: ILevelData[] = LSdata ? JSON.parse(LSdata) : data;
+
+  private currentLevel: number | null = Number(localStorage.getItem('testLevelKH')) || 0;
 
   private sidebar: HTMLElement = addElement('aside', 'sidebar');
 
@@ -17,15 +19,12 @@ export default class LevelViewer {
 
   private initLevels(): void {
     this.sidebar.innerHTML = '';
-
     const sidebarHeader: HTMLElement = addElement('h2', 'sidebar-header');
     sidebarHeader.textContent = 'Levels';
 
     const sidebarList: HTMLElement = addElement('ul', 'sidebar-list');
-
     this.levelsData.forEach((level, levelIndx) => {
       const elem: HTMLElement = addElement('li', 'sidebar-level');
-
       const icon: HTMLImageElement = document.createElement('img');
       icon.classList.add('sidebar-level--img');
       icon.src = `./img/check-${level.complete ? 'green' : 'black'}.png`;
@@ -35,7 +34,6 @@ export default class LevelViewer {
 
       const elemWrapper = addElement('span', 'sidebar-level--wrapper');
       elemWrapper.append(icon, elemText);
-
       elem.append(elemWrapper);
 
       if (level.help) {
@@ -44,7 +42,6 @@ export default class LevelViewer {
         iconHelp.src = './img/question.png';
         elem.append(iconHelp);
       }
-
       elem.addEventListener('click', (e) => {
         const { target } = e;
         if (target) {
@@ -52,11 +49,9 @@ export default class LevelViewer {
         }
         this.initLevels();
       });
-
       if (this.currentLevel === levelIndx) {
         elem.classList.add('sidebar-level--active');
       }
-
       sidebarList.append(elem);
     });
 
@@ -64,7 +59,6 @@ export default class LevelViewer {
       'button',
       'sidebar-reset--btn',
     );
-
     sidebarButton.textContent = 'Reset Progress';
     sidebarButton.addEventListener('click', () => this.resetProgress());
 
@@ -77,9 +71,12 @@ export default class LevelViewer {
     this.levelsData = this.levelsData.map((level) => ({
       ...level,
       complete: false,
+      help: false,
     }));
     this.currentLevel = 0;
     this.initLevels();
+    localStorage.removeItem('testDataKH');
+    localStorage.removeItem('testLevelKH');
   }
 
   public nextLevel(): void {
@@ -98,6 +95,8 @@ export default class LevelViewer {
         this.nextLevel();
       }
     }
+    localStorage.setItem('testDataKH', JSON.stringify(this.levelsData));
+    localStorage.setItem('testLevelKH', JSON.stringify(this.currentLevel));
   }
 
   public addInfoHelp(): void {
