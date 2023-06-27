@@ -22,18 +22,18 @@
   },
   {
     "name": "Level 3",
-    "description": "Select the boxes",
+    "description": "Select the fancy box",
     "complete": false,
     "items": [
-      { "element": "box", "class": "active", "id": "fansy" },
+      { "element": "box", "class": "active", "id": "fancy" },
       { "element": "box" },
       { "element": "bucket" }
     ],
-    "answer": [".fansy"]
+    "answer": [".fancy"]
   },
   {
     "name": "Level 4",
-    "description": "Select the boxes",
+    "description": "Select the red ball in the bucket",
     "complete": false,
     "items": [
       { "element": "box" },
@@ -47,7 +47,7 @@
   },
   {
     "name": "Level 5",
-    "description": "Select the boxes",
+    "description": "Select the red ball in the fancy bucket",
     "complete": false,
     "items": [
       { "element": "box", "innerElement": { "element": "blue-ball" } },
@@ -64,6 +64,226 @@
         "innerElement": { "element": "red-ball" }
       }
     ],
-    "answer": [".fansy red-ball"]
+    "answer": [".fancy red-ball"]
+  },
+  {
+    "name": "Level 6",
+    "description": "Select the small red balls",
+    "complete": false,
+    "items": [
+      { "element": "red-ball" },
+      { "element": "red-ball", "class": ["active", "small"], "id": "small" },
+      {
+        "element": "bucket",
+        "innerElement": {
+          "element": "red-ball",
+          "class": ["active", "small"],
+          "id": "small"
+        }
+      },
+      { "element": "bucket" }
+    ],
+    "answer": [".small", "red-ball.small"]
+  },
+  {
+    "name": "Level 7",
+    "description": "Select the small blue balls",
+    "complete": false,
+    "items": [
+      { "element": "red-ball" },
+      { "element": "red-ball", "class": "small", "id": "small" },
+      {
+        "element": "box",
+        "innerElement": {
+          "element": "blue-ball",
+          "class": ["active", "small"],
+          "id": "small"
+        }
+      },
+      {
+        "element": "bucket",
+        "innerElement": {
+          "element": "blue-ball"
+        }
+      },
+      {
+        "element": "bucket",
+        "innerElement": {
+          "element": "blue-ball",
+          "class": ["active", "small"],
+          "id": "small"
+        }
+      }
+    ],
+    "answer": ["blue-ball.small"]
+  },
+  {
+    "name": "Level 8",
+    "description": "Select the small blue balls in the boxes",
+    "complete": false,
+    "items": [
+      {
+        "element": "box",
+        "innerElement": {
+          "element": "blue-ball"
+        }
+      },
+      {
+        "element": "blue-ball",
+        "class": "small",
+        "id": "small"
+      },
+      {
+        "element": "box",
+        "innerElement": {
+          "element": "blue-ball",
+          "class": ["active", "small"],
+          "id": "small"
+        }
+      },
+      {
+        "element": "box",
+        "innerElement": {
+          "element": "red-ball",
+          "class": "small",
+          "id": "small"
+        }
+      },
+      {
+        "element": "box",
+        "innerElement": {
+          "element": "blue-ball",
+          "class": ["active", "small"],
+          "id": "small"
+        }
+      }
+    ],
+    "answer": ["box blue-ball.small"]
+  },
+  {
+    "name": "Level 9",
+    "description": "Select all the buckets and boxes",
+    "complete": false,
+    "items": [
+      {
+        "element": "blue-ball",
+        "class": "small",
+        "id": "small"
+      },
+      {
+        "element": "blue-ball"
+      },
+      {
+        "element": "bucket",
+        "class": "active",
+        "innerElement": {
+          "element": "blue-ball"
+        }
+      },
+      {
+        "element": "box",
+        "class": "active",
+        "innerElement": {
+          "element": "blue-ball"
+        }
+      },
+      {
+        "element": "bucket",
+        "class": "active",
+        "innerElement": {
+          "element": "blue-ball"
+        }
+      },
+      {
+        "element": "blue-ball"
+      },
+      {
+        "element": "blue-ball",
+        "class": "small",
+        "id": "small"
+      }
+    ],
+    "answer": ["box, bucket"]
+  },
+  {
+    "name": "Level 10",
+    "description": "Select all the things!",
+    "complete": false,
+    "items": [
+      {
+        "element": "red-ball",
+        "class": "active"
+      },
+      {
+        "element": "bucket",
+        "class": "active",
+        "innerElement": {
+          "element": "blue-ball",
+          "class": "small",
+          "id": "small"
+        }
+      },
+      {
+        "element": "box",
+        "class": "active"
+      },
+      {
+        "element": "box",
+        "class": "active",
+        "innerElement": {
+          "element": "blue-ball"
+        }
+      },
+      {
+        "element": "bucket",
+        "class": "active",
+        "innerElement": {
+          "element": "blue-ball"
+        }
+      },
+      {
+        "element": "bucket",
+        "class": "active",
+        "id": "fancy"
+      }
+    ],
+    "answer": ["*"]
+  },
+  {
+    "name": "Level 11",
+    "description": "Select everything in a buckets",
+    "complete": false,
+    "items": [
+      {
+        "element": "bucket",
+        "id": "fancy",
+        "innerElement": {
+          "element": "blue-ball",
+          "class": ["active", "small"],
+          "id": "small"
+        }
+      },
+      {
+        "element": "bucket",
+        "innerElement": {
+          "element": "red-ball",
+          "class": ["active", "small"],
+          "id": "small"
+        }
+      },
+      {
+        "element": "red-ball",
+        "class": "small",
+        "id": "small"
+      },
+      {
+        "element": "bucket",
+        "innerElement": {
+          "element": "red-ball",
+          "class": "active"
+        }
+      }
+    ],
+    "answer": ["bucket *", "bucket > *"]
   }
 ]

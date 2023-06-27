@@ -10,7 +10,7 @@ export default class CssEditor {
 
   constructor(private container: HTMLElement, private callback: () => void) {}
 
-  public initCssEditor(answer: string[]) {
+  public initCssEditor(answer: string[]): void {
     this.complete = false;
     this.answerArr = answer;
 

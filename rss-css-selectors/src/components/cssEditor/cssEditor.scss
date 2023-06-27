@@ -32,10 +32,14 @@
     background: #ccc;
     font-size: 1.6em;
 
+    @media (max-width: 620px) {
+      font-size: 1.4em;
+    }
+
     &-wrapper {
       display: grid;
       grid-template-columns: 25px 1fr;
-      height: 37vh;
+      height: 35vh;
       border-radius: 0 0 0 10px;
       overflow: hidden;
     }
@@ -47,6 +51,10 @@
       padding-top: 5px;
       background: #b6b6b6;
       font-size: 1.6em;
+
+      @media (max-width: 620px) {
+        font-size: 1.4em;
+      }
     }
 
     &-input {

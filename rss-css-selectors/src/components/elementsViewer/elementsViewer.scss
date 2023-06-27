@@ -8,12 +8,12 @@
     align-items: center;
     gap: 5px;
     transform-style: flat;
-    overflow-x: auto;
   }
 
   &-header {
     padding: 0;
-    font-size: 4em;
+    font-size: 3.5em;
+    text-align: center;
   }
 
   &-btn {
@@ -33,14 +33,23 @@
       background: $light-gray-color;
     }
   }
+
+  &-field-wrapper {
+    width: 100%;
+    padding: 0 5px;
+    height: 29vh;
+    overflow-x: auto;
+  }
 }
 
 field {
+  width: min-content;
+  margin: 0 auto;
   display: flex;
   align-items: end;
   justify-content: center;
   gap: 25px;
-  height: 28vh;
+  height: 25vh;
   padding: 20px;
   background-image: url("img/grass.jpg");
   background-size: cover;
@@ -68,12 +77,16 @@ box {
   background-image: url("img/box.png");
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: center bottom;
 
   & * {
     position: absolute;
     bottom: 80px;
     left: 26px;
+
+    &.small {
+      left: 55px;
+    }
 
     .tooltip {
       bottom: -110px;
@@ -88,11 +101,15 @@ bucket {
   background-image: url("img/bucket.png");
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: center bottom;
 
   & * {
     position: absolute;
     bottom: 68px;
+
+    &.small {
+      left: 25px;
+    }
 
     .tooltip {
       bottom: -100px;
@@ -106,7 +123,7 @@ red-ball {
   background-image: url("img/red-ball.png");
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: center bottom;
 }
 
 blue-ball {
@@ -115,12 +132,17 @@ blue-ball {
   background-image: url("img/blue-ball.png");
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: center bottom;
 }
 
 .active {
   transform-origin: center bottom;
   animation: active 1.5s infinite linear;
+}
+
+.small {
+  height: 75px;
+  width: 50px;
 }
 
 .complete {

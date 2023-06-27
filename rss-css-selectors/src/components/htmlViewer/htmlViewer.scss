@@ -49,6 +49,10 @@
     background-color: $light-gray-color;
     font-size: 1.6em;
 
+    @media (max-width: 620px) {
+      font-size: 1.4em;
+    }
+
     &-item {
       margin-left: 16px;
       color: #fff;
@@ -66,7 +70,7 @@
     &-wrapper {
       display: grid;
       grid-template-columns: 25px 1fr;
-      height: 37vh;
+      height: 35vh;
       border-radius: 0 0 10px 0;
       overflow: hidden;
     }
@@ -78,6 +82,10 @@
       padding-top: 5px;
       background: $main-gray-color;
       font-size: 1.6em;
+
+      @media (max-width: 620px) {
+        font-size: 1.4em;
+      }
     }
   }
 }

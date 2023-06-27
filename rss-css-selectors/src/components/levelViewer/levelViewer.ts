@@ -124,7 +124,7 @@ export default class LevelViewer {
     }
   }
 
-  resetAndInitEventListeners() {
+  private resetAndInitEventListeners(): void {
     const sidebarBtnSpan1 = addElement('span');
     const sidebarBtnSpan2 = addElement('span');
     const sidebarBtnSpan3 = addElement('span');
@@ -143,7 +143,7 @@ export default class LevelViewer {
     this.sidebarBtn.addEventListener('click', () => this.toggleMenu());
   }
 
-  private toggleMenu() {
+  private toggleMenu(): void {
     this.sidebarBtn.classList.toggle('sidebar__btn--active');
     this.sidebar.classList.toggle('sidebar--active');
     this.sidebarOverlay.classList.toggle('sidebar-overlay--active');

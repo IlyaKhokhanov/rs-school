@@ -27,7 +27,7 @@ ul {
   padding: 0 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 41vh 1fr;
+  grid-template-rows: 43vh 40vh;
 
   @media (max-width: 767px) {
     right: 0;

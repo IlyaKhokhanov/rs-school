@@ -6,7 +6,7 @@ export default class Modal {
     this.initModal();
   }
 
-  private initModal() {
+  private initModal(): void {
     const overlay = addElement('div', 'overlay');
     overlay.addEventListener('click', (e) => {
       const { target } = e;

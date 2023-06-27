@@ -1,10 +1,18 @@
 function addElement(
   tagName: string,
-  className?: string,
+  className?: string | [],
   textContent?: string,
 ): HTMLElement {
   const elem: HTMLElement = document.createElement(tagName);
-  if (className) elem.classList.add(className);
+  if (className) {
+    if (className instanceof Array) {
+      className.forEach((classEl) => {
+        elem.classList.add(classEl);
+      });
+    } else {
+      elem.classList.add(className);
+    }
+  }
   if (textContent) elem.textContent = textContent;
   return elem;
 }

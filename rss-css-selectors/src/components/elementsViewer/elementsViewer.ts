@@ -18,6 +18,8 @@ export default class ElementsViewer {
     helpBtn.textContent = "Help, I'm stuck!";
     helpBtn.addEventListener('click', this.callback);
 
+    const fieldWrapper = addElement('div', 'elements-field-wrapper');
+
     const field = addElement('field');
     field.addEventListener('mouseover', (e) => illuminateElementsAndCode(e, true));
     field.addEventListener('mouseout', (e) => illuminateElementsAndCode(e, false));
@@ -53,7 +55,8 @@ export default class ElementsViewer {
       field.append(itemToField);
     });
 
-    elementsWrapper.append(header, helpBtn, field);
+    fieldWrapper.append(field);
+    elementsWrapper.append(header, helpBtn, fieldWrapper);
     this.container.append(elementsWrapper);
   }
 }

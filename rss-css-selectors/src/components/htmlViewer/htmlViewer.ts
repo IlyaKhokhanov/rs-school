@@ -7,7 +7,7 @@ export default class HtmlViewer {
 
   constructor(private container: HTMLElement) {}
 
-  public initHtmlViewer(levelItems: LevelItemsT[]) {
+  public initHtmlViewer(levelItems: LevelItemsT[]): void {
     this.items = levelItems;
     const htmlViewerWrapper = addElement('div', 'html-viewer-wrapper');
     const htmlViewerHeaderBlock = addElement('div', 'html-viewer-header-block');
@@ -27,7 +27,7 @@ export default class HtmlViewer {
     const htmlViewerCodeWrapper = addElement('div', 'html-viewer-code-wrapper');
     const htmlViewerNumbers = addElement('div', 'html-viewer-code-numbers');
 
-    for (let i = 1; i <= 19; i += 1) {
+    for (let i = 1; i <= 20; i += 1) {
       const numberEl = addElement('div', 'html-viewer-code-number', String(i));
       htmlViewerNumbers.append(numberEl);
     }
