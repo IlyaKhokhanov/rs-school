@@ -9,6 +9,10 @@
   gap: 7px;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 767px) {
+    right: 0;
+  }
 }
 
 .rss {

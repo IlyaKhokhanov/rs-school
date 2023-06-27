@@ -13,7 +13,15 @@ export default class LevelViewer {
 
   private sidebar: HTMLElement = addElement('aside', 'sidebar');
 
-  constructor(private container: HTMLElement, private callback:(levelData: ILevelData)=> void) {
+  private sidebarBtn: HTMLElement = addElement('button', 'sidebar__btn');
+
+  private sidebarOverlay: HTMLElement = addElement('div', 'sidebar-overlay');
+
+  constructor(
+    private container: HTMLElement,
+    private callback: (levelData: ILevelData) => void,
+  ) {
+    this.resetAndInitEventListeners();
     this.initLevels();
   }
 
@@ -55,15 +63,25 @@ export default class LevelViewer {
       sidebarList.append(elem);
     });
 
-    const sidebarButton: HTMLElement = addElement(
+    const sidebarResetBtn: HTMLElement = addElement(
       'button',
       'sidebar-reset--btn',
     );
-    sidebarButton.textContent = 'Reset Progress';
-    sidebarButton.addEventListener('click', () => this.resetProgress());
+    sidebarResetBtn.textContent = 'Reset Progress';
+    sidebarResetBtn.addEventListener('click', () => {
+      this.resetProgress();
+      if (document.documentElement.clientWidth < 768) {
+        this.toggleMenu();
+      }
+    });
 
-    this.sidebar.append(sidebarHeader, sidebarList, sidebarButton);
-    document.body.append(this.sidebar);
+    this.sidebar.append(
+      this.sidebarBtn,
+      sidebarHeader,
+      sidebarList,
+      sidebarResetBtn,
+    );
+    document.body.append(this.sidebarOverlay, this.sidebar);
     this.callback(this.levelsData[this.currentLevel || 0]);
   }
 
@@ -83,7 +101,8 @@ export default class LevelViewer {
     if (this.currentLevel !== null) {
       this.levelsData[this.currentLevel].complete = true;
       if (this.currentLevel !== this.levelsData.length - 1) this.currentLevel += 1;
-      if (this.levelsData.length === this.levelsData.filter((level) => level.complete).length) {
+      if (this.levelsData.length === this.levelsData.filter((level) => level.complete).length
+      ) {
         this.initLevels();
         const modal = new Modal(this.container, this.resetProgress.bind(this));
       } else if (this.currentLevel === this.levelsData.length - 1) {
@@ -103,5 +122,31 @@ export default class LevelViewer {
     if (this.currentLevel !== null) {
       this.levelsData[this.currentLevel].help = true;
     }
+  }
+
+  resetAndInitEventListeners() {
+    const sidebarBtnSpan1 = addElement('span');
+    const sidebarBtnSpan2 = addElement('span');
+    const sidebarBtnSpan3 = addElement('span');
+    this.sidebarBtn.append(sidebarBtnSpan1, sidebarBtnSpan2, sidebarBtnSpan3);
+    this.sidebar.addEventListener('click', (e) => {
+      const { target } = e;
+      if (
+        target
+        && (<HTMLElement>target).closest('.sidebar-level')
+        && this.sidebar.closest('.sidebar--active')
+      ) {
+        this.toggleMenu();
+      }
+    });
+    this.sidebarOverlay.addEventListener('click', () => this.toggleMenu());
+    this.sidebarBtn.addEventListener('click', () => this.toggleMenu());
+  }
+
+  private toggleMenu() {
+    this.sidebarBtn.classList.toggle('sidebar__btn--active');
+    this.sidebar.classList.toggle('sidebar--active');
+    this.sidebarOverlay.classList.toggle('sidebar-overlay--active');
+    document.body.style.overflow = document.body.style.overflow ? '' : 'hidden';
   }
 }
