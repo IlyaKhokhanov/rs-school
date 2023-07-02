@@ -20,7 +20,7 @@
   &-wrapper {
     align-self: flex-start;
     padding: 8px 8px 8px 0;
-    background: $dark-gray-color;
+    background: $dark-primary-color;
     border-radius: 0 10px 10px 0;
     cursor: default;
     letter-spacing: 0.8px;
@@ -35,7 +35,7 @@
       padding: 8px;
       justify-content: space-between;
       border-radius: 0 10px 0 0;
-      background: $main-gray-color;
+      background: $main-color;
     }
 
     &-file {
@@ -46,7 +46,7 @@
   &-code {
     height: 100%;
     padding: 5px 0 0 10px;
-    background-color: $light-gray-color;
+    background-color: $light-primary-color;
     font-size: 1.6em;
 
     @media (max-width: 620px) {
@@ -80,7 +80,7 @@
       flex-direction: column;
       align-items: center;
       padding-top: 5px;
-      background: $main-gray-color;
+      background: $main-color;
       font-size: 1.6em;
 
       @media (max-width: 620px) {

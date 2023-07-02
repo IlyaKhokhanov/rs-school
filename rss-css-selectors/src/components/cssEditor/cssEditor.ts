@@ -1,6 +1,8 @@
 import { addElement } from '../../utils/utils';
 import './cssEditor.scss';
 
+const numbersCount = 20;
+
 export default class CssEditor {
   private complete = false;
 
@@ -28,7 +30,7 @@ export default class CssEditor {
     const cssEditorCodeWrapper = addElement('div', 'css-editor-code-wrapper');
     const cssEditorNumbers = addElement('div', 'css-editor-code-numbers');
 
-    for (let i = 1; i <= 20; i += 1) {
+    for (let i = 1; i <= numbersCount; i += 1) {
       const numberEl = addElement('div', 'css-editor-code-number', String(i));
       cssEditorNumbers.append(numberEl);
     }

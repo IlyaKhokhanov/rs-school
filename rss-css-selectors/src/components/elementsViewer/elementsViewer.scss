@@ -18,7 +18,7 @@
 
   &-btn {
     padding: 10px 15px;
-    background: $dark-gray-color;
+    background: $dark-primary-color;
     font-size: 1.5em;
     font-weight: bold;
     border: none;
@@ -26,11 +26,11 @@
     cursor: pointer;
 
     &:hover {
-      background: $light-gray-color;
+      background: $light-primary-color;
     }
 
     &:active {
-      background: $light-gray-color;
+      background: $light-primary-color;
     }
   }
 

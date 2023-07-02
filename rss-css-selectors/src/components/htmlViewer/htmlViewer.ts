@@ -2,6 +2,8 @@ import { addElement, elemToHtmlViewer, illuminateElementsAndCode } from '../../u
 import { LevelItemsT } from '../../utils/types';
 import './htmlViewer.scss';
 
+const numbersCount = 20;
+
 export default class HtmlViewer {
   private items: LevelItemsT[] | null = null;
 
@@ -27,7 +29,7 @@ export default class HtmlViewer {
     const htmlViewerCodeWrapper = addElement('div', 'html-viewer-code-wrapper');
     const htmlViewerNumbers = addElement('div', 'html-viewer-code-numbers');
 
-    for (let i = 1; i <= 20; i += 1) {
+    for (let i = 1; i <= numbersCount; i += 1) {
       const numberEl = addElement('div', 'html-viewer-code-number', String(i));
       htmlViewerNumbers.append(numberEl);
     }

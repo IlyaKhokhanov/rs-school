@@ -1,11 +1,11 @@
 function addElement(
   tagName: string,
-  className?: string | [],
+  className?: string | string[],
   textContent?: string,
 ): HTMLElement {
   const elem: HTMLElement = document.createElement(tagName);
   if (className) {
-    if (className instanceof Array) {
+    if (Array.isArray(className)) {
       className.forEach((classEl) => {
         elem.classList.add(classEl);
       });

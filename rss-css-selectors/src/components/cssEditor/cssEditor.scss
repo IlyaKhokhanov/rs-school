@@ -4,7 +4,7 @@
   &-wrapper {
     align-self: flex-start;
     padding: 8px 0 8px 8px;
-    background: $dark-gray-color;
+    background: $dark-primary-color;
     border-radius: 10px 0 0 10px;
     letter-spacing: 0.5px;
   }
@@ -18,7 +18,7 @@
       padding: 8px;
       justify-content: space-between;
       border-radius: 10px 0 0 0;
-      background: $main-gray-color;
+      background: $main-color;
     }
 
     &-file {
@@ -71,7 +71,7 @@
       }
 
       &-btn {
-        background: $dark-gray-color;
+        background: $dark-primary-color;
         padding: 1px 8px;
         border: none;
         border-radius: 5px;
@@ -79,7 +79,7 @@
         cursor: pointer;
 
         &:hover {
-          background: $light-gray-color;
+          background: $light-primary-color;
         }
       }
     }
@@ -87,7 +87,7 @@
     &-value {
       height: 100%;
       white-space: pre-wrap;
-      color: $main-gray-color;
+      color: $main-color;
     }
   }
 }

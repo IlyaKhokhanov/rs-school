@@ -1,6 +1,6 @@
 export type LevelItemsT = {
   element: string;
-  class?: string;
+  class?: string | string[];
   id?: string;
   innerElement?: LevelItemsT;
 };
