@@ -1,4 +1,4 @@
-import { ILevelData } from '../../utils/types';
+import { ILevelData, LevelItemsT } from '../../utils/types';
 import { addElement } from '../../utils/utils';
 import CssEditor from '../cssEditor/cssEditor';
 import ElementsViewer from '../elementsViewer/elementsViewer';
@@ -16,7 +16,7 @@ export default class App {
 
   private levels = new LevelViewer(this.mainContainer, this.initApp.bind(this));
 
-  private initApp(levelData: ILevelData): void {
+  private initApp(levelData: ILevelData<LevelItemsT>): void {
     this.mainContainer.innerHTML = '';
     this.elements.initElements(levelData);
     this.cssEditor.initCssEditor(levelData.answer);

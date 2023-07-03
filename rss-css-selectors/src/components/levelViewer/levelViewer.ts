@@ -1,4 +1,4 @@
-import { ILevelData } from '../../utils/types';
+import { ILevelData, LevelItemsT } from '../../utils/types';
 import { addElement } from '../../utils/utils';
 import data from '../../data/levels.json';
 import './levelViewer.scss';
@@ -7,7 +7,7 @@ import Modal from '../modal/modal';
 const LSdata: string | null = localStorage.getItem('testDataKH');
 
 export default class LevelViewer {
-  private levelsData: ILevelData[] = data;
+  private levelsData: ILevelData<LevelItemsT>[] = data;
 
   private currentLevel: number | null = Number(localStorage.getItem('testLevelKH')) || 0;
 
@@ -19,7 +19,7 @@ export default class LevelViewer {
 
   constructor(
     private container: HTMLElement,
-    private callback: (levelData: ILevelData) => void,
+    private callback: (levelData: ILevelData<LevelItemsT>) => void,
   ) {
     if (LSdata) {
       this.levelsData = JSON.parse(LSdata);

@@ -7,7 +7,7 @@ export default class ElementsViewer {
 
   constructor(private container: HTMLElement, private callback: () => void) {}
 
-  public initElements(levelData: ILevelData): void {
+  public initElements(levelData: ILevelData<LevelItemsT>): void {
     this.items = levelData.items;
 
     const elementsWrapper = addElement('div', 'elements-wrapper');

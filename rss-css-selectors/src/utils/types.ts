@@ -5,11 +5,11 @@ export type LevelItemsT = {
   innerElement?: LevelItemsT;
 };
 
-export interface ILevelData {
+export interface ILevelData<T> {
   name: string;
   description: string;
   answer: string[];
-  items: LevelItemsT[];
+  items: T[];
   complete: boolean;
   help?: boolean;
 }
