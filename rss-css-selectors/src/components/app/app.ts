@@ -24,13 +24,13 @@ export default class App {
     document.body.append(this.mainContainer);
   }
 
-  private levelComplete() {
+  private levelComplete(): void {
     setTimeout(() => {
       this.levels.nextLevel();
     }, 1000);
   }
 
-  private helpWithAnswer() {
+  private helpWithAnswer(): void {
     this.cssEditor.addAnswer();
     this.levels.addInfoHelp();
   }

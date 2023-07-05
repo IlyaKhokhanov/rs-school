@@ -88,6 +88,7 @@ export default class LevelViewer {
     );
     document.body.append(this.sidebarOverlay, this.sidebar);
     this.callback(this.levelsData[this.currentLevel || 0]);
+    localStorage.setItem('testLevelKH', JSON.stringify(this.currentLevel));
   }
 
   private resetProgress(): void {
@@ -120,7 +121,6 @@ export default class LevelViewer {
       }
     }
     localStorage.setItem('testDataKH', JSON.stringify(this.levelsData));
-    localStorage.setItem('testLevelKH', JSON.stringify(this.currentLevel));
   }
 
   public addInfoHelp(): void {
