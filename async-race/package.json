@@ -1,0 +1,38 @@
+{
+  "name": "async-race",
+  "version": "1.0.0",
+  "description": "async-race RSS",
+  "main": "index.js",
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist -e rss-css-selectors",
+    "build": "npx webpack --mode production",
+    "start": "npx webpack-dev-server --mode development",
+    "lint": "eslint"
+  },
+  "keywords": [],
+  "author": "Ilya Khokhanov",
+  "license": "ISC",
+  "homepage": "https://rolling-scopes-school.github.io/ilyakhokhanov-JSFE2023Q1",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^8.44.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-webpack-plugin": "^4.0.1",
+    "gh-pages": "^5.0.0",
+    "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "sass": "^1.63.6",
+    "sass-loader": "^13.3.2",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
