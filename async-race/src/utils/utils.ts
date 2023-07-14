@@ -1,7 +1,7 @@
 function addElement(
   tagName: string,
   className?: string | string[],
-  textContent?: string,
+  textContent?: string
 ): HTMLElement {
   const elem: HTMLElement = document.createElement(tagName);
   if (className) {
@@ -17,6 +17,12 @@ function addElement(
   return elem;
 }
 
+async function requestGarage(url: string) {
+  const request = await fetch(url);
+  const response = await request.json();
+  return response;
+}
+
 function getRandomNumber(numder: number): number {
   return Math.round(Math.random() * numder);
 }
@@ -30,4 +36,4 @@ function getRandomColor(): string {
   return res;
 }
 
-export { addElement, getRandomNumber, getRandomColor };
+export { addElement, requestGarage, getRandomNumber, getRandomColor };

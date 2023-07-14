@@ -1,0 +1,31 @@
+$main-color: #6d3838;
+$main-light-color: #ca6a6a;
+$main-dark-color: #a83f3f;
+$primary-light-color: #b46c6c;
+$primary-dark-color: #5a2525;
+
+%main-btn {
+  padding: 5px 10px;
+  background: $main-light-color;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.4em;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+%primary-btn {
+  padding: 5px 10px;
+  background: $main-dark-color;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.4em;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
