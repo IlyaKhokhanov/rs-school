@@ -6,6 +6,7 @@
   svg {
     width: 80px;
     height: 30px;
+    filter: drop-shadow(2px 2px 2px black) drop-shadow(-2px -2px 2px black);
   }
 
   &-container {

@@ -3,17 +3,22 @@ import { addCarImage, addElement } from '../../utils/utils';
 import './car.scss';
 
 export default class Car {
-  constructor(private container: HTMLElement, private item: CarItem) {
+  constructor(
+    private container: HTMLElement,
+    private item: CarItem,
+    private callbackRemove: (id: string) => void
+  ) {
     this.initCar();
   }
 
   initCar() {
     const carContainer = addElement('div', 'car-container');
+    carContainer.dataset.id = String(this.item.id);
     const carMainBtnsWrapper = addElement('div', 'car-btn-wrapper');
     const selectBtn = addElement('button', 'primary-btn', 'SELECT');
     selectBtn.addEventListener('click', () => console.log('select'));
     const removeBtn = addElement('button', 'primary-btn', 'REMOVE');
-    removeBtn.addEventListener('click', () => console.log('remove'));
+    removeBtn.addEventListener('click', (e) => this.removeCar(e));
     const header = addElement('h2', 'garage-header', this.item.name);
     carMainBtnsWrapper.append(selectBtn, removeBtn, header);
     const trackCar = addElement('div', 'car-track');
@@ -30,5 +35,17 @@ export default class Car {
     trackCar.append(carAdditBtnsWrapper, flag);
     carContainer.append(carMainBtnsWrapper, trackCar);
     this.container.append(carContainer);
+  }
+
+  removeCar(event: MouseEvent) {
+    // this.callbackRemove('1');
+    const { target } = event;
+    if (target) {
+      const elemWithId = (<HTMLElement>target).closest('[data-id]');
+      const { id } = (<HTMLElement>elemWithId).dataset;
+      if (id) {
+        this.callbackRemove(id);
+      }
+    }
   }
 }

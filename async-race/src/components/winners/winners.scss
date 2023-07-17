@@ -1,0 +1,40 @@
+@import "./../../utils/vars.scss";
+
+.winners {
+  &-header,
+  &-page {
+    margin: 10px;
+  }
+
+  &-table {
+    margin: 10px;
+    font-size: 1.4em;
+    border-collapse: collapse;
+
+    &-header-row {
+      border-radius: 5px;
+      & > th {
+        background: $primary-light-color;
+      }
+    }
+
+    &-row {
+      font-weight: 400;
+    }
+
+    &-cell {
+      padding: 5px;
+
+      svg {
+        width: 50px;
+        height: 20px;
+      }
+    }
+  }
+
+  &-buttons-wrapper {
+    margin: 10px;
+    display: flex;
+    gap: 10px;
+  }
+}

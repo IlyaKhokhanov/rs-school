@@ -17,10 +17,9 @@ function addElement(
   return elem;
 }
 
-async function requestGarage(url: string) {
-  const request = await fetch(url);
-  const response = await request.json();
-  return response;
+async function requestGarage(url: string, options: object = {}) {
+  const request = await fetch(url, options);
+  return request.json();
 }
 
 function getRandomNumber(numder: number): number {

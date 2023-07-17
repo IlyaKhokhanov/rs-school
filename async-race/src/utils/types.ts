@@ -4,4 +4,10 @@ type CarItem = {
   id: number;
 };
 
-export { CarItem };
+type WinnerItem = {
+  id: number;
+  wins: number;
+  time: number;
+};
+
+export { CarItem, WinnerItem };

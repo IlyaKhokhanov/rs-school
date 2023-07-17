@@ -4,7 +4,11 @@ import Car from '../car/car';
 import './garageList.scss';
 
 export default class GarageList {
-  constructor(private container: HTMLElement, private data: CarItem[]) {
+  constructor(
+    private container: HTMLElement,
+    private data: CarItem[],
+    private callbackRemove: (id: string) => void
+  ) {
     this.initGarageList();
   }
 
@@ -15,20 +19,20 @@ export default class GarageList {
       'garage-header',
       `Garage (${this.data.length})`
     );
-    const pageCount = addElement('h1', 'garage-page', `Page #${1}`);
+    const pageCount = addElement('h2', 'garage-page', `Page #${1}`);
 
     const garageList = addElement('div', 'garage-list');
-    this.data.forEach((item) => new Car(garageList, item));
+    this.data.forEach((item) => new Car(garageList, item, this.callbackRemove));
 
     const buttons = addElement('div', 'garage-buttons-wrapper');
 
-    const raceBtn = addElement('button', ['main-btn', 'garage-btn'], 'prev');
-    raceBtn.addEventListener('click', () => console.log('prev'));
+    const prevBtn = addElement('button', ['main-btn', 'garage-btn'], 'prev');
+    prevBtn.addEventListener('click', () => console.log('prev'));
 
-    const resetBtn = addElement('button', ['main-btn', 'garage-btn'], 'next');
-    resetBtn.addEventListener('click', () => console.log('next'));
+    const nextBtn = addElement('button', ['main-btn', 'garage-btn'], 'next');
+    nextBtn.addEventListener('click', () => console.log('next'));
 
-    buttons.append(raceBtn, resetBtn);
+    buttons.append(prevBtn, nextBtn);
     this.container.append(header, pageCount, garageList, buttons);
   }
 }
