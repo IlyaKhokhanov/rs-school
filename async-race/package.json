@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -e rss-css-selectors",
+    "deploy": "gh-pages -d dist -e async-race",
     "build": "npx webpack --mode production",
     "start": "npx webpack-dev-server --mode development",
     "lint": "eslint"

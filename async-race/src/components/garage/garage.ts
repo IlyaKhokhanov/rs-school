@@ -29,7 +29,7 @@ export default class Garage {
     const createBtn = addElement(
       'button',
       ['primary-btn', 'settings-create-btn'],
-      'CREATE'
+      'CREATE',
     );
     createBtn.addEventListener('click', () => console.log('create'));
 
