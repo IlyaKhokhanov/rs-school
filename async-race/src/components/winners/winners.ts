@@ -59,34 +59,34 @@ export default class Winners {
       String(indx + 1)
     );
     tableRow.append(tableCellNumber);
-    requestGarage(
-      `${RequestPath.address}${RequestPath.getCars}/${item.id}`
-    ).then((dataCar: CarItem) => {
-      const tableCellCar = addElement('td', 'winners-table-cell');
-      tableCellCar.innerHTML = addCarImage(dataCar.color);
-      const tableCellName = addElement(
-        'td',
-        'winners-table-cell',
-        dataCar.name
-      );
-      const tableCellWins = addElement(
-        'td',
-        'winners-table-cell',
-        String(item.wins)
-      );
-      const tableCellTime = addElement(
-        'td',
-        'winners-table-cell',
-        String(item.time)
-      );
+    requestGarage(`${RequestPath.address}${RequestPath.getCars}/${item.id}`)
+      .then((dataCar: CarItem) => {
+        const tableCellCar = addElement('td', 'winners-table-cell');
+        tableCellCar.innerHTML = addCarImage(dataCar.color);
+        const tableCellName = addElement(
+          'td',
+          'winners-table-cell',
+          dataCar.name
+        );
+        const tableCellWins = addElement(
+          'td',
+          'winners-table-cell',
+          String(item.wins)
+        );
+        const tableCellTime = addElement(
+          'td',
+          'winners-table-cell',
+          String(item.time)
+        );
 
-      tableRow.append(
-        tableCellCar,
-        tableCellName,
-        tableCellWins,
-        tableCellTime
-      );
-    });
+        tableRow.append(
+          tableCellCar,
+          tableCellName,
+          tableCellWins,
+          tableCellTime
+        );
+      })
+      .catch((err) => console.error(err));
 
     return tableRow;
   }

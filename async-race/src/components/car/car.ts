@@ -6,7 +6,8 @@ export default class Car {
   constructor(
     private container: HTMLElement,
     private item: CarItem,
-    private callbackRemove: (id: string) => void
+    private callbackRemove: (id: string) => void,
+    private callbackSelect: (id: string) => void
   ) {
     this.initCar();
   }
@@ -16,7 +17,7 @@ export default class Car {
     carContainer.dataset.id = String(this.item.id);
     const carMainBtnsWrapper = addElement('div', 'car-btn-wrapper');
     const selectBtn = addElement('button', 'primary-btn', 'SELECT');
-    selectBtn.addEventListener('click', () => console.log('select'));
+    selectBtn.addEventListener('click', (e) => this.selectCar(e));
     const removeBtn = addElement('button', 'primary-btn', 'REMOVE');
     removeBtn.addEventListener('click', (e) => this.removeCar(e));
     const header = addElement('h2', 'garage-header', this.item.name);
@@ -38,13 +39,23 @@ export default class Car {
   }
 
   removeCar(event: MouseEvent) {
-    // this.callbackRemove('1');
     const { target } = event;
     if (target) {
       const elemWithId = (<HTMLElement>target).closest('[data-id]');
       const { id } = (<HTMLElement>elemWithId).dataset;
       if (id) {
         this.callbackRemove(id);
+      }
+    }
+  }
+
+  selectCar(event: MouseEvent) {
+    const { target } = event;
+    if (target) {
+      const elemWithId = (<HTMLElement>target).closest('[data-id]');
+      const { id } = (<HTMLElement>elemWithId).dataset;
+      if (id) {
+        this.callbackSelect(id);
       }
     }
   }

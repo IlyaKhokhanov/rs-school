@@ -8,9 +8,12 @@ import {
 import GarageList from '../garageList/garageList';
 import dataCars from '../../data/data.json';
 import './garage.scss';
+import { CarItem } from '../../utils/types';
 
 export default class Garage {
   private containerList = addElement('div', 'garage');
+
+  private updateWrapper = addElement('div', 'settings-update');
 
   constructor(private container: HTMLElement) {
     this.initGarage();
@@ -23,7 +26,12 @@ export default class Garage {
     requestGarage(`${RequestPath.address}${RequestPath.getCars}`)
       .then(
         (data) =>
-          new GarageList(this.containerList, data, this.removeCar.bind(this))
+          new GarageList(
+            this.containerList,
+            data,
+            this.removeCar.bind(this),
+            this.selectCar.bind(this)
+          )
       )
       .catch((err) => console.error(err));
     this.container.append(this.containerList);
@@ -44,7 +52,7 @@ export default class Garage {
     );
     createBtn.addEventListener('click', (e) => this.createCar(e));
 
-    const updateWrapper = addElement('div', 'settings-update');
+    this.updateWrapper = addElement('div', 'settings-update');
     const updateInput = addElement('input', 'settings-update-input');
     updateInput.setAttribute('type', 'text');
     const updateColor = addElement('input', 'settings-update-color');
@@ -55,11 +63,11 @@ export default class Garage {
       ['primary-btn', 'settings-update-btn'],
       'UPDATE'
     );
-    updateBtn.addEventListener('click', () => console.log('update'));
+    updateBtn.addEventListener('click', (e) => this.updateCar(e));
 
     createWrapper.append(createInput, createColor, createBtn);
-    updateWrapper.append(updateInput, updateColor, updateBtn);
-    settings.append(createWrapper, updateWrapper);
+    this.updateWrapper.append(updateInput, updateColor, updateBtn);
+    settings.append(createWrapper, this.updateWrapper);
     this.container.append(settings);
   }
 
@@ -132,18 +140,30 @@ export default class Garage {
     }).catch((err) => console.error(err));
   }
 
+  selectCar(id: string): void {
+    this.updateWrapper.dataset.id = id;
+    requestGarage(`${RequestPath.address}${RequestPath.getCars}/${id}`)
+      .then((dataCar: CarItem) => {
+        const [name, color] = this.updateWrapper.children;
+        (<HTMLInputElement>name).value = dataCar.name;
+        (<HTMLInputElement>color).value = dataCar.color;
+      })
+      .catch((err) => console.error(err));
+  }
+
   updateCar(event: MouseEvent): void {
     const { target } = event;
     if (target) {
       const parent = (<HTMLElement>target).parentElement;
+      const id = parent?.dataset.id;
       if (parent) {
         const [name, color] = parent.children;
         const car = {
           name: (<HTMLInputElement>name).value,
           color: (<HTMLInputElement>color).value,
         };
-        requestGarage(`${RequestPath.address}${RequestPath.getCars}`, {
-          method: 'POST',
+        requestGarage(`${RequestPath.address}${RequestPath.getCars}/${id}`, {
+          method: 'PUT',
           headers: new Headers({ 'content-type': 'application/json' }),
           body: JSON.stringify(car),
         })

@@ -7,7 +7,8 @@ export default class GarageList {
   constructor(
     private container: HTMLElement,
     private data: CarItem[],
-    private callbackRemove: (id: string) => void
+    private callbackRemove: (id: string) => void,
+    private callbackSelect: (id: string) => void
   ) {
     this.initGarageList();
   }
@@ -22,7 +23,8 @@ export default class GarageList {
     const pageCount = addElement('h2', 'garage-page', `Page #${1}`);
 
     const garageList = addElement('div', 'garage-list');
-    this.data.forEach((item) => new Car(garageList, item, this.callbackRemove));
+    this.data.forEach(
+      (item) => new Car(garageList, item, this.callbackRemove, this.callbackSelect));
 
     const buttons = addElement('div', 'garage-buttons-wrapper');
 
