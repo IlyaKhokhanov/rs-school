@@ -3,7 +3,7 @@ import {
   addElement,
   getRandomColor,
   getRandomNumber,
-  requestGarage,
+  request,
 } from '../../utils/utils';
 import GarageList from '../garageList/garageList';
 import dataCars from '../../data/data.json';
@@ -23,17 +23,11 @@ export default class Garage {
     this.container.innerHTML = '';
     this.initSettingsGarage();
     this.initButtonsGarage();
-    requestGarage(`${RequestPath.address}${RequestPath.getCars}`)
-      .then(
-        (data) =>
-          new GarageList(
-            this.containerList,
-            data,
-            this.removeCar.bind(this),
-            this.selectCar.bind(this)
-          )
-      )
-      .catch((err) => console.error(err));
+    const garageList = new GarageList(
+      this.containerList,
+      this.removeCar.bind(this),
+      this.selectCar.bind(this),
+    );
     this.container.append(this.containerList);
   }
 
@@ -48,7 +42,7 @@ export default class Garage {
     const createBtn = addElement(
       'button',
       ['primary-btn', 'settings-create-btn'],
-      'CREATE'
+      'CREATE',
     );
     createBtn.addEventListener('click', (e) => this.createCar(e));
 
@@ -61,7 +55,7 @@ export default class Garage {
     const updateBtn = addElement(
       'button',
       ['primary-btn', 'settings-update-btn'],
-      'UPDATE'
+      'UPDATE',
     );
     updateBtn.addEventListener('click', (e) => this.updateCar(e));
 
@@ -83,7 +77,7 @@ export default class Garage {
     const generateBtn = addElement(
       'button',
       ['primary-btn', 'garage-btn'],
-      'GENERATE CARS'
+      'GENERATE CARS',
     );
     generateBtn.addEventListener('click', () => this.generateCars());
 
@@ -101,7 +95,7 @@ export default class Garage {
           name: (<HTMLInputElement>name).value,
           color: (<HTMLInputElement>color).value,
         };
-        requestGarage(`${RequestPath.address}${RequestPath.getCars}`, {
+        request(`${RequestPath.address}${RequestPath.getCars}`, {
           method: 'POST',
           headers: new Headers({ 'content-type': 'application/json' }),
           body: JSON.stringify(car),
@@ -115,12 +109,12 @@ export default class Garage {
   generateCars(): void {
     for (let i = 0; i < 100; i += 1) {
       const car = {
-        name: `${dataCars.brands[getRandomNumber(dataCars.brands.length)]} ${
-          dataCars.models[getRandomNumber(dataCars.models.length)]
+        name: `${dataCars.brands[getRandomNumber(dataCars.brands.length - 1)]} ${
+          dataCars.models[getRandomNumber(dataCars.models.length - 1)]
         } `,
         color: getRandomColor(),
       };
-      requestGarage(`${RequestPath.address}${RequestPath.getCars}`, {
+      request(`${RequestPath.address}${RequestPath.getCars}`, {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
         body: JSON.stringify(car),
@@ -130,19 +124,19 @@ export default class Garage {
   }
 
   removeCar(id: string): void {
-    requestGarage(`${RequestPath.address}${RequestPath.getCars}/${id}`, {
+    request(`${RequestPath.address}${RequestPath.getCars}/${id}`, {
       method: 'DELETE',
     })
       .then(() => this.initGarage())
       .catch((err) => console.error(err));
-    requestGarage(`${RequestPath.address}${RequestPath.getWinners}/${id}`, {
+    request(`${RequestPath.address}${RequestPath.getWinners}/${id}`, {
       method: 'DELETE',
     }).catch((err) => console.error(err));
   }
 
   selectCar(id: string): void {
     this.updateWrapper.dataset.id = id;
-    requestGarage(`${RequestPath.address}${RequestPath.getCars}/${id}`)
+    request(`${RequestPath.address}${RequestPath.getCars}/${id}`)
       .then((dataCar: CarItem) => {
         const [name, color] = this.updateWrapper.children;
         (<HTMLInputElement>name).value = dataCar.name;
@@ -156,13 +150,13 @@ export default class Garage {
     if (target) {
       const parent = (<HTMLElement>target).parentElement;
       const id = parent?.dataset.id;
-      if (parent) {
+      if (id && parent) {
         const [name, color] = parent.children;
         const car = {
           name: (<HTMLInputElement>name).value,
           color: (<HTMLInputElement>color).value,
         };
-        requestGarage(`${RequestPath.address}${RequestPath.getCars}/${id}`, {
+        request(`${RequestPath.address}${RequestPath.getCars}/${id}`, {
           method: 'PUT',
           headers: new Headers({ 'content-type': 'application/json' }),
           body: JSON.stringify(car),

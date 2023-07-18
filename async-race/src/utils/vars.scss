@@ -15,6 +15,10 @@ $primary-dark-color: #5a2525;
   &:hover {
     opacity: 0.8;
   }
+
+  &:disabled {
+    opacity: 0.6;
+  }
 }
 
 %primary-btn {
@@ -27,5 +31,9 @@ $primary-dark-color: #5a2525;
 
   &:hover {
     opacity: 0.8;
+  }
+
+  &:disabled {
+    opacity: 0.6;
   }
 }

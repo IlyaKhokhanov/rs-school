@@ -16,14 +16,8 @@ export default class App {
   }
 
   initApp() {
-    this.garageBtn.addEventListener(
-      'click',
-      () => new Garage(this.pageContainer)
-    );
-    this.winnersBtn.addEventListener(
-      'click',
-      () => new Winners(this.pageContainer)
-    );
+    this.garageBtn.addEventListener('click', () => new Garage(this.pageContainer));
+    this.winnersBtn.addEventListener('click', () => new Winners(this.pageContainer));
     const buttonsWrapper = addElement('div', 'buttons-wrapper');
 
     buttonsWrapper.append(this.garageBtn, this.winnersBtn);

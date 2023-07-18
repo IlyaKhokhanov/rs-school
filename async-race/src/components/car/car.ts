@@ -7,7 +7,7 @@ export default class Car {
     private container: HTMLElement,
     private item: CarItem,
     private callbackRemove: (id: string) => void,
-    private callbackSelect: (id: string) => void
+    private callbackSelect: (id: string) => void,
   ) {
     this.initCar();
   }

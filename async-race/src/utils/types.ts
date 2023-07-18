@@ -4,10 +4,25 @@ type CarItem = {
   id: number;
 };
 
+interface ICarsRequest {
+  header?: string | null;
+  data: Promise<CarItem[]>;
+}
+
 type WinnerItem = {
   id: number;
   wins: number;
   time: number;
 };
 
-export { CarItem, WinnerItem };
+interface IWinnersRequest {
+  header?: string | null;
+  data: Promise<WinnerItem[]>;
+}
+
+export {
+  CarItem,
+  WinnerItem,
+  ICarsRequest,
+  IWinnersRequest,
+};
