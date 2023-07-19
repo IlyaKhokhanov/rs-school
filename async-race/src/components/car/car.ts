@@ -69,7 +69,7 @@ export default class Car {
 
   public startEngine(isRace?: boolean): void {
     this.goBtn.setAttribute('disabled', 'true');
-    this.stopBtn.removeAttribute('disabled');
+    if (!isRace) this.stopBtn.removeAttribute('disabled');
     request<StartEngine>(
       `${RequestPath.address}${RequestPath.engine}?id=${this.id}&status=started`,
       { method: 'PATCH' },

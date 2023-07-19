@@ -8,7 +8,7 @@ import {
 import GarageList from '../garageList/garageList';
 import dataCars from '../../data/data.json';
 import './garage.scss';
-import { CarItem } from '../../utils/types';
+import { CarItem, WinnerItem } from '../../utils/types';
 
 export default class Garage {
   private containerList = addElement('div', 'garage');
@@ -73,17 +73,13 @@ export default class Garage {
   private initButtonsGarage(): void {
     const buttons = addElement('div', 'buttons-wrapper');
 
-    const raceBtn = addElement('button', ['main-btn', 'garage-btn'], 'RACE');
+    const raceBtn = addElement('button', 'main-btn', 'RACE');
     raceBtn.addEventListener('click', () => this.startRace());
 
-    const resetBtn = addElement('button', ['main-btn', 'garage-btn'], 'RESET');
+    const resetBtn = addElement('button', 'main-btn', 'RESET');
     resetBtn.addEventListener('click', () => this.resetRace());
 
-    const generateBtn = addElement(
-      'button',
-      ['primary-btn', 'garage-btn'],
-      'GENERATE CARS',
-    );
+    const generateBtn = addElement('button', 'primary-btn', 'GENERATE CARS');
     generateBtn.addEventListener('click', () => this.generateCars());
 
     buttons.append(raceBtn, resetBtn, generateBtn);
@@ -185,6 +181,7 @@ export default class Garage {
     if (!this.winner) {
       this.winner = true;
       this.winnerModal(id, time.toFixed(2));
+      Garage.writeWinner(id, Number(time.toFixed(2)));
     }
   }
 
@@ -206,5 +203,36 @@ export default class Garage {
         this.container.append(overlay);
       })
       .catch((err) => console.error(err));
+  }
+
+  static writeWinner(id: number, record: number): void {
+    request<WinnerItem>(`${RequestPath.address}${RequestPath.getWinners}/${id}`)
+      .then((dataCar) => {
+        if (Object.keys(dataCar).length === 0) {
+          const car = {
+            id,
+            wins: 1,
+            time: record,
+          };
+          request(`${RequestPath.address}${RequestPath.getWinners}`, {
+            method: 'POST',
+            headers: new Headers({ 'content-type': 'application/json' }),
+            body: JSON.stringify(car),
+          }).catch((err) => console.error(err));
+        } else {
+          const car = {
+            wins: dataCar.wins + 1,
+            time: record < dataCar.time ? record : dataCar.time,
+          };
+          request<WinnerItem>(`${RequestPath.address}${RequestPath.getWinners}/${id}`, {
+            method: 'PUT',
+            headers: new Headers({ 'content-type': 'application/json' }),
+            body: JSON.stringify(car),
+          }).catch((err) => console.error(err));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }
