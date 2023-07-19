@@ -12,11 +12,14 @@ export default class Car {
 
   private stopBtn: HTMLElement = addElement('button', 'primary-btn', 'B');
 
+  private idAnimation = 0;
+
   constructor(
     private container: HTMLElement,
     private item: CarItem,
     private callbackRemove: (id: string) => void,
     private callbackSelect: (id: string) => void,
+    private callbackWinner: (id: number, time: number) => void,
   ) {
     this.id = this.item.id;
     this.initCar();
@@ -64,13 +67,24 @@ export default class Car {
     }
   }
 
-  public startEngine(): void {
+  public startEngine(isRace?: boolean): void {
     this.goBtn.setAttribute('disabled', 'true');
     this.stopBtn.removeAttribute('disabled');
     request<StartEngine>(
       `${RequestPath.address}${RequestPath.engine}?id=${this.id}&status=started`,
       { method: 'PATCH' },
-    ).then((data) => this.animationCar(data.distance, data.velocity));
+    )
+      .then((data) => {
+        this.animationCar(data.distance, data.velocity, isRace);
+        request(
+          `${RequestPath.address}${RequestPath.engine}?id=${this.id}&status=drive`,
+          { method: 'PATCH' },
+        ).catch((err) => {
+          cancelAnimationFrame(this.idAnimation);
+          console.error(err);
+        });
+      })
+      .catch((err) => console.error(err));
   }
 
   public stopEngine(): void {
@@ -79,12 +93,19 @@ export default class Car {
     request<StartEngine>(
       `${RequestPath.address}${RequestPath.engine}?id=${this.id}&status=stopped`,
       { method: 'PATCH' },
-    ).then(() => {
-      this.car.style.transform = 'translateX(0px)';
-    });
+    )
+      .then(() => {
+        cancelAnimationFrame(this.idAnimation);
+        this.car.style.transform = 'translateX(0px)';
+      })
+      .catch((err) => console.error(err));
   }
 
-  private animationCar(distance: number, velocity: number): void {
+  private animationCar(
+    distance: number,
+    velocity: number,
+    isRace?: boolean,
+  ): void {
     const widthWindow = window.innerWidth - 190;
     const timeStart = new Date().getTime();
     const moveCar = () => {
@@ -92,7 +113,9 @@ export default class Car {
       const curMove = (timeNow - timeStart) * (widthWindow / (distance / velocity));
       this.car.style.transform = `translateX(${curMove}px)`;
       if (curMove < widthWindow) {
-        window.requestAnimationFrame(moveCar);
+        this.idAnimation = requestAnimationFrame(moveCar);
+      } else if (isRace) {
+        this.callbackWinner(this.id, distance / velocity / 1000);
       }
     };
     moveCar();

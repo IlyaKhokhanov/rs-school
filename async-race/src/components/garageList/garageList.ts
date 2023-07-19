@@ -13,6 +13,7 @@ export default class GarageList {
     private container: HTMLElement,
     private callbackRemove: (id: string) => void,
     private callbackSelect: (id: string) => void,
+    private callbackWinner: (id: number, time: number) => void,
   ) {
     requestWithHeader(
       `${RequestPath.address}${RequestPath.getCars}?_limit=7&_page=${this.currentPage}`,
@@ -38,8 +39,7 @@ export default class GarageList {
     const garageList = addElement('div', 'garage-list');
     data.data.then((arr) => {
       this.cars = arr.map((item) => (
-        new Car(garageList, item, this.callbackRemove, this.callbackSelect)));
-      console.log(this.cars);
+        new Car(garageList, item, this.callbackRemove, this.callbackSelect, this.callbackWinner)));
     });
 
     const buttons = addElement('div', 'garage-buttons-wrapper');

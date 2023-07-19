@@ -17,6 +17,8 @@ export default class Garage {
 
   private garageList: GarageList | null = null;
 
+  private winner = false;
+
   constructor(private container: HTMLElement) {
     this.initGarage();
   }
@@ -29,6 +31,7 @@ export default class Garage {
       this.containerList,
       this.removeCar.bind(this),
       this.selectCar.bind(this),
+      this.checkWinner.bind(this),
     );
     this.container.append(this.containerList);
   }
@@ -170,10 +173,38 @@ export default class Garage {
   }
 
   private startRace() {
-    this.garageList?.cars.forEach((car) => car.startEngine());
+    this.winner = false;
+    this.garageList?.cars.forEach((car) => car.startEngine(true));
   }
 
   private resetRace() {
     this.garageList?.cars.forEach((car) => car.stopEngine());
+  }
+
+  private checkWinner(id: number, time: number): void {
+    if (!this.winner) {
+      this.winner = true;
+      this.winnerModal(id, time.toFixed(2));
+    }
+  }
+
+  private winnerModal(id: number, time: string):void {
+    const overlay = addElement('div', 'overlay');
+    overlay.addEventListener('click', (e) => {
+      const { target } = e;
+      if (target && (target as HTMLElement).classList.contains('overlay')) {
+        overlay.remove();
+      }
+    });
+
+    request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${id}`)
+      .then((dataCar) => {
+        const modal = addElement('div', 'modal');
+        modal.textContent = `${dataCar.name} wont first (${time}s)!!!`;
+
+        overlay.append(modal);
+        this.container.append(overlay);
+      })
+      .catch((err) => console.error(err));
   }
 }
