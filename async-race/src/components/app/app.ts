@@ -15,9 +15,15 @@ export default class App {
     this.initApp();
   }
 
-  initApp() {
-    this.garageBtn.addEventListener('click', () => new Garage(this.pageContainer));
-    this.winnersBtn.addEventListener('click', () => new Winners(this.pageContainer));
+  private initApp(): void {
+    this.garageBtn.addEventListener('click', () => {
+      localStorage.setItem('pageKH', 'garage');
+      const garage = new Garage(this.pageContainer);
+    });
+    this.winnersBtn.addEventListener('click', () => {
+      localStorage.setItem('pageKH', 'winners');
+      const winners = new Winners(this.pageContainer);
+    });
     const buttonsWrapper = addElement('div', 'buttons-wrapper');
 
     buttonsWrapper.append(this.garageBtn, this.winnersBtn);
@@ -25,7 +31,12 @@ export default class App {
     this.initPage();
   }
 
-  initPage() {
-    const page = new Garage(this.pageContainer);
+  private initPage(): void {
+    const page = localStorage.getItem('pageKH');
+    if (page === 'winners') {
+      const winners = new Winners(this.pageContainer);
+    } else {
+      const garage = new Garage(this.pageContainer);
+    }
   }
 }

@@ -19,7 +19,7 @@ export default class Winners {
       .catch((err) => console.error(err));
   }
 
-  initWinners(data: IWinnersRequest) {
+  private initWinners(data: IWinnersRequest): void {
     this.container.innerHTML = '';
     const header = addElement('h1', 'winners-header', `Winners (${data.header})`);
     const pageCount = addElement('h2', 'winners-page', `Page #${this.currentPage}`);
@@ -48,7 +48,7 @@ export default class Winners {
     if (this.currentPage < 2) prevBtn.setAttribute('disabled', 'true');
     prevBtn.addEventListener('click', () => this.changePage('prev'));
     const nextBtn = addElement('button', 'main-btn', 'next');
-    if (this.currentPage === Math.ceil(Number(data.header) / 10)) nextBtn.setAttribute('disabled', 'true');
+    if (this.currentPage === Math.ceil(Number(data.header) / 10) || data.header === '0') nextBtn.setAttribute('disabled', 'true');
     nextBtn.addEventListener('click', () => this.changePage('next'));
     buttons.append(prevBtn, nextBtn);
     this.container.append(header, pageCount, table, buttons);
@@ -62,8 +62,8 @@ export default class Winners {
       String(indx + 1),
     );
     tableRow.append(tableCellNumber);
-    request(`${RequestPath.address}${RequestPath.getCars}/${item.id}`)
-      .then((dataCar: CarItem) => {
+    request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${item.id}`)
+      .then((dataCar) => {
         const tableCellCar = addElement('td', 'winners-table-cell');
         tableCellCar.innerHTML = addCarImage(dataCar.color);
         const tableCellName = addElement('td', 'winners-table-cell', dataCar.name);
@@ -82,7 +82,7 @@ export default class Winners {
     return tableRow;
   }
 
-  changePage(page: string): void {
+  private changePage(page: string): void {
     if (page === 'prev') {
       this.currentPage -= 1;
     } else if (page === 'next') {

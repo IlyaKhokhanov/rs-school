@@ -7,6 +7,8 @@ import './garageList.scss';
 export default class GarageList {
   private currentPage = Number(localStorage.getItem('pageGarageKH')) || 1;
 
+  public cars: Car[] | [] = [];
+
   constructor(
     private container: HTMLElement,
     private callbackRemove: (id: string) => void,
@@ -19,7 +21,7 @@ export default class GarageList {
       .catch((err) => console.error(err));
   }
 
-  initGarageList(data: ICarsRequest) {
+  private initGarageList(data: ICarsRequest): void {
     if (this.currentPage > Math.ceil(Number(data.header) / 7)) {
       this.currentPage = Math.ceil(Number(data.header) / 7);
       localStorage.setItem('pageGarageKH', String(this.currentPage));
@@ -34,9 +36,11 @@ export default class GarageList {
     const pageCount = addElement('h2', 'garage-page', `Page #${this.currentPage}`);
 
     const garageList = addElement('div', 'garage-list');
-    data.data.then((arr) => arr.forEach((item) => (
-      new Car(garageList, item, this.callbackRemove, this.callbackSelect)
-    )));
+    data.data.then((arr) => {
+      this.cars = arr.map((item) => (
+        new Car(garageList, item, this.callbackRemove, this.callbackSelect)));
+      console.log(this.cars);
+    });
 
     const buttons = addElement('div', 'garage-buttons-wrapper');
     const prevBtn = addElement('button', 'main-btn', 'prev');
@@ -51,7 +55,7 @@ export default class GarageList {
     this.container.append(header, pageCount, garageList, buttons);
   }
 
-  changePage(page: string): void {
+  private changePage(page: string): void {
     if (page === 'prev') {
       this.currentPage -= 1;
     } else if (page === 'next') {

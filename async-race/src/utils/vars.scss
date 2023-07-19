@@ -18,6 +18,7 @@ $primary-dark-color: #5a2525;
 
   &:disabled {
     opacity: 0.6;
+    cursor: default;
   }
 }
 
@@ -35,5 +36,6 @@ $primary-dark-color: #5a2525;
 
   &:disabled {
     opacity: 0.6;
+    cursor: default;
   }
 }

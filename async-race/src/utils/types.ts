@@ -5,7 +5,7 @@ type CarItem = {
 };
 
 interface ICarsRequest {
-  header?: string | null;
+  header: string | null;
   data: Promise<CarItem[]>;
 }
 
@@ -16,13 +16,19 @@ type WinnerItem = {
 };
 
 interface IWinnersRequest {
-  header?: string | null;
+  header: string | null;
   data: Promise<WinnerItem[]>;
 }
+
+type StartEngine = {
+  velocity: number;
+  distance: number;
+};
 
 export {
   CarItem,
   WinnerItem,
   ICarsRequest,
   IWinnersRequest,
+  StartEngine,
 };

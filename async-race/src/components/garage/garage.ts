@@ -15,15 +15,17 @@ export default class Garage {
 
   private updateWrapper = addElement('div', 'settings-update');
 
+  private garageList: GarageList | null = null;
+
   constructor(private container: HTMLElement) {
     this.initGarage();
   }
 
-  initGarage() {
+  private initGarage(): void {
     this.container.innerHTML = '';
     this.initSettingsGarage();
     this.initButtonsGarage();
-    const garageList = new GarageList(
+    this.garageList = new GarageList(
       this.containerList,
       this.removeCar.bind(this),
       this.selectCar.bind(this),
@@ -31,7 +33,7 @@ export default class Garage {
     this.container.append(this.containerList);
   }
 
-  initSettingsGarage() {
+  private initSettingsGarage(): void {
     const settings = addElement('div', 'settings');
     const createWrapper = addElement('div', 'settings-create');
     const createInput = addElement('input', 'settings-create-input');
@@ -65,14 +67,14 @@ export default class Garage {
     this.container.append(settings);
   }
 
-  initButtonsGarage() {
+  private initButtonsGarage(): void {
     const buttons = addElement('div', 'buttons-wrapper');
 
     const raceBtn = addElement('button', ['main-btn', 'garage-btn'], 'RACE');
-    raceBtn.addEventListener('click', () => console.log('race'));
+    raceBtn.addEventListener('click', () => this.startRace());
 
     const resetBtn = addElement('button', ['main-btn', 'garage-btn'], 'RESET');
-    resetBtn.addEventListener('click', () => console.log('reset'));
+    resetBtn.addEventListener('click', () => this.resetRace());
 
     const generateBtn = addElement(
       'button',
@@ -85,7 +87,7 @@ export default class Garage {
     this.container.append(buttons);
   }
 
-  createCar(event: MouseEvent): void {
+  private createCar(event: MouseEvent): void {
     const { target } = event;
     if (target) {
       const parent = (<HTMLElement>target).parentElement;
@@ -106,7 +108,7 @@ export default class Garage {
     }
   }
 
-  generateCars(): void {
+  private generateCars(): void {
     for (let i = 0; i < 100; i += 1) {
       const car = {
         name: `${dataCars.brands[getRandomNumber(dataCars.brands.length - 1)]} ${
@@ -123,7 +125,7 @@ export default class Garage {
     setTimeout(() => this.initGarage(), 400);
   }
 
-  removeCar(id: string): void {
+  private removeCar(id: string): void {
     request(`${RequestPath.address}${RequestPath.getCars}/${id}`, {
       method: 'DELETE',
     })
@@ -134,10 +136,10 @@ export default class Garage {
     }).catch((err) => console.error(err));
   }
 
-  selectCar(id: string): void {
+  private selectCar(id: string): void {
     this.updateWrapper.dataset.id = id;
-    request(`${RequestPath.address}${RequestPath.getCars}/${id}`)
-      .then((dataCar: CarItem) => {
+    request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${id}`)
+      .then((dataCar) => {
         const [name, color] = this.updateWrapper.children;
         (<HTMLInputElement>name).value = dataCar.name;
         (<HTMLInputElement>color).value = dataCar.color;
@@ -145,7 +147,7 @@ export default class Garage {
       .catch((err) => console.error(err));
   }
 
-  updateCar(event: MouseEvent): void {
+  private updateCar(event: MouseEvent): void {
     const { target } = event;
     if (target) {
       const parent = (<HTMLElement>target).parentElement;
@@ -165,5 +167,13 @@ export default class Garage {
           .catch((err) => console.error(err));
       }
     }
+  }
+
+  private startRace() {
+    this.garageList?.cars.forEach((car) => car.startEngine());
+  }
+
+  private resetRace() {
+    this.garageList?.cars.forEach((car) => car.stopEngine());
   }
 }

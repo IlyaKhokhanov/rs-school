@@ -17,7 +17,7 @@ function addElement(
   return elem;
 }
 
-async function request(url: string, options: object = {}) {
+async function request<T>(url: string, options: object = {}): Promise<T> {
   const response = await fetch(url, options);
   return response.json();
 }
@@ -26,8 +26,8 @@ async function requestWithHeader(url: string, options: object = {}) {
   const response = await fetch(url, options);
   const header = response.headers.get('X-Total-Count');
   return {
-    header,
     data: response.json(),
+    header,
   };
 }
 
