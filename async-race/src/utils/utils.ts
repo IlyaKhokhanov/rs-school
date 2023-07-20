@@ -22,7 +22,10 @@ async function request<T>(url: string, options: object = {}): Promise<T> {
   return response.json();
 }
 
-async function requestWithHeader(url: string, options: object = {}) {
+async function requestWithHeader<T>(
+  url: string,
+  options: object = {},
+): Promise<{ data: Promise<T>; header: string | null }> {
   const response = await fetch(url, options);
   const header = response.headers.get('X-Total-Count');
   return {

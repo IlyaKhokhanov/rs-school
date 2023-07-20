@@ -1,5 +1,5 @@
 import RequestPath from '../../utils/enum';
-import { ICarsRequest } from '../../utils/types';
+import { CarItem, ICarsRequest } from '../../utils/types';
 import { addElement, requestWithHeader } from '../../utils/utils';
 import Car from '../car/car';
 import './garageList.scss';
@@ -15,22 +15,14 @@ export default class GarageList {
     private callbackSelect: (id: string) => void,
     private callbackWinner: (id: number, time: number) => void,
   ) {
-    requestWithHeader(
-      `${RequestPath.address}${RequestPath.getCars}?_limit=7&_page=${this.currentPage}`,
-    )
-      .then((data: ICarsRequest) => this.initGarageList(data))
-      .catch((err) => console.error(err));
+    this.requestGarage();
   }
 
   private initGarageList(data: ICarsRequest): void {
     if (this.currentPage > Math.ceil(Number(data.header) / 7)) {
       this.currentPage = Math.ceil(Number(data.header) / 7);
       localStorage.setItem('pageGarageKH', String(this.currentPage));
-      requestWithHeader(
-        `${RequestPath.address}${RequestPath.getCars}?_limit=7&_page=${this.currentPage}`,
-      )
-        .then((dataCorrect: ICarsRequest) => this.initGarageList(dataCorrect))
-        .catch((err) => console.error(err));
+      this.requestGarage();
     }
     this.container.innerHTML = '';
     const header = addElement('h1', 'garage-header', `Garage (${data.header})`);
@@ -62,10 +54,14 @@ export default class GarageList {
       this.currentPage += 1;
     }
     localStorage.setItem('pageGarageKH', String(this.currentPage));
-    requestWithHeader(
+    this.requestGarage();
+  }
+
+  private requestGarage(): void {
+    requestWithHeader<CarItem[]>(
       `${RequestPath.address}${RequestPath.getCars}?_limit=7&_page=${this.currentPage}`,
     )
-      .then((data: ICarsRequest) => this.initGarageList(data))
+      .then((data) => this.initGarageList(data))
       .catch((err) => console.error(err));
   }
 }

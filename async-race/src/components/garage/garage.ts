@@ -19,6 +19,10 @@ export default class Garage {
 
   private winner = false;
 
+  private raceBtn = addElement('button', 'main-btn', 'RACE');
+
+  private resetBtn = addElement('button', 'main-btn', 'RESET');
+
   constructor(private container: HTMLElement) {
     this.initGarage();
   }
@@ -44,11 +48,7 @@ export default class Garage {
     const createColor = addElement('input', 'settings-create-color');
     createColor.setAttribute('type', 'color');
     createColor.setAttribute('value', '#ffffff');
-    const createBtn = addElement(
-      'button',
-      ['primary-btn', 'settings-create-btn'],
-      'CREATE',
-    );
+    const createBtn = addElement('button', 'primary-btn', 'CREATE');
     createBtn.addEventListener('click', (e) => this.createCar(e));
 
     this.updateWrapper = addElement('div', 'settings-update');
@@ -57,11 +57,7 @@ export default class Garage {
     const updateColor = addElement('input', 'settings-update-color');
     updateColor.setAttribute('type', 'color');
     updateColor.setAttribute('value', '#ffffff');
-    const updateBtn = addElement(
-      'button',
-      ['primary-btn', 'settings-update-btn'],
-      'UPDATE',
-    );
+    const updateBtn = addElement('button', 'primary-btn', 'UPDATE');
     updateBtn.addEventListener('click', (e) => this.updateCar(e));
 
     createWrapper.append(createInput, createColor, createBtn);
@@ -72,17 +68,14 @@ export default class Garage {
 
   private initButtonsGarage(): void {
     const buttons = addElement('div', 'buttons-wrapper');
-
-    const raceBtn = addElement('button', 'main-btn', 'RACE');
-    raceBtn.addEventListener('click', () => this.startRace());
-
-    const resetBtn = addElement('button', 'main-btn', 'RESET');
-    resetBtn.addEventListener('click', () => this.resetRace());
+    this.raceBtn.addEventListener('click', () => this.startRace());
+    this.resetBtn.addEventListener('click', () => this.resetRace());
+    this.resetBtn.setAttribute('disabled', 'true');
 
     const generateBtn = addElement('button', 'primary-btn', 'GENERATE CARS');
     generateBtn.addEventListener('click', () => this.generateCars());
 
-    buttons.append(raceBtn, resetBtn, generateBtn);
+    buttons.append(this.raceBtn, this.resetBtn, generateBtn);
     this.container.append(buttons);
   }
 
@@ -169,11 +162,15 @@ export default class Garage {
   }
 
   private startRace() {
+    this.raceBtn.setAttribute('disabled', 'true');
+    this.resetBtn.removeAttribute('disabled');
     this.winner = false;
     this.garageList?.cars.forEach((car) => car.startEngine(true));
   }
 
   private resetRace() {
+    this.resetBtn.setAttribute('disabled', 'true');
+    this.raceBtn.removeAttribute('disabled');
     this.garageList?.cars.forEach((car) => car.stopEngine());
   }
 
@@ -193,7 +190,6 @@ export default class Garage {
         overlay.remove();
       }
     });
-
     request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${id}`)
       .then((dataCar) => {
         const modal = addElement('div', 'modal');

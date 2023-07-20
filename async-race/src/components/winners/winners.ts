@@ -11,12 +11,12 @@ import './winners.scss';
 export default class Winners {
   private currentPage = 1;
 
+  private sort = localStorage.getItem('sortKH') || 'id';
+
+  private order = localStorage.getItem('orderKH') || 'ASC';
+
   constructor(private container: HTMLElement) {
-    requestWithHeader(
-      `${RequestPath.address}${RequestPath.getWinners}?_limit=10&_page=${this.currentPage}`,
-    )
-      .then((data: IWinnersRequest) => this.initWinners(data))
-      .catch((err) => console.error(err));
+    this.requestWinners();
   }
 
   private initWinners(data: IWinnersRequest): void {
@@ -25,22 +25,11 @@ export default class Winners {
     const pageCount = addElement('h2', 'winners-page', `Page #${this.currentPage}`);
     const table = addElement('table', 'winners-table');
     const tableBody = addElement('tbody');
-    const tableHeaderRow = addElement('tr', 'winners-table-header-row');
-    const tableHeaderNumber = addElement('th', 'winners-table-cell', '№');
-    const tableHeaderCar = addElement('th', 'winners-table-cell', 'Car');
-    const tableHeaderName = addElement('th', 'winners-table-cell', 'Name');
-    const tableHeaderWins = addElement('th', 'winners-table-cell', 'Wins');
-    const tableHeaderTime = addElement('th', 'winners-table-cell', 'Best Time (sec)');
-    tableHeaderRow.append(
-      tableHeaderNumber,
-      tableHeaderCar,
-      tableHeaderName,
-      tableHeaderWins,
-      tableHeaderTime,
-    );
+    const tableHeaderRow = addElement('tr', 'winners-header-row');
+    this.addHeaderToTable(tableHeaderRow);
     tableBody.append(tableHeaderRow);
     data.data.then((arr) => arr.forEach((item, indx) => (
-      tableBody.append(Winners.addCarToTable(item, indx))
+      tableBody.append(this.addCarToTable(item, indx))
     )));
     table.append(tableBody);
     const buttons = addElement('div', 'winners-buttons-wrapper');
@@ -54,21 +43,55 @@ export default class Winners {
     this.container.append(header, pageCount, table, buttons);
   }
 
-  static addCarToTable(item: WinnerItem, indx: number): HTMLElement {
-    const tableRow = addElement('tr', 'winners-table-row');
+  private addHeaderToTable(row: HTMLElement):void {
+    const tableHeaderNumber = addElement('th', 'winners-cell', '№');
+    const tableHeaderCar = addElement('th', 'winners-cell', 'Car');
+    const tableHeaderName = addElement('th', 'winners-cell', 'Name');
+    const tableHeaderWins = addElement('th', ['winners-cell', 'cell-clickable']);
+    const winsWrapper = addElement('div', 'cell-wrapper');
+    const winsSpan = addElement('span', 'cell-span', 'Wins');
+    winsWrapper.append(winsSpan);
+    tableHeaderWins.append(winsWrapper);
+    tableHeaderWins.addEventListener('click', () => this.addSort('wins'));
+    const tableHeaderTime = addElement('th', ['winners-cell', 'cell-clickable']);
+    const timeWrapper = addElement('div', 'cell-wrapper');
+    const timeSpan = addElement('span', 'cell-span', 'Best Time (sec)');
+    timeWrapper.append(timeSpan);
+    tableHeaderTime.append(timeWrapper);
+    tableHeaderTime.addEventListener('click', () => this.addSort('time'));
+    if (this.sort === 'time') {
+      const arrow = document.createElement('img');
+      arrow.src = `./img/arr-${this.order === 'ASC' ? 'down' : 'up'}.png`;
+      timeWrapper.append(arrow);
+    } else if (this.sort === 'wins') {
+      const arrow = document.createElement('img');
+      arrow.src = `./img/arr-${this.order === 'ASC' ? 'down' : 'up'}.png`;
+      winsWrapper.append(arrow);
+    }
+    row.append(
+      tableHeaderNumber,
+      tableHeaderCar,
+      tableHeaderName,
+      tableHeaderWins,
+      tableHeaderTime,
+    );
+  }
+
+  private addCarToTable(item: WinnerItem, indx: number): HTMLElement {
+    const tableRow = addElement('tr', 'winners-row');
     const tableCellNumber = addElement(
       'td',
-      'winners-table-cell',
-      String(indx + 1),
+      'winners-cell',
+      String(this.currentPage * 10 + indx - 9),
     );
     tableRow.append(tableCellNumber);
     request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${item.id}`)
       .then((dataCar) => {
-        const tableCellCar = addElement('td', 'winners-table-cell');
+        const tableCellCar = addElement('td', 'winners-cell');
         tableCellCar.innerHTML = addCarImage(dataCar.color);
-        const tableCellName = addElement('td', 'winners-table-cell', dataCar.name);
-        const tableCellWins = addElement('td', 'winners-table-cell', String(item.wins));
-        const tableCellTime = addElement('td', 'winners-table-cell', String(item.time));
+        const tableCellName = addElement('td', 'winners-cell', dataCar.name);
+        const tableCellWins = addElement('td', 'winners-cell', String(item.wins));
+        const tableCellTime = addElement('td', 'winners-cell', String(item.time));
 
         tableRow.append(
           tableCellCar,
@@ -88,8 +111,20 @@ export default class Winners {
     } else if (page === 'next') {
       this.currentPage += 1;
     }
-    requestWithHeader(
-      `${RequestPath.address}${RequestPath.getWinners}?_limit=10&_page=${this.currentPage}`,
-    ).then((data: IWinnersRequest) => this.initWinners(data));
+    this.requestWinners();
+  }
+
+  private requestWinners(): void {
+    requestWithHeader<WinnerItem[]>(
+      `${RequestPath.address}${RequestPath.getWinners}?_limit=10&_page=${this.currentPage}&_sort=${this.sort}&_order=${this.order}`,
+    ).then((data) => this.initWinners(data));
+  }
+
+  private addSort(value: string): void {
+    this.sort = value;
+    this.order = this.order === 'ASC' ? 'DESC' : 'ASC';
+    localStorage.setItem('sortKH', this.sort);
+    localStorage.setItem('orderKH', this.order);
+    this.requestWinners();
   }
 }
