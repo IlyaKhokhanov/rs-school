@@ -84,7 +84,7 @@ export default class Winners {
     const tableCellNumber = addElement(
       'td',
       'winners-cell',
-      String(this.currentPage * carsOnPage + indx - 9),
+      String(this.currentPage * carsOnPage + indx - (carsOnPage - 1)),
     );
     tableRow.append(tableCellNumber);
     request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${item.id}`)
