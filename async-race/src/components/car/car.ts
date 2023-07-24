@@ -75,14 +75,19 @@ export default class Car {
       { method: 'PATCH' },
     )
       .then((data) => {
-        this.animationCar(data.distance, data.velocity, isRace);
-        request(
+        if (typeof data !== 'string') {
+          this.animationCar(data.distance, data.velocity, isRace);
+        }
+        request<object>(
           `${RequestPath.address}${RequestPath.engine}?id=${this.id}&status=drive`,
           { method: 'PATCH' },
-        ).catch((err) => {
-          cancelAnimationFrame(this.idAnimation);
-          console.error(err);
-        });
+        )
+          .then((dataDrive) => {
+            if (typeof dataDrive === 'string') {
+              cancelAnimationFrame(this.idAnimation);
+            }
+          })
+          .catch((err) => console.error(err));
       })
       .catch((err) => console.error(err));
   }

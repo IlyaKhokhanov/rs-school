@@ -4,6 +4,8 @@ import { addElement, requestWithHeader } from '../../utils/utils';
 import Car from '../car/car';
 import './garageList.scss';
 
+const carsOnPage = 7;
+
 export default class GarageList {
   private currentPage = Number(localStorage.getItem('pageGarageKH')) || 1;
 
@@ -19,8 +21,8 @@ export default class GarageList {
   }
 
   private initGarageList(data: ICarsRequest): void {
-    if (this.currentPage > Math.ceil(Number(data.header) / 7)) {
-      this.currentPage = Math.ceil(Number(data.header) / 7);
+    if (this.currentPage > Math.ceil(Number(data.header) / carsOnPage)) {
+      this.currentPage = Math.ceil(Number(data.header) / carsOnPage);
       localStorage.setItem('pageGarageKH', String(this.currentPage));
       this.requestGarage();
     }
@@ -40,7 +42,7 @@ export default class GarageList {
     prevBtn.addEventListener('click', () => this.changePage('prev'));
 
     const nextBtn = addElement('button', 'main-btn', 'next');
-    if (this.currentPage === Math.ceil(Number(data.header) / 7)) nextBtn.setAttribute('disabled', 'true');
+    if (this.currentPage === Math.ceil(Number(data.header) / carsOnPage)) nextBtn.setAttribute('disabled', 'true');
     nextBtn.addEventListener('click', () => this.changePage('next'));
 
     buttons.append(prevBtn, nextBtn);
@@ -59,9 +61,13 @@ export default class GarageList {
 
   private requestGarage(): void {
     requestWithHeader<CarItem[]>(
-      `${RequestPath.address}${RequestPath.getCars}?_limit=7&_page=${this.currentPage}`,
+      `${RequestPath.address}${RequestPath.getCars}?_limit=${carsOnPage}&_page=${this.currentPage}`,
     )
-      .then((data) => this.initGarageList(data))
+      .then((data) => {
+        if (typeof data.data !== 'string') {
+          this.initGarageList(data);
+        }
+      })
       .catch((err) => console.error(err));
   }
 }

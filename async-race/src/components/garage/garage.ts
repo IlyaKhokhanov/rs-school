@@ -132,9 +132,11 @@ export default class Garage {
     this.updateWrapper.dataset.id = id;
     request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${id}`)
       .then((dataCar) => {
-        const [name, color] = this.updateWrapper.children;
-        (<HTMLInputElement>name).value = dataCar.name;
-        (<HTMLInputElement>color).value = dataCar.color;
+        if (typeof dataCar !== 'string') {
+          const [name, color] = this.updateWrapper.children;
+          (<HTMLInputElement>name).value = dataCar.name;
+          (<HTMLInputElement>color).value = dataCar.color;
+        }
       })
       .catch((err) => console.error(err));
   }
@@ -165,13 +167,17 @@ export default class Garage {
     this.raceBtn.setAttribute('disabled', 'true');
     this.resetBtn.removeAttribute('disabled');
     this.winner = false;
-    this.garageList?.cars.forEach((car) => car.startEngine(true));
+    if (this.garageList) {
+      this.garageList.cars.forEach((car) => car.startEngine(true));
+    }
   }
 
   private resetRace() {
     this.resetBtn.setAttribute('disabled', 'true');
     this.raceBtn.removeAttribute('disabled');
-    this.garageList?.cars.forEach((car) => car.stopEngine());
+    if (this.garageList) {
+      this.garageList?.cars.forEach((car) => car.stopEngine());
+    }
   }
 
   private checkWinner(id: number, time: number): void {
@@ -192,11 +198,13 @@ export default class Garage {
     });
     request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${id}`)
       .then((dataCar) => {
-        const modal = addElement('div', 'modal');
-        modal.textContent = `${dataCar.name} wont first (${time}s)!!!`;
+        if (typeof dataCar !== 'string') {
+          const modal = addElement('div', 'modal');
+          modal.textContent = `${dataCar.name} wont first (${time}s)!!!`;
 
-        overlay.append(modal);
-        this.container.append(overlay);
+          overlay.append(modal);
+          this.container.append(overlay);
+        }
       })
       .catch((err) => console.error(err));
   }
@@ -204,27 +212,29 @@ export default class Garage {
   static writeWinner(id: number, record: number): void {
     request<WinnerItem>(`${RequestPath.address}${RequestPath.getWinners}/${id}`)
       .then((dataCar) => {
-        if (Object.keys(dataCar).length === 0) {
-          const car = {
-            id,
-            wins: 1,
-            time: record,
-          };
-          request(`${RequestPath.address}${RequestPath.getWinners}`, {
-            method: 'POST',
-            headers: new Headers({ 'content-type': 'application/json' }),
-            body: JSON.stringify(car),
-          }).catch((err) => console.error(err));
-        } else {
-          const car = {
-            wins: dataCar.wins + 1,
-            time: record < dataCar.time ? record : dataCar.time,
-          };
-          request<WinnerItem>(`${RequestPath.address}${RequestPath.getWinners}/${id}`, {
-            method: 'PUT',
-            headers: new Headers({ 'content-type': 'application/json' }),
-            body: JSON.stringify(car),
-          }).catch((err) => console.error(err));
+        if (typeof dataCar !== 'string') {
+          if (Object.keys(dataCar).length === 0) {
+            const car = {
+              id,
+              wins: 1,
+              time: record,
+            };
+            request(`${RequestPath.address}${RequestPath.getWinners}`, {
+              method: 'POST',
+              headers: new Headers({ 'content-type': 'application/json' }),
+              body: JSON.stringify(car),
+            }).catch((err) => console.error(err));
+          } else {
+            const car = {
+              wins: dataCar.wins + 1,
+              time: record < dataCar.time ? record : dataCar.time,
+            };
+            request<WinnerItem>(`${RequestPath.address}${RequestPath.getWinners}/${id}`, {
+              method: 'PUT',
+              headers: new Headers({ 'content-type': 'application/json' }),
+              body: JSON.stringify(car),
+            }).catch((err) => console.error(err));
+          }
         }
       })
       .catch((err) => {

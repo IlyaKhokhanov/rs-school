@@ -8,6 +8,8 @@ import {
 } from '../../utils/utils';
 import './winners.scss';
 
+const carsOnPage = 10;
+
 export default class Winners {
   private currentPage = 1;
 
@@ -37,7 +39,7 @@ export default class Winners {
     if (this.currentPage < 2) prevBtn.setAttribute('disabled', 'true');
     prevBtn.addEventListener('click', () => this.changePage('prev'));
     const nextBtn = addElement('button', 'main-btn', 'next');
-    if (this.currentPage === Math.ceil(Number(data.header) / 10) || data.header === '0') nextBtn.setAttribute('disabled', 'true');
+    if (this.currentPage === Math.ceil(Number(data.header) / carsOnPage) || data.header === '0') nextBtn.setAttribute('disabled', 'true');
     nextBtn.addEventListener('click', () => this.changePage('next'));
     buttons.append(prevBtn, nextBtn);
     this.container.append(header, pageCount, table, buttons);
@@ -82,23 +84,25 @@ export default class Winners {
     const tableCellNumber = addElement(
       'td',
       'winners-cell',
-      String(this.currentPage * 10 + indx - 9),
+      String(this.currentPage * carsOnPage + indx - 9),
     );
     tableRow.append(tableCellNumber);
     request<CarItem>(`${RequestPath.address}${RequestPath.getCars}/${item.id}`)
       .then((dataCar) => {
-        const tableCellCar = addElement('td', 'winners-cell');
-        tableCellCar.innerHTML = addCarImage(dataCar.color);
-        const tableCellName = addElement('td', 'winners-cell', dataCar.name);
-        const tableCellWins = addElement('td', 'winners-cell', String(item.wins));
-        const tableCellTime = addElement('td', 'winners-cell', String(item.time));
+        if (typeof dataCar !== 'string') {
+          const tableCellCar = addElement('td', 'winners-cell');
+          tableCellCar.innerHTML = addCarImage(dataCar.color);
+          const tableCellName = addElement('td', 'winners-cell', dataCar.name);
+          const tableCellWins = addElement('td', 'winners-cell', String(item.wins));
+          const tableCellTime = addElement('td', 'winners-cell', String(item.time));
 
-        tableRow.append(
-          tableCellCar,
-          tableCellName,
-          tableCellWins,
-          tableCellTime,
-        );
+          tableRow.append(
+            tableCellCar,
+            tableCellName,
+            tableCellWins,
+            tableCellTime,
+          );
+        }
       })
       .catch((err) => console.error(err));
 
@@ -116,8 +120,10 @@ export default class Winners {
 
   private requestWinners(): void {
     requestWithHeader<WinnerItem[]>(
-      `${RequestPath.address}${RequestPath.getWinners}?_limit=10&_page=${this.currentPage}&_sort=${this.sort}&_order=${this.order}`,
-    ).then((data) => this.initWinners(data));
+      `${RequestPath.address}${RequestPath.getWinners}?_limit=${carsOnPage}&_page=${this.currentPage}&_sort=${this.sort}&_order=${this.order}`,
+    )
+      .then((data) => this.initWinners(data))
+      .catch((err) => console.error(err));
   }
 
   private addSort(value: string): void {
