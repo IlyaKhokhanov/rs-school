@@ -1,4 +1,4 @@
-import data from "./pets.json" assert { type: "json" };
+import data from "./pets.json" with { type: "json" };
 
 export function carousel() {
   const prevBtn = document.querySelector(".carousel__btn-prev");
