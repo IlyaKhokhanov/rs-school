@@ -1,9 +1,5 @@
 import data from "./pets.json" with { type: "json" };
 
-// import JSON from '../json/menu.json' with { type: "json" };
-
-// const { default: jsonData } = await import("./data.json", { assert: { type: "json" } })
-
 export function modal() {
   const listCards = document.querySelector(".our-friends__list");
 
