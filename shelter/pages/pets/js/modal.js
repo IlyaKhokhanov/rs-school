@@ -1,4 +1,4 @@
-import data from "./pets.json" assert { type: "json" };
+import data from "./pets.json" with { type: "json" };
 
 export function modal() {
   const listCards = document.querySelector(".our-friends__list");
